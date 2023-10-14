@@ -17,7 +17,9 @@ const Indicator: React.FC<{ className?: string; items: IndicatorItem[]; active: 
             {items.map((item) => (
                 <div
                     key={item.id}
-                    className={`w-full rounded-full bg-light text-on-light flex items-center justify-center transition-all ${item.id === active ? "bg-opacity-100" : "bg-opacity-0 hover:bg-opacity-80"}`}
+                    className={`w-full rounded-full bg-light text-on-light flex items-center justify-center transition-all ${
+                        item.id === active ? "bg-opacity-100" : "bg-opacity-0 hover:bg-opacity-80"
+                    }`}
                     onClick={() => onChange(item.id)}
                 >
                     <span className="grid h-6 w-6 place-content-center rounded-full font-bold">{item.text}</span>
@@ -27,7 +29,7 @@ const Indicator: React.FC<{ className?: string; items: IndicatorItem[]; active: 
     );
 };
 
-const steps = [
+const steps: IndicatorItem[] = [
     { id: 1, text: "1" },
     { id: 2, text: "2" },
     { id: 3, text: "3" },
