@@ -21,6 +21,7 @@ body {
     background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
+
 .grid-bg {
     background-image: linear-gradient(to bottom, transparent 0%, transparent calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) 100%),
         linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) 100%);
