@@ -1,6 +1,8 @@
 "use client";
 import Main from "@/components/Home/Main";
 import Indicator, { IndicatorItem } from "@/components/Registration/Indicator";
+import StepAdditional, { StepAdditionalData } from "@/components/Registration/StepAdditional";
+import StepFinish from "@/components/Registration/StepFinish";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
@@ -30,6 +32,16 @@ export default function Registration() {
         playExp: "",
         beACaptain: "",
     });
+    const [dataStepAdditional, setDataStepAdditional] = useState<StepAdditionalData>({
+        years: 1,
+        throwing: "",
+        catching: "",
+        cutting: "",
+        defense: "",
+        fitness: "",
+        playExp: "",
+        beACaptain: "",
+    });
     const steps: IndicatorItem[] = [
         {
             id: 1,
@@ -37,7 +49,8 @@ export default function Registration() {
             form: <StepGeneral data={dataStepGeneral} validate={validate} onChange={(e) => setDataStepGeneral(e)} onValidate={(e) => setValid(e)} />,
         },
         { id: 2, text: "2", form: <StepSkillset data={dataStepSkillset} validate={validate} onChange={(e) => setDataStepSkillset(e)} onValidate={(e) => setValid(e)} /> },
-        { id: 3, text: "3" },
+        { id: 3, text: "3", form: <StepAdditional data={dataStepAdditional} validate={validate} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} /> },
+        { id: 4, text: "4", form: <StepFinish data={dataStepAdditional} validate={validate} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} /> },
     ];
     const [activeStep, setActiveStep] = useState(steps[0].id);
     const [isNext, setIsNext] = useState(true);
@@ -78,8 +91,8 @@ export default function Registration() {
                                     show={activeStep === step.id && !delay}
                                     enter="transition-all ease-in-out duration-200"
                                     leave="transition-all ease-in-out duration-100"
-                                    enterFrom={isNext ? "translate-x-full opacity-0" : "-translate-x-full opacity-0"}
-                                    leaveTo={isNext ? "-translate-x-full opacity-0" : "translate-x-full opacity-0"}
+                                    enterFrom={isNext ? "translate-x-1/4 opacity-0" : "-translate-x-1/4 opacity-0"}
+                                    leaveTo={isNext ? "-translate-x-1/4 opacity-0" : "translate-x-1/4 opacity-0"}
                                 >
                                     <div className="">{step.form || step.text}</div>
                                 </Transition>
@@ -94,23 +107,35 @@ export default function Registration() {
                     >
                         <button
                             disabled={isShaking}
-                            className={`bg-light text-on-light rounded-full h-12 w-12 lg:w-36 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 right-1/2 transition-all ${
-                                activeStep > 1 ? "-translate-x-2 lg:-translate-x-4" : "opacity-0 scale-0 translate-x-1/2"
+                            className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                activeStep === steps.length
+                                    ? "left-0 right-[calc(100%_-_3rem)] w-12"
+                                    : `bg-light text-on-light w-12 lg:w-32 ${
+                                          activeStep > 1
+                                              ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
+                                              : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
+                                      }`
                             }`}
                             onClick={() => handleNext(activeStep - 1)}
                         >
                             <ArrowLeft size={18} weight="bold" />
-                            <span className="hidden lg:inline leading-none font-medium">Prev</span>
+                            {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Prev</span>}
                         </button>
                         <button
                             disabled={isShaking}
-                            className={`bg-light text-on-light rounded-full h-12 w-12 lg:w-36 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 left-1/2 transition-all ${
-                                activeStep > 1 ? "translate-x-2 lg:translate-x-4" : "-translate-x-1/2"
+                            className={`bg-light text-on-light rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                activeStep === steps.length
+                                    ? "right-0 left-16 w-[calc(100%_-_4rem)]"
+                                    : `w-12 lg:w-32 ${
+                                          activeStep > 1
+                                              ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
+                                              : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
+                                      }`
                             }`}
                             onClick={() => handleNext(activeStep + 1)}
                         >
-                            <span className="hidden lg:inline leading-none font-medium">Next</span>
-                            <ArrowRight size={18} weight="bold" />
+                            {activeStep === steps.length ? <span className="font-medium">Send the registration</span> : <span className="hidden lg:inline leading-none font-medium">Next</span>}
+                            <ArrowRight size={18} weight="bold" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
                         </button>
                     </div>
                 </Main>

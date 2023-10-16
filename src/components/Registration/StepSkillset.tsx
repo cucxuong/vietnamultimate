@@ -22,7 +22,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
         onChange({ ...data, [prop]: value });
     };
     useEffect(() => {
-        onValidate(data.years !== "");
+        onValidate(
+            data.years !== "" && data.throwing !== "" && data.catching !== "" && data.cutting !== "" && data.defense !== "" && data.fitness !== "" && data.playExp !== "" && data.beACaptain !== "",
+        );
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
@@ -52,13 +54,15 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.years ? "bg-light bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("years", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.years ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.years ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.years ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -84,13 +88,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.playExp ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("playExp", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.playExp ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.playExp ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.playExp ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -116,13 +120,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.throwing ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("throwing", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.throwing ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.throwing ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.throwing ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -148,13 +152,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.catching ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("catching", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.catching ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.catching ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.catching ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -180,13 +184,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.cutting ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("cutting", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.cutting ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.cutting ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.cutting ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -212,13 +216,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.defense ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("defense", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.defense ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.defense ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.defense ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -244,13 +248,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.fitness ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("fitness", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.fitness ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.fitness ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.fitness ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
@@ -275,13 +279,13 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.beACaptain ? "bg-light bg-opacity-30" : ""}`}
                             onClick={() => handleChange("beACaptain", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center ${item.value === data.beACaptain ? "bg-light bg-opacity-30" : ""}`}>
+                            <div className={`font-semibold grid place-content-center`}>
                                 {item.value === data.beACaptain ? <CheckFat size={18} weight="fill" /> : item.value}
                             </div>
-                            <div className={`flex items-center px-4 ${item.value === data.beACaptain ? "bg-light bg-opacity-30" : ""}`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
