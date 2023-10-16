@@ -26,4 +26,5 @@ body {
     background-image: linear-gradient(to bottom, transparent 0%, transparent calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) 100%),
         linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) calc(100% - 1px), rgba(var(--foreground-rgb), 0.04) 100%);
     background-size: 0.5rem 0.5rem;
+    background-attachment: fixed;
 }
