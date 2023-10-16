@@ -1,7 +1,8 @@
 "use client";
 import Main from "@/components/Home/Main";
 import { Transition } from "@headlessui/react";
-import { useState, Fragment } from "react";
+import { CheckFat } from "@phosphor-icons/react";
+import { useState, Fragment, useEffect } from "react";
 
 type IndicatorItem = {
     id: number;
@@ -31,6 +32,7 @@ type StepGeneralData = {
     name: string;
     nickname: string;
     dob: string;
+    gender: "male" | "female";
     email: string;
     nationality: string;
     stayingCountry: string;
@@ -41,11 +43,16 @@ type StepGeneralData = {
 };
 const StepGeneral: React.FC<{
     data: StepGeneralData;
+    validate?: boolean;
     onChange: (d: StepGeneralData) => void;
-}> = ({ data, onChange }) => {
+    onValidate?: (v: boolean) => void;
+}> = ({ data, validate, onChange, onValidate = (e: boolean) => {} }) => {
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
+    useEffect(() => {
+        onValidate(data.name !== "" && data.dob !== "" && data.email !== "" && (data.joinableD1m || data.joinableD1a || data.joinableD2m || data.joinableD2a));
+    });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6 pt-6">
             <h3 className="text-5xl font-semibold px-2">General information</h3>
@@ -57,8 +64,9 @@ const StepGeneral: React.FC<{
 
             <div className="grid gap-0.5 lg:grid-cols-2 -mx-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded-t-2xl rounded lg:rounded-tr p-4">
-                    <span className="text-2xl font-medium">Your full name</span>
+                    <span className="text-2xl font-medium">Full name</span>
                     <input value={data.name} onChange={(e) => handleChange("name", e.target.value)} type="text" placeholder="Your answer" className="bg-dark text-on-dark rounded-md h-12 p-4" />
+                    {validate && data.name === "" && <span className="text-red-500 text-sm">This field is required</span>}
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded lg:rounded-tr-2xl p-4">
                     <div className="grid">
@@ -83,7 +91,65 @@ const StepGeneral: React.FC<{
                         className="appearance-none bg-dark text-on-dark rounded-md h-12 p-4"
                     />
                 </label>
-                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-b-2xl lg:rounded-bl p-4">
+                <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-b-2xl lg:rounded-bl p-4">
+                    <span className="text-2xl font-medium">Gender</span>
+                    <div className="flex rounded-full overflow-hidden border h-12">
+                        <button
+                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                data.gender === "female" ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                            }`}
+                            onClick={() => handleChange("gender", "female")}
+                        >
+                            {data.gender === "female" && (
+                                <span>
+                                    <CheckFat size={18} weight="fill" />
+                                </span>
+                            )}
+                            <span>Female</span>
+                        </button>
+                        <div className="border-l"></div>
+                        <button
+                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                data.gender === "male" ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                            }`}
+                            onClick={() => handleChange("gender", "male")}
+                        >
+                            {data.gender === "male" && (
+                                <span>
+                                    <CheckFat size={18} weight="fill" />
+                                </span>
+                            )}
+                            <span>Male</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid gap-0.5 lg:grid-cols-2 -mx-2">
+                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4">
+                    <span className="text-2xl font-medium">Nationality</span>
+                    <input
+                        value={data.nationality}
+                        onChange={(e) => handleChange("nationality", e.target.value)}
+                        type="text"
+                        placeholder="Your answer"
+                        className="bg-dark text-on-dark rounded-md h-12 p-4"
+                    />
+                </label>
+                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4">
+                    <span className="text-2xl font-medium">Which country are you staying?</span>
+                    <input
+                        value={data.stayingCountry}
+                        onChange={(e) => handleChange("stayingCountry", e.target.value)}
+                        type="text"
+                        placeholder="Your answer"
+                        className="bg-dark text-on-dark rounded-md h-12 p-4"
+                    />
+                </label>
+            </div>
+
+            <div className="grid gap-0.5 lg:grid-cols-2 -mx-2">
+                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4">
                     <span className="text-2xl font-medium">Email</span>
                     <input
                         value={data.email}
@@ -94,54 +160,82 @@ const StepGeneral: React.FC<{
                         className="bg-dark text-on-dark rounded-md h-12 p-4"
                     />
                 </label>
-            </div>
-
-            <div className="grid gap-0.5 lg:grid-cols-2 -mx-2">
-                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded-t-2xl rounded lg:rounded-tr p-4">
-                    <span className="text-2xl font-medium">Your nationality</span>
-                    <input
-                        value={data.nationality}
-                        onChange={(e) => handleChange("nationality", e.target.value)}
-                        type="text"
-                        placeholder="Your answer"
-                        className="bg-dark text-on-dark rounded-md h-12 p-4"
-                    />
-                </label>
-                <label className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded lg:rounded-tr-2xl p-4">
-                    <span className="text-2xl font-medium">Which country are you staying?</span>
-                    <input
-                        value={data.stayingCountry}
-                        onChange={(e) => handleChange("stayingCountry", e.target.value)}
-                        type="text"
-                        placeholder="Your answer"
-                        className="bg-dark text-on-dark rounded-md h-12 p-4"
-                    />
-                </label>
-                <div className="col-span-full grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-b-2xl p-4">
+                <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-sm snap-start rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4">
                     <div className="grid">
                         <span className="text-2xl font-medium">Which date could you join the tournament?</span>
                         <span className="text-sm">Please uncheck which one you couldn&#39;t join</span>
                     </div>
-                    <div className="inline-grid grid-cols-2 gap-4">
-                        <div className="grid gap-4">
-                            <div className="flex gap-2 items-center">
-                                <input checked={data.joinableD1m} onChange={(e) => handleChange("joinableD1m", e.target.checked)} id="d1m" type="checkbox" />
-                                <label htmlFor="d1m">Day 1 - Morning</label>
-                            </div>
-                            <div className="flex gap-2 items-center">
-                                <input checked={data.joinableD1a} onChange={(e) => handleChange("joinableD1a", e.target.checked)} id="d1a" type="checkbox" />
-                                <label htmlFor="d1a">Day 1 - Afternoon</label>
-                            </div>
+
+                    <div className="grid lg:grid-cols-2 gap-4 lg:gap-0">
+                        <div className="flex rounded-full lg:rounded-r-none overflow-hidden border h-12 w-full max-w-md mx-auto">
+                            <label
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out cursor-pointer select-none ${
+                                    data.joinableD1m ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                                }`}
+                            >
+                                <input checked={data.joinableD1m} onChange={(e) => handleChange("joinableD1m", e.target.checked)} type="checkbox" hidden />
+                                {data.joinableD1m && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <div className="inline-grid place-content-center text-center leading-tight">
+                                    <span className="truncate">Day 1</span>
+                                    <span className="truncate">Morning</span>
+                                </div>
+                            </label>
+                            <div className="border-l"></div>
+                            <label
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out cursor-pointer select-none ${
+                                    data.joinableD1a ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                                }`}
+                            >
+                                <input checked={data.joinableD1a} onChange={(e) => handleChange("joinableD1a", e.target.checked)} type="checkbox" hidden />
+                                {data.joinableD1a && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <div className="inline-grid place-content-center text-center leading-tight">
+                                    <span className="truncate">Day 1</span>
+                                    <span className="truncate">Afternoon</span>
+                                </div>
+                            </label>
                         </div>
-                        <div className="grid gap-4">
-                            <div className="flex gap-2 items-center">
-                                <input checked={data.joinableD2m} onChange={(e) => handleChange("joinableD2m", e.target.checked)} id="d2m" type="checkbox" />
-                                <label htmlFor="d2m">Day 2 - Morning</label>
-                            </div>
-                            <div className="flex gap-2 items-center">
-                                <input checked={data.joinableD2a} onChange={(e) => handleChange("joinableD2a", e.target.checked)} id="d2a" type="checkbox" />
-                                <label htmlFor="d2a">Day 2 - Afternoon</label>
-                            </div>
+                        <div className="flex rounded-full lg:rounded-l-none lg:border-l-0 overflow-hidden border h-12 w-full max-w-md mx-auto">
+                            <label
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out cursor-pointer select-none ${
+                                    data.joinableD2m ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                                }`}
+                            >
+                                <input checked={data.joinableD2m} onChange={(e) => handleChange("joinableD2m", e.target.checked)} type="checkbox" hidden />
+                                {data.joinableD2m && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <div className="inline-grid place-content-center text-center leading-tight">
+                                    <span className="truncate">Day 2</span>
+                                    <span className="truncate">Morning</span>
+                                </div>
+                            </label>
+                            <div className="border-l"></div>
+                            <label
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out cursor-pointer select-none ${
+                                    data.joinableD2a ? "bg-on-dark bg-opacity-30 duration-200" : "duration-100"
+                                }`}
+                            >
+                                <input checked={data.joinableD2a} onChange={(e) => handleChange("joinableD2a", e.target.checked)} type="checkbox" hidden />
+                                {data.joinableD2a && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <div className="inline-grid place-content-center text-center leading-tight">
+                                    <span className="truncate">Day 2</span>
+                                    <span className="truncate">Afternoon</span>
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -151,10 +245,13 @@ const StepGeneral: React.FC<{
 };
 
 export default function Registration() {
+    const [validate, setValidate] = useState(false);
+    const [valid, setValid] = useState(true);
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
         name: "",
         nickname: "",
         dob: "",
+        gender: "female",
         email: "",
         nationality: "",
         stayingCountry: "",
@@ -167,7 +264,7 @@ export default function Registration() {
         {
             id: 1,
             text: "1",
-            form: <StepGeneral data={dataStepGeneral} onChange={(e) => setDataStepGeneral(e)} />,
+            form: <StepGeneral data={dataStepGeneral} validate={validate} onChange={(e) => setDataStepGeneral(e)} onValidate={(e) => setValid(e)} />,
         },
         { id: 2, text: "2" },
         { id: 3, text: "3" },
@@ -177,11 +274,15 @@ export default function Registration() {
     const [delay, setDelay] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
-        setDelay(true);
-        setTimeout(() => {
-            setDelay(false);
-            setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-        }, 200);
+        setValidate(true);
+        if (valid) {
+            setValidate(false);
+            setDelay(true);
+            setTimeout(() => {
+                setDelay(false);
+                setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+            }, 200);
+        }
     };
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
