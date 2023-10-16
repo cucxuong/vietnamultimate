@@ -100,43 +100,45 @@ export default function Registration() {
                         ))}
                     </div>
 
-                    <div
-                        className={`flex justify-center transition-all h-12 sticky bottom-6 ${
-                            !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
-                        }`}
-                    >
-                        <button
-                            disabled={isShaking}
-                            className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                activeStep === steps.length
-                                    ? "left-0 right-[calc(100%_-_3rem)] w-12"
-                                    : `bg-light text-on-light w-12 lg:w-32 ${
-                                          activeStep > 1
-                                              ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
-                                              : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
-                                      }`
+                    <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 -mb-6 pb-6">
+                        <div
+                            className={`flex justify-center transition-all h-12 ${
+                                !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
                             }`}
-                            onClick={() => handleNext(activeStep - 1)}
                         >
-                            <ArrowLeft size={18} weight="bold" />
-                            {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Prev</span>}
-                        </button>
-                        <button
-                            disabled={isShaking}
-                            className={`bg-light text-on-light rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                activeStep === steps.length
-                                    ? "right-0 left-16 w-[calc(100%_-_4rem)]"
-                                    : `w-12 lg:w-32 ${
-                                          activeStep > 1
-                                              ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
-                                              : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
-                                      }`
-                            }`}
-                            onClick={() => handleNext(activeStep + 1)}
-                        >
-                            {activeStep === steps.length ? <span className="font-medium">Send the registration</span> : <span className="hidden lg:inline leading-none font-medium">Next</span>}
-                            <ArrowRight size={18} weight="bold" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
-                        </button>
+                            <button
+                                disabled={isShaking}
+                                className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                    activeStep === steps.length
+                                        ? "left-0 right-[calc(100%_-_3rem)] w-12"
+                                        : `bg-light text-on-light w-12 lg:w-32 ${
+                                              activeStep > 1
+                                                  ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
+                                                  : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
+                                          }`
+                                }`}
+                                onClick={() => handleNext(activeStep - 1)}
+                            >
+                                <ArrowLeft size={18} weight="bold" />
+                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Prev</span>}
+                            </button>
+                            <button
+                                disabled={isShaking}
+                                className={`bg-light text-on-light rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                    activeStep === steps.length
+                                        ? "right-0 left-16 w-[calc(100%_-_4rem)]"
+                                        : `w-12 lg:w-32 ${
+                                              activeStep > 1
+                                                  ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
+                                                  : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
+                                          }`
+                                }`}
+                                onClick={() => handleNext(activeStep + 1)}
+                            >
+                                {activeStep === steps.length ? <span className="font-medium">Send the registration</span> : <span className="hidden lg:inline leading-none font-medium">Next</span>}
+                                <ArrowRight size={18} weight="bold" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                            </button>
+                        </div>
                     </div>
                 </Main>
             </ScrollArea>
