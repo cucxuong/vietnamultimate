@@ -26,7 +26,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-dark grid-bg">General information</h3>
-            <div className="grid gap-2 text-sm lg:gap-0">
+            <div className="grid gap-2 text-sm lg:text-base lg:gap-0">
                 <p>Please provide the correct information so we can contact you properly.</p>
                 <p>The information provided will be used for registration purposes and to communicate important updates regarding the tournament.</p>
                 <p>Your privacy is important to us, and the information provided will be handled in accordance with our privacy policy.</p>

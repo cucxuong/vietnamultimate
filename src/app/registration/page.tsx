@@ -26,7 +26,9 @@ export default function Registration() {
         catching: "",
         cutting: "",
         defense: "",
+        fitness: "",
         playExp: "",
+        beACaptain: "",
     });
     const steps: IndicatorItem[] = [
         {
