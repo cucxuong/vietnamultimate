@@ -2,6 +2,7 @@
 import Main from "@/components/Home/Main";
 import Indicator, { IndicatorItem } from "@/components/Registration/Indicator";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
+import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Transition } from "@headlessui/react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
@@ -19,13 +20,21 @@ export default function Registration() {
         nationality: "",
         stayingCountry: "",
     });
+    const [dataStepSkillset, setDataStepSkillset] = useState<StepSkillsetData>({
+        years: "",
+        throwing: "",
+        catching: "",
+        cutting: "",
+        defense: "",
+        playExp: "",
+    });
     const steps: IndicatorItem[] = [
         {
             id: 1,
             text: "1",
             form: <StepGeneral data={dataStepGeneral} validate={validate} onChange={(e) => setDataStepGeneral(e)} onValidate={(e) => setValid(e)} />,
         },
-        { id: 2, text: "2" },
+        { id: 2, text: "2", form: <StepSkillset data={dataStepSkillset} validate={validate} onChange={(e) => setDataStepSkillset(e)} onValidate={(e) => setValid(e)} /> },
         { id: 3, text: "3" },
     ];
     const [activeStep, setActiveStep] = useState(steps[0].id);
@@ -35,7 +44,7 @@ export default function Registration() {
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
         setValidate(true);
-        if (valid) {
+        if (valid || id < activeStep) {
             setValidate(false);
             if (id >= 1 && id <= steps.length) {
                 setDelay(true);
@@ -59,7 +68,7 @@ export default function Registration() {
                 <Main>
                     <Indicator items={steps} active={activeStep} />
 
-                    <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-xl mx-auto pb-6">
+                    <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-lg mx-auto pb-6">
                         {steps.map((step) => (
                             <div key={step.id} className={isShaking ? "animate-shake-horizontal" : ""}>
                                 <Transition
