@@ -16,7 +16,7 @@ export default function Registration() {
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
         name: "",
         nickname: "",
-        dob: undefined,
+        yob: "",
         gender: "female",
         email: "",
         nationality: "",
@@ -140,7 +140,10 @@ export default function Registration() {
                                 }`}
                                 onClick={() => handleNext(activeStep + 1)}
                             >
-                                {activeStep === steps.length ? <span className="font-medium">Send the registration</span> : <span className="hidden lg:inline leading-none font-medium">Next</span>}
+                                <Transition as="span" show={activeStep === steps.length} enter="transiton-all ease-in-out" entered="font-medium truncate min-w-max" enterFrom="opacity-0 w-0" leaveTo="opacity-0 w-0">
+                                    Send the registration
+                                </Transition>
+                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Next</span>}
                                 <ArrowRight size={18} weight="bold" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
                             </button>
                         </div>

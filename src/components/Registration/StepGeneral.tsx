@@ -3,11 +3,12 @@ import { Input } from "@/components/ui/input";
 import { CalendarBlank, CheckFat, X } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { useEffect } from "react";
+import { InputMask } from "@react-input/mask";
 
 export type StepGeneralData = {
     name: string;
     nickname: string;
-    dob: Date | undefined;
+    yob: string;
     gender: "male" | "female";
     email: string;
     nationality: string;
@@ -24,7 +25,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
         onChange({ ...data, [prop]: value });
     };
     useEffect(() => {
-        onValidate(data.name !== "" && data.dob !== undefined && data.email !== "");
+        onValidate(data.name !== "" && data.yob !== "" && data.email !== "");
     });
     return (
         <div className="flex flex-col gap-6 -mt-6">
@@ -68,7 +69,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-tr-2xl p-4 lg:p-6">
                     <div className="grid">
-                        <span className="text-2xl font-medium">Nickname</span>            
+                        <span className="text-2xl font-medium">Nickname</span>
                     </div>
                     <Input
                         value={data.nickname}
@@ -76,55 +77,36 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         onChange={(e) => handleChange("nickname", e)}
                         type="text"
                         placeholder="Which everyone could conveniently call you"
-                        className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
+                        className="placeholder:opacity-50"
                     />
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-bl-2xl p-4 lg:p-6">
-                    <span className={`text-2xl font-medium ${validate && !data.dob ? "text-rose-500 snap-start" : ""}`}>Date of birth{!data.dob && <span className="text-rose-500">*</span>}</span>
-                    <div className="relative grid">
-                        <input
-                            onFocus={(e) => e.target.showPicker()}
-                            onChange={(e) => handleChange("dob", e.target.valueAsDate)}
-                            type="date"
-                            max={format(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1), "yyyy-MM-dd")}
-                            placeholder={validate && !data.dob ? "This field is required" : "DD.MM.YYYY"}
-                            className={`appearance-none h-12 p-4 opacity-0 ${validate && !data.dob ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
+                    <span className={`text-2xl font-medium ${validate && !data.yob ? "text-rose-500 snap-start" : ""}`}>Year of birth{!data.yob && <span className="text-rose-500">*</span>}</span>
+                    <div className="relative inline-grid grid-cols-1">
+                        <InputMask
+                            mask="a___"
+                            replacement={{ a: /[1-2]/, _: /\d/ }}
+                            value={data.yob}
+                            onMask={(e) => handleChange("yob", e.detail.value)}
+                            placeholder="YYYY"
+                            className="appearance-none flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 placeholder:opacity-50"
                         />
-                        <span
-                            className={`absolute inset-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground justify-start text-left font-normal inline-flex items-center rounded-md text-base ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 px-4 ${
-                                validate && !data.dob ? "text-rose-500" : ""
-                            }`}
-                        >
-                            <span className="mr-auto">
-                                {data.dob ? (
-                                    format(data.dob, "dd.MM.yyyy")
-                                ) : (
-                                    <span className={`${validate && !data.dob ? "text-rose-500" : "text-[#9ca3af] opacity-50"}`}>
-                                        {validate && !data.dob ? "This field is required" : "DD.MM.YYYY"}
-                                    </span>
-                                )}
-                            </span>
-                        </span>
-                        <div className="absolute top-1/2 -translate-y-1/2 right-4 h-5 z-10">
-                            {data.dob ? (
-                                <Button
-                                    variant={"ghost"}
-                                    size={"icon-xs"}
-                                    tabIndex={-1}
-                                    className="rounded-full"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleChange("dob", null);
-                                    }}
-                                >
-                                    <span>
-                                        <X size={16} weight="bold" />
-                                    </span>
-                                </Button>
-                            ) : (
-                                <CalendarBlank size={18} className="text-inherit opacity-30" />
-                            )}
-                        </div>
+                        {data.yob && (
+                            <Button
+                                variant={"ghost"}
+                                size={"icon-xs"}
+                                tabIndex={-1}
+                                className="rounded-full absolute top-1/2 -translate-y-1/2 right-4"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleChange("yob", "");
+                                }}
+                            >
+                                <span>
+                                    <X size={16} weight="bold" />
+                                </span>
+                            </Button>
+                        )}
                     </div>
                 </label>
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl p-4 lg:p-6">
