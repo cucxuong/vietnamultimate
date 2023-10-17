@@ -28,12 +28,12 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-dark grid-bg">Ultimate frisbee skillset</h3>
+            <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-background grid-bg">Ultimate frisbee skillset</h3>
             <div className="grid gap-2 text-sm lg:gap-0">
                 <p>Please BE HONEST about your so we can place teams that are balanced in level.</p>
             </div>
 
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.years === "" ? "text-rose-500" : ""}`}>
                         How long have you played Ultimate frisbee? {data.years === "" && <span className="text-rose-500">*</span>}
@@ -41,8 +41,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.years === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.years === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.years === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -54,20 +54,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${
-                                item.value === data.years ? "bg-light bg-opacity-30" : ""
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.years ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("years", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.years ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.years ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.playExp === "" ? "text-rose-500" : ""}`}>
                         Playing experience? {data.playExp === "" && <span className="text-rose-500">*</span>}
@@ -75,8 +73,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.playExp === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.playExp === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.playExp === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -88,18 +86,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.playExp ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.playExp ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("playExp", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.playExp ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.playExp ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.throwing === "" ? "text-rose-500" : ""}`}>
                         Throwing skill? {data.throwing === "" && <span className="text-rose-500">*</span>}
@@ -107,8 +105,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.throwing === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.throwing === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.throwing === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -120,18 +118,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.throwing ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.throwing ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("throwing", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.throwing ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.throwing ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.catching === "" ? "text-rose-500" : ""}`}>
                         Catching skill? {data.catching === "" && <span className="text-rose-500">*</span>}
@@ -139,8 +137,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.catching === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.catching === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.catching === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -152,18 +150,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.catching ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.catching ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("catching", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.catching ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.catching ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.cutting === "" ? "text-rose-500" : ""}`}>
                         Cutting skill? {data.cutting === "" && <span className="text-rose-500">*</span>}
@@ -171,8 +169,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.cutting === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.cutting === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.cutting === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -184,18 +182,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.cutting ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.cutting ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("cutting", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.cutting ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.cutting ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.defense === "" ? "text-rose-500" : ""}`}>
                         Defense skill? {data.defense === "" && <span className="text-rose-500">*</span>}
@@ -203,8 +201,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.defense === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.defense === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.defense === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -216,18 +214,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.defense ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.defense ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("defense", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.defense ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.defense ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.fitness === "" ? "text-rose-500" : ""}`}>
                         Fitness and agility? {data.fitness === "" && <span className="text-rose-500">*</span>}
@@ -235,8 +233,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.fitness === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.fitness === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.fitness === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -248,18 +246,18 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.fitness ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.fitness ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("fitness", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.fitness ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.fitness ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-light bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.beACaptain === "" ? "text-rose-500" : ""}`}>
                         Are you interested in the captain position or wish to be a captain? {data.beACaptain === "" && <span className="text-rose-500">*</span>}
@@ -267,8 +265,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.beACaptain === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-on-dark divide-opacity-30 ${
-                        validate && data.beACaptain === "" ? "border-rose-500" : "border-on-dark"
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                        validate && data.beACaptain === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -279,12 +277,12 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-on-dark divide-opacity-30 cursor-pointer select-none ${item.value === data.beACaptain ? "bg-light bg-opacity-30" : ""}`}
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                                item.value === data.beACaptain ? "bg-foreground bg-opacity-30" : ""
+                            }`}
                             onClick={() => handleChange("beACaptain", item.value)}
                         >
-                            <div className={`font-semibold grid place-content-center`}>
-                                {item.value === data.beACaptain ? <CheckFat size={18} weight="fill" /> : item.value}
-                            </div>
+                            <div className={`font-semibold grid place-content-center`}>{item.value === data.beACaptain ? <CheckFat size={18} weight="fill" /> : item.value}</div>
                             <div className={`flex items-center px-4 py-2`}>{item.label}</div>
                         </div>
                     ))}

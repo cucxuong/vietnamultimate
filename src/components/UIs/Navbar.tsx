@@ -6,15 +6,13 @@ type Props = {
     items?: menuItem[];
 };
 
-const menu: menuItem[] = [
-    { key: "menu-2", text: "Registration", path: "/registration", icon: <></> },
-];
+const menu: menuItem[] = [{ key: "menu-2", text: "Registration", path: "/registration", icon: <></> }];
 export default function Navbar({ className = "flex items-center gap-4", items = menu }: Props) {
     return (
         <nav className={className}>
             Menu
             {items.map((item) => (
-                <Link key={item.key} href={item.path} className="text-on-dark">
+                <Link key={item.key} href={item.path} className="text-foreground">
                     <span>{item.text}</span>
                 </Link>
             ))}

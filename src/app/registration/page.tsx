@@ -16,7 +16,7 @@ export default function Registration() {
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
         name: "",
         nickname: "",
-        dob: "",
+        dob: undefined,
         gender: "female",
         email: "",
         nationality: "",
@@ -79,7 +79,7 @@ export default function Registration() {
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            <ScrollArea className="overscroll-contain scroll-smooth" onScroll={(v) => setScroll(v)}>
+            <ScrollArea className={`scroll-smooth ${(!scroll.isDown && !scroll.isEnd) || scroll.top <= 0 ? "overscroll-none" : "overscroll-contain"}`} onScroll={(v) => setScroll(v)}>
                 <Main>
                     <Indicator items={steps} active={activeStep} />
 
@@ -101,17 +101,13 @@ export default function Registration() {
                     </div>
 
                     <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 -mb-6 pb-6">
-                        <div
-                            className={`flex justify-center transition-all h-12 ${
-                                !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
-                            }`}
-                        >
+                        <div className={`flex justify-center transition-all h-12 ${!scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"}`}>
                             <button
                                 disabled={isShaking}
                                 className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
                                     activeStep === steps.length
                                         ? "left-0 right-[calc(100%_-_3rem)] w-12"
-                                        : `bg-light text-on-light w-12 lg:w-32 ${
+                                        : `bg-foreground text-background w-12 lg:w-32 ${
                                               activeStep > 1
                                                   ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
                                                   : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
@@ -124,7 +120,7 @@ export default function Registration() {
                             </button>
                             <button
                                 disabled={isShaking}
-                                className={`bg-light text-on-light rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                className={`bg-foreground text-background rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
                                     activeStep === steps.length
                                         ? "right-0 left-16 w-[calc(100%_-_4rem)]"
                                         : `w-12 lg:w-32 ${

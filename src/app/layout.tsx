@@ -18,7 +18,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
-            <body className={`grid-bg ${barlow.className}`}>{children}</body>
+            <body className={`grid-bg overscroll-none w-[100dvw] h-[100dvh] overflow-hidden ${barlow.className}`}>{children}</body>
         </html>
     );
 }
