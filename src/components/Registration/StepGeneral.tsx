@@ -68,8 +68,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-tr-2xl p-4 lg:p-6">
                     <div className="grid">
-                        <span className="text-2xl font-medium">Nickname</span>
-                        {/* <span className="text-sm opacity-50">Which everyone could conveniently call you</span> */}
+                        <span className="text-2xl font-medium">Nickname</span>            
                     </div>
                     <Input
                         value={data.nickname}
@@ -87,7 +86,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                             onFocus={(e) => e.target.showPicker()}
                             onChange={(e) => handleChange("dob", e.target.valueAsDate)}
                             type="date"
-                            max={format(new Date(), "yyyy-MM-dd")}
+                            max={format(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1), "yyyy-MM-dd")}
                             placeholder={validate && !data.dob ? "This field is required" : "DD.MM.YYYY"}
                             className={`appearance-none h-12 p-4 opacity-0 ${validate && !data.dob ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                         />
@@ -111,6 +110,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                 <Button
                                     variant={"ghost"}
                                     size={"icon-xs"}
+                                    tabIndex={-1}
                                     className="rounded-full"
                                     onClick={(e) => {
                                         e.stopPropagation();

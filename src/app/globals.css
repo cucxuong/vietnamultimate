@@ -80,7 +80,7 @@
         --color: hsl(var(--foreground) / 0.04);
         background-image: linear-gradient(to bottom, transparent 0%, transparent calc(100% - 1px), var(--color) calc(100% - 1px), var(--color) 100%),
             linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), var(--color) calc(100% - 1px), var(--color) 100%);
-        background-size: 0.5rem 0.5rem;
+        background-size: 10px 10px;
         background-attachment: fixed;
     }
 }

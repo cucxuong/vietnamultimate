@@ -33,14 +33,15 @@ export default function Registration() {
         beACaptain: "",
     });
     const [dataStepAdditional, setDataStepAdditional] = useState<StepAdditionalData>({
-        years: 1,
-        throwing: "",
-        catching: "",
-        cutting: "",
-        defense: "",
-        fitness: "",
-        playExp: "",
-        beACaptain: "",
+        height: "",
+        lunchD1: true,
+        lunchD2: true,
+        busD1AM: true,
+        busD1PM: true,
+        busD2AM: true,
+        busD2PM: true,
+        jerseys: [{ color: "black", size: "m" }],
+        disc: 1,
     });
     const steps: IndicatorItem[] = [
         {
@@ -50,7 +51,7 @@ export default function Registration() {
         },
         { id: 2, text: "2", form: <StepSkillset data={dataStepSkillset} validate={validate} onChange={(e) => setDataStepSkillset(e)} onValidate={(e) => setValid(e)} /> },
         { id: 3, text: "3", form: <StepAdditional data={dataStepAdditional} validate={validate} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} /> },
-        { id: 4, text: "4", form: <StepFinish data={dataStepAdditional} validate={validate} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} /> },
+        { id: 4, text: "4", form: <StepFinish /> },
     ];
     const [activeStep, setActiveStep] = useState(steps[0].id);
     const [isNext, setIsNext] = useState(true);
@@ -58,22 +59,30 @@ export default function Registration() {
     const [delay, setDelay] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
-        setValidate(true);
-        if (valid || id < activeStep) {
-            setValidate(false);
-            if (id >= 1 && id <= steps.length) {
-                setDelay(true);
-                setTimeout(() => {
-                    setDelay(false);
-                    setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-                }, 200);
-            }
-        }
-        if (!valid || id < 1 || id > steps.length) {
-            setIsShaking(true);
+        // setValidate(true);
+        // if (valid || id < activeStep) {
+        //     setValidate(false);
+        //     if (id >= 1 && id <= steps.length) {
+        //         setDelay(true);
+        //         setTimeout(() => {
+        //             setDelay(false);
+        //             setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+        //         }, 200);
+        //     }
+        // }
+        // if (!valid || id < 1 || id > steps.length) {
+        //     setIsShaking(true);
+        //     setTimeout(() => {
+        //         setIsShaking(false);
+        //     }, 400);
+        // }
+
+        if (id >= 1 && id <= steps.length) {
+            setDelay(true);
             setTimeout(() => {
-                setIsShaking(false);
-            }, 400);
+                setDelay(false);
+                setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+            }, 200);
         }
     };
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });

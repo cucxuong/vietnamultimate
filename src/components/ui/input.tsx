@@ -26,6 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
                 <Button
                     variant={"ghost"}
                     size={"icon-xs"}
+                    tabIndex={-1}
                     className="rounded-full absolute top-1/2 -translate-y-1/2 right-4"
                     onClick={(e) => {
                         e.stopPropagation();
