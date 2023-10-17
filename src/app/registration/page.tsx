@@ -21,6 +21,7 @@ export default function Registration() {
         email: "",
         nationality: "",
         stayingCountry: "",
+        isStudent: false,
     });
     const [dataStepSkillset, setDataStepSkillset] = useState<StepSkillsetData>({
         years: "",
@@ -140,7 +141,14 @@ export default function Registration() {
                                 }`}
                                 onClick={() => handleNext(activeStep + 1)}
                             >
-                                <Transition as="span" show={activeStep === steps.length} enter="transiton-all ease-in-out" entered="font-medium truncate min-w-max" enterFrom="opacity-0 w-0" leaveTo="opacity-0 w-0">
+                                <Transition
+                                    as="span"
+                                    show={activeStep === steps.length}
+                                    enter="transiton-all ease-in-out"
+                                    entered="font-medium truncate min-w-max"
+                                    enterFrom="opacity-0 w-0"
+                                    leaveTo="opacity-0 w-0"
+                                >
                                     Send the registration
                                 </Transition>
                                 {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Next</span>}
