@@ -59,31 +59,31 @@ export default function Registration() {
     const [delay, setDelay] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
-        // setValidate(true);
-        // if (valid || id < activeStep) {
-        //     setValidate(false);
-        //     if (id >= 1 && id <= steps.length) {
-        //         setDelay(true);
-        //         setTimeout(() => {
-        //             setDelay(false);
-        //             setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-        //         }, 200);
-        //     }
-        // }
-        // if (!valid || id < 1 || id > steps.length) {
-        //     setIsShaking(true);
-        //     setTimeout(() => {
-        //         setIsShaking(false);
-        //     }, 400);
-        // }
-
-        if (id >= 1 && id <= steps.length) {
-            setDelay(true);
-            setTimeout(() => {
-                setDelay(false);
-                setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-            }, 200);
+        setValidate(true);
+        if (valid || id < activeStep) {
+            setValidate(false);
+            if (id >= 1 && id <= steps.length) {
+                setDelay(true);
+                setTimeout(() => {
+                    setDelay(false);
+                    setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+                }, 200);
+            }
         }
+        if (!valid || id < 1 || id > steps.length) {
+            setIsShaking(true);
+            setTimeout(() => {
+                setIsShaking(false);
+            }, 400);
+        }
+
+        // if (id >= 1 && id <= steps.length) {
+        //     setDelay(true);
+        //     setTimeout(() => {
+        //         setDelay(false);
+        //         setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+        //     }, 200);
+        // }
     };
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     return (
