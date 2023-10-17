@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { CheckFat, X } from "@phosphor-icons/react";
+import { Input } from "@/components/ui/input";
+import { CalendarBlank, CheckFat, X } from "@phosphor-icons/react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export type StepGeneralData = {
@@ -40,9 +40,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     <span className={`text-2xl font-medium ${validate && data.email === "" ? "text-rose-500 snap-start" : ""}`}>
                         Email {data.email === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    <input
+                    <Input
                         value={data.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
+                        clearable
+                        onChange={(e) => handleChange("email", e)}
                         type="email"
                         inputMode="email"
                         placeholder={validate && data.email === "" ? "This field is required" : "Your answer"}
@@ -56,9 +57,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     <span className={`text-2xl font-medium ${validate && data.name === "" ? "text-rose-500 snap-start" : ""}`}>
                         Full name{data.name === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    <input
+                    <Input
                         value={data.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
+                        clearable
+                        onChange={(e) => handleChange("name", e)}
                         type="text"
                         placeholder={validate && data.name === "" ? "This field is required" : "Your answer"}
                         className={`bg-background text-foreground rounded-md h-12 p-4  ${validate && data.name === "" ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
@@ -69,9 +71,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         <span className="text-2xl font-medium">Nickname</span>
                         {/* <span className="text-sm opacity-50">Which everyone could conveniently call you</span> */}
                     </div>
-                    <input
+                    <Input
                         value={data.nickname}
-                        onChange={(e) => handleChange("nickname", e.target.value)}
+                        clearable
+                        onChange={(e) => handleChange("nickname", e)}
                         type="text"
                         placeholder="Which everyone could conveniently call you"
                         className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
@@ -84,6 +87,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                             onFocus={(e) => e.target.showPicker()}
                             onChange={(e) => handleChange("dob", e.target.valueAsDate)}
                             type="date"
+                            max={format(new Date(), "yyyy-MM-dd")}
                             placeholder={validate && !data.dob ? "This field is required" : "DD.MM.YYYY"}
                             className={`appearance-none h-12 p-4 opacity-0 ${validate && !data.dob ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                         />
@@ -118,7 +122,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                     </span>
                                 </Button>
                             ) : (
-                                <CalendarIcon size={18} className="text-inherit opacity-30" />
+                                <CalendarBlank size={18} className="text-inherit opacity-30" />
                             )}
                         </div>
                     </div>
@@ -160,10 +164,11 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4 lg:p-6">
                     <span className="text-2xl font-medium">Nationality</span>
-                    <input
+                    <Input
                         value={data.nationality}
+                        clearable
                         onChange={(e) => {
-                            handleChange("nationality", e.target.value);
+                            handleChange("nationality", e);
                         }}
                         type="text"
                         placeholder="Your answer"
@@ -172,9 +177,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6">
                     <span className="text-2xl font-medium">Which country are you staying?</span>
-                    <input
+                    <Input
                         value={data.stayingCountry}
-                        onChange={(e) => handleChange("stayingCountry", e.target.value)}
+                        clearable
+                        onChange={(e) => handleChange("stayingCountry", e)}
                         onFocus={() => {
                             if (data.stayingCountry === "" && data.nationality) {
                                 handleChange("stayingCountry", data.nationality);
