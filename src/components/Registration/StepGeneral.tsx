@@ -115,7 +115,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-30 h-12">
                         <button
                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                data.gender === "female" ? "bg-foreground bg-opacity-30 duration-200" : "duration-100"
+                                data.gender === "female" ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                             }`}
                             onClick={() => handleChange("gender", "female")}
                         >
@@ -129,7 +129,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         <div className="border-l border-foreground border-opacity-30"></div>
                         <button
                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                data.gender === "male" ? "bg-foreground bg-opacity-30 duration-200" : "duration-100"
+                                data.gender === "male" ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                             }`}
                             onClick={() => handleChange("gender", "male")}
                         >
