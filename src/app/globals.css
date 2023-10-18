@@ -70,11 +70,6 @@
     }
 }
 
-/* body {
-    color: hsl(var(--foreground));
-    background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-} */
-
 @layer components {
     .grid-bg {
         --color: hsl(var(--foreground) / 0.04);
