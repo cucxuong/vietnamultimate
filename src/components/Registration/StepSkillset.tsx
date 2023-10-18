@@ -29,7 +29,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-background grid-bg">Ultimate frisbee skillset</h3>
-            <div className="grid gap-2 text-sm lg:gap-0">
+            <div className="grid gap-2 text-sm lg:text-base lg:gap-0">
                 <p>Please BE HONEST about your so we can place teams that are balanced in level.</p>
             </div>
 
@@ -41,7 +41,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.years === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.years === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -54,7 +54,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.years ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("years", item.value)}
@@ -73,7 +73,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.playExp === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.playExp === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -86,7 +86,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.playExp ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("playExp", item.value)}
@@ -105,7 +105,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.throwing === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.throwing === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -118,7 +118,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.throwing ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("throwing", item.value)}
@@ -137,7 +137,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.catching === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.catching === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -150,7 +150,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.catching ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("catching", item.value)}
@@ -169,7 +169,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.cutting === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.cutting === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -182,7 +182,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.cutting ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("cutting", item.value)}
@@ -201,7 +201,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.defense === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.defense === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -214,7 +214,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.defense ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("defense", item.value)}
@@ -233,7 +233,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.fitness === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.fitness === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -246,7 +246,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.fitness ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("fitness", item.value)}
@@ -265,7 +265,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {validate && data.beACaptain === "" && <span className="text-rose-500">Please select one answer below</span>}
                 </div>
                 <div
-                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-30 divide-y divide-foreground divide-opacity-30 ${
+                    className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                         validate && data.beACaptain === "" ? "border-rose-500" : "border-foreground"
                     }`}
                 >
@@ -277,7 +277,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ].map((item) => (
                         <div
                             key={item.value}
-                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-30 cursor-pointer select-none ${
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
                                 item.value === data.beACaptain ? "bg-foreground bg-opacity-30" : ""
                             }`}
                             onClick={() => handleChange("beACaptain", item.value)}

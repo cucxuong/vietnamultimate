@@ -7,7 +7,8 @@ import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGene
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Transition } from "@headlessui/react";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+// import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Fragment, useState } from "react";
 
 export default function Registration() {
@@ -37,10 +38,12 @@ export default function Registration() {
         height: "",
         lunchD1: true,
         lunchD2: true,
-        busD1AM: true,
-        busD1PM: true,
-        busD2AM: true,
-        busD2PM: true,
+        isVegan: false,
+        allergies: "",
+        busD1Depart: true,
+        busD1Return: true,
+        busD2Depart: true,
+        busD2Return: true,
         jerseys: [{ color: "black", size: "m" }],
         disc: 1,
     });
@@ -60,31 +63,31 @@ export default function Registration() {
     const [delay, setDelay] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
-        setValidate(true);
-        if (valid || id < activeStep) {
-            setValidate(false);
-            if (id >= 1 && id <= steps.length) {
-                setDelay(true);
-                setTimeout(() => {
-                    setDelay(false);
-                    setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-                }, 200);
-            }
-        }
-        if (!valid || id < 1 || id > steps.length) {
-            setIsShaking(true);
-            setTimeout(() => {
-                setIsShaking(false);
-            }, 400);
-        }
-
-        // if (id >= 1 && id <= steps.length) {
-        //     setDelay(true);
-        //     setTimeout(() => {
-        //         setDelay(false);
-        //         setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-        //     }, 200);
+        // setValidate(true);
+        // if (valid || id < activeStep) {
+        //     setValidate(false);
+        //     if (id >= 1 && id <= steps.length) {
+        //         setDelay(true);
+        //         setTimeout(() => {
+        //             setDelay(false);
+        //             setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+        //         }, 200);
+        //     }
         // }
+        // if (!valid || id < 1 || id > steps.length) {
+        //     setIsShaking(true);
+        //     setTimeout(() => {
+        //         setIsShaking(false);
+        //     }, 400);
+        // }
+
+        if (id >= 1 && id <= steps.length) {
+            setDelay(true);
+            setTimeout(() => {
+                setDelay(false);
+                setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+            }, 200);
+        }
     };
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     return (
@@ -125,7 +128,7 @@ export default function Registration() {
                                 }`}
                                 onClick={() => handleNext(activeStep - 1)}
                             >
-                                <ArrowLeft size={18} weight="bold" />
+                                <ArrowLeft size={18} strokeWidth="2.5" />
                                 {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Prev</span>}
                             </button>
                             <button
@@ -152,7 +155,7 @@ export default function Registration() {
                                     Send the registration
                                 </Transition>
                                 {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Next</span>}
-                                <ArrowRight size={18} weight="bold" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                                <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
                             </button>
                         </div>
                     </div>

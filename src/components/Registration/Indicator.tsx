@@ -9,7 +9,7 @@ type Props = { className?: string; items: IndicatorItem[]; active: number };
 export default function Indicator({ className = "", items, active }: Props) {
     return (
         <div
-            className={`grid rounded-full overflow-hidden h-1.5 bg-foreground bg-opacity-10 backdrop-blur fixed top-0 left-1/2 -translate-x-1/2 z-[1] w-full max-w-screen gap-px ${className}`}
+            className={`grid rounded-full overflow-hidden h-1.5 bg-foreground bg-opacity-10 backdrop-blur fixed top-0 left-1/2 -translate-x-1/2 z-10 w-full max-w-screen gap-px ${className}`}
             style={{ gridTemplateColumns: `repeat(${items.length},minmax(0,1fr))` }}
         >
             {items.map((item) => (

@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Transition } from "@headlessui/react";
 import { CheckFat, X } from "@phosphor-icons/react";
 import { InputMask } from "@react-input/mask";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 
 export type StepGeneralData = {
     name: string;
@@ -199,10 +200,18 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     />
                 </label>
             </div>
-            {toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam" && (
+
+            <Transition
+                show={toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam"}
+                as={Fragment}
+                enter="transition-all ease-in origin-top duration-200"
+                leave="transition-all ease-out duration-100"
+                enterFrom="scale-50 opacity-0"
+                leaveTo="scale-50 opacity-0"
+            >
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium`}>Are you a high school/college student?</span>
-                    <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
+                    <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
                         <button
                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
                             onClick={() => handleChange("isStudent", true)}
@@ -228,7 +237,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         </button>
                     </div>
                 </div>
-            )}
+            </Transition>
         </div>
     );
 }
