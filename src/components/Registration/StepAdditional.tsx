@@ -264,9 +264,9 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
 
                         <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 py-4 border-y">
                             <div className="grid grid-cols-[auto_minmax(0,1fr)] text-sm gap-x-4 w-full max-w-lg mx-auto">
-                                <div className="grid">
+                                <div className="grid grid-row-[auto_minmax(0,1fr)]">
                                     <span className="">Size chart (in cm)</span>
-                                    <div className="pr-4 pt-4">
+                                    <div className="flex items-center justify-center pr-4 pt-4">
                                         <div className="w-42 h-42 flex items-center justify-center relative">
                                             <div className="absolute -top-2 left-2 right-2 flex items-center gap-1 leading-none text-xs">
                                                 <div className="border-t border-foreground border-opacity-30 w-full"></div>
@@ -283,73 +283,61 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                     </div>
                                 </div>
                                 <div className="grid gap-1 text-center text-xs lg:text-sm">
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span></span>
                                         <span>X</span>
                                         <span>Y</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
-                                        <span>2XS</span>
-                                        <span>40</span>
-                                        <span>58</span>
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-1">
-                                        <span>XS</span>
-                                        <span>41</span>
-                                        <span>63</span>
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>S</span>
                                         <span>43</span>
                                         <span>65</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>M</span>
                                         <span>45</span>
                                         <span>67</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>L</span>
                                         <span>47</span>
                                         <span>69</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>XL</span>
                                         <span>49</span>
                                         <span>71</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>2XL</span>
                                         <span>51</span>
                                         <span>73</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>3XL</span>
                                         <span>53</span>
                                         <span>75</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>4XL</span>
                                         <span>55</span>
                                         <span>77</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>5XL</span>
                                         <span>57</span>
                                         <span>79</span>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className="grid grid-cols-3 gap-1 even:bg-foreground even:bg-opacity-5">
                                         <span>6XL</span>
                                         <span>59</span>
                                         <span>81</span>
