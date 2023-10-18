@@ -111,7 +111,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                             replacement={{ a: /[1-2]/, _: /\d/ }}
                             value={data.yob}
                             inputMode="numeric"
-                            onMask={(e) => handleChange("yob", e.detail.value)}
+                            onChange={(e) => handleChange("yob", e.target.value)}
                             placeholder="YYYY"
                             className="appearance-none flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 placeholder:opacity-50"
                         />
