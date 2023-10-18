@@ -28,8 +28,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-background grid-bg">Ultimate frisbee skillset</h3>
-            <div className="grid gap-2 text-sm lg:text-base lg:gap-0">
+            <h3 className="text-5xl font-semibold sticky top-0 pt-12 pb-4 bg-background grid-bg">Ultimate frisbee skillset</h3>
+            <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>Please BE HONEST about your so we can place teams that are balanced in level.</p>
             </div>
 

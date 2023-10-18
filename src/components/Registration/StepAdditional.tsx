@@ -32,11 +32,11 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 bg-background grid-bg">Additional</h3>
-            <div className="grid gap-2 text-sm lg:text-base lg:gap-0">
+            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 pb-4 bg-background grid-bg">Additional</h3>
+            <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>Player fee included: </p>
                 <div className="flex flex-wrap justify-center gap-4 py-4 z-0">
-                    <div className="flex-grow rounded-2xl border grid gap-4 p-4 lg:p-6">
+                    <div className="bg-background flex-grow rounded-2xl border grid gap-4 p-4 lg:p-6">
                         <div className="uppercase font-medium">Field</div>
                         <div className="flex items-center justify-center">
                             <div className="border-2 h-12 lg:h-16 w-36 lg:w-48 grid grid-cols-[minmax(0,25fr)_minmax(0,70fr)_minmax(0,25fr)] divide-x-2 border-foreground divide-foreground rounded">
@@ -53,7 +53,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                     </div>
-                    <div className="flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                         <div className="uppercase font-medium">Medic & First Aid</div>
                         <div className="grid place-content-center">
                             <div className="inline-grid grid-cols-2 place-content-center gap-1">
@@ -66,7 +66,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                     </div>
-                    <div className="flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                         <div className="uppercase font-medium">Beverage & electrolytes</div>
                         <div className="grid place-content-center">
                             <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
@@ -85,7 +85,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                     </div>
-                    <div className="flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                         <div className="uppercase font-medium">Fruits & Snack</div>
                         <div className="grid place-content-center">
                             <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
@@ -108,7 +108,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
 
                 <p>And these items below are optional. Uncheck which one you prefer to prepare yourself. The fee might be reduced.</p>
 
-                <div className="grid text-base gap-4 py-4">
+                <div className="grid text-base gap-4 py-4 z-10">
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
                         <div className="text-2xl font-medium">Lunch</div>
                         <div className="grid grid-cols-2 w-full max-w-lg mx-auto gap-4">

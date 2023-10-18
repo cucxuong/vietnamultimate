@@ -204,10 +204,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             <Transition
                 show={toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam"}
                 as={Fragment}
-                enter="transition-all ease-in origin-top duration-200"
+                enter="transition-all ease-in duration-200"
                 leave="transition-all ease-out duration-100"
-                enterFrom="scale-50 opacity-0"
-                leaveTo="scale-50 opacity-0"
+                enterFrom="-translate-y-6 opacity-0"
+                leaveTo="translate-y-1/2 opacity-0"
             >
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium`}>Are you a high school/college student?</span>
