@@ -17,7 +17,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
-            <body className={`${barlow.variable}`}>
+            <body className={`${barlow.variable} ${barlow.className}`}>
                 <MainLayout>{children}</MainLayout>
             </body>
         </html>
