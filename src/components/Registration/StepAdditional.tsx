@@ -3,6 +3,7 @@ import { ArrowBigRight, Banana, Beer, Citrus, Croissant, Cross, CupSoda, GlassWa
 import { Fragment, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Transition } from "@headlessui/react";
+import { useAppTranslation } from "@/i18n/client";
 
 export type StepAdditionalData = {
     height: string;
@@ -24,6 +25,7 @@ type Props = {
     onValidate?: (v: boolean) => void;
 };
 export default function StepAdditional({ data, validate, onChange, onValidate = (e: boolean) => {} }: Props) {
+    const { t, i18n } = useAppTranslation();
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
@@ -32,13 +34,13 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 pb-4 bg-background grid-bg">Additional</h3>
+            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 pb-4 bg-background grid-bg">{t("Additional")}</h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
-                <p>Player fee included: </p>
+                <p>{t("Player fee included:")} </p>
                 <div className="flex flex-wrap justify-center gap-4 py-4 z-0">
                     <div className="flex flex-grow gap-4">
                         <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid gap-4 p-4 lg:p-6">
-                            <div className="uppercase font-medium">Field</div>
+                            <div className="uppercase font-medium">{t("Field")}</div>
                             <div className="flex items-center justify-center">
                                 <div className="border-2 h-12 lg:h-16 w-36 lg:w-48 grid grid-cols-[minmax(0,25fr)_minmax(0,70fr)_minmax(0,25fr)] divide-x-2 border-foreground divide-foreground rounded">
                                     <div></div>
@@ -55,7 +57,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                         <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                            <div className="uppercase font-medium">Medic & First Aid</div>
+                            <div className="uppercase font-medium">{t("Medic & First Aid")}</div>
                             <div className="grid place-content-center">
                                 <div className="inline-grid grid-cols-2 place-content-center gap-1">
                                     <span>
@@ -70,7 +72,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                     </div>
                     <div className="flex flex-grow gap-4">
                         <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                            <div className="uppercase font-medium">Beverage & electrolytes</div>
+                            <div className="uppercase font-medium">{t("Beverage & electrolytes")}</div>
                             <div className="grid place-content-center">
                                 <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
                                     <span>
@@ -89,7 +91,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                         <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                            <div className="uppercase font-medium">Fruits & Snack</div>
+                            <div className="uppercase font-medium">{t("Fruits & Snack")}</div>
                             <div className="grid place-content-center">
                                 <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
                                     <span>
@@ -110,11 +112,11 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                     </div>
                 </div>
 
-                <p>And these items below are optional. Uncheck which one you prefer to prepare yourself. The fee might be reduced.</p>
+                <p>{t("And these items below are optional. Uncheck which one you prefer to prepare yourself. The fee might be reduced.")}</p>
 
                 <div className="grid text-base gap-4 py-4 z-10">
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                        <div className="text-2xl font-medium">Lunch</div>
+                        <div className="text-2xl font-medium">{t("Lunch")}</div>
                         <div className="grid grid-cols-2 w-full max-w-lg mx-auto gap-4">
                             <button
                                 className={`flex items-center justify-center rounded-full border border-foreground border-opacity-60 gap-2 px-4 h-12 transition-all ease-in-out ${
@@ -127,7 +129,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                         <CheckFat size={18} weight="fill" />
                                     </span>
                                 )}
-                                <span>Day 1</span>
+                                <span>{t("Day 1")}</span>
                             </button>
                             <button
                                 className={`flex items-center justify-center rounded-full border border-foreground border-opacity-60 gap-2 px-4 h-12 transition-all ease-in-out ${
@@ -140,7 +142,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                         <CheckFat size={18} weight="fill" />
                                     </span>
                                 )}
-                                <span>Day 2</span>
+                                <span>{t("Day 2")}</span>
                             </button>
                         </div>
                         <Transition
@@ -153,7 +155,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                         >
                             <div className="grid gap-4 pt-4 border-t -mx-4 lg:-mx-6 px-4 lg:px-6">
                                 <div className="grid gap-2">
-                                    <span>Are you vegan?</span>
+                                    <span>{t("Are you vegan?")}</span>
                                     <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
                                         <button
                                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
@@ -166,7 +168,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                                     <CheckFat size={18} weight="fill" />
                                                 </span>
                                             )}
-                                            <span>Yes</span>
+                                            <span>{t("Yes")}</span>
                                         </button>
                                         <div className="border-l border-foreground border-opacity-60"></div>
                                         <button
@@ -180,22 +182,22 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                                     <CheckFat size={18} weight="fill" />
                                                 </span>
                                             )}
-                                            <span>No</span>
+                                            <span>{t("No")}</span>
                                         </button>
                                     </div>
                                 </div>
                                 <div className="grid gap-2">
-                                    <span>Allergies?</span>
+                                    <span>{t("Allergies?")}</span>
                                     <Input value={data.allergies} onChange={(e) => handleChange("allergies", e.target.value)} clearable placeholder="Your answer" />
                                 </div>
                             </div>
                         </Transition>
                     </div>
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                        <div className="text-2xl font-medium">Shuttle Bus</div>
+                        <div className="text-2xl font-medium">{t("Shuttle Bus")}</div>
                         <div className="grid lg:grid-cols-2 gap-4">
                             <div className="grid gap-2">
-                                <span className="text-center">Day 1</span>
+                                <span className="text-center">{t("Day 1")}</span>
                                 <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
                                     <button
                                         className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
@@ -227,7 +229,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <span className="text-center">Day 2</span>
+                                <span className="text-center">{t("Day 2")}</span>
                                 <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
                                     <button
                                         className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
@@ -264,12 +266,12 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                     </div>
 
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                        <div className="text-2xl font-medium">Jersey & Short</div>
+                        <div className="text-2xl font-medium">{t("Jersey & Short")}</div>
 
                         <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 py-4 border-y">
                             <div className="grid grid-cols-[auto_minmax(0,1fr)] text-sm gap-x-4 w-full max-w-lg mx-auto">
                                 <div className="grid grid-row-[auto_minmax(0,1fr)]">
-                                    <span className="">Size chart (in cm)</span>
+                                    <span className="">{t("Size chart (in cm)")}</span>
                                     <div className="flex items-center justify-center pr-4 pt-4">
                                         <div className="w-42 h-42 flex items-center justify-center relative">
                                             <div className="absolute -top-2 left-2 right-2 flex items-center gap-1 leading-none text-xs">
@@ -365,7 +367,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                             </div>
                         </div>
                     </div>
-                    <span className="rounded-full h-8 bg-primary text-primary-foreground grid place-content-center px-3">Tournament disc</span>
+                    <span className="rounded-full h-8 bg-primary text-primary-foreground grid place-content-center px-3">{t("Tournament disc")}</span>
                 </div>
             </div>
         </div>
