@@ -1,3 +1,4 @@
+import { useAppTranslation } from "@/i18n/client";
 import { CheckFat } from "@phosphor-icons/react";
 import { useEffect } from "react";
 
@@ -18,6 +19,7 @@ type Props = {
     onValidate?: (v: boolean) => void;
 };
 export default function StepSkillset({ data, validate, onChange, onValidate = (e: boolean) => {} }: Props) {
+    const { t, i18n } = useAppTranslation();
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
@@ -28,17 +30,17 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 pt-12 pb-4 bg-background grid-bg">Ultimate frisbee skillset</h3>
+            <h3 className="text-5xl font-semibold sticky top-0 pt-12 pb-4 bg-background grid-bg">{t("Ultimate frisbee skillset")}</h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
-                <p>Please BE HONEST about your so we can place teams that are balanced in level.</p>
+                <p>{t("Please BE HONEST about your so we can place teams that are balanced in level.")}</p>
             </div>
 
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.years === "" ? "text-rose-500" : ""}`}>
-                        How long have you played Ultimate frisbee? {data.years === "" && <span className="text-rose-500">*</span>}
+                        {t("How long have you played Ultimate frisbee?")} {data.years === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.years === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.years === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -60,7 +62,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("years", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.years ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -68,9 +70,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.playExp === "" ? "text-rose-500" : ""}`}>
-                        Playing experience? {data.playExp === "" && <span className="text-rose-500">*</span>}
+                        {t("Playing experience?")} {data.playExp === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.playExp === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.playExp === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -80,7 +82,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {[
                         { value: 1, label: "Haven't really played much at all" },
                         { value: 2, label: "Played in some regular pick-up games" },
-                        { value: 3, label: "Played pick-up quite regularly of played in leagues" },
+                        { value: 3, label: "Played pick-up quite regularly or played in leagues" },
                         { value: 4, label: "Played on Club teams or played in tournament regularly" },
                         { value: 5, label: "Have been playing for quite sometime and have played at high levels of ultimate" },
                     ].map((item) => (
@@ -92,7 +94,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("playExp", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.playExp ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -100,9 +102,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.throwing === "" ? "text-rose-500" : ""}`}>
-                        Throwing skill? {data.throwing === "" && <span className="text-rose-500">*</span>}
+                        {t("Throwing skill?")} {data.throwing === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.throwing === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.throwing === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -124,7 +126,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("throwing", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.throwing ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -132,9 +134,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.catching === "" ? "text-rose-500" : ""}`}>
-                        Catching skill? {data.catching === "" && <span className="text-rose-500">*</span>}
+                        {t("Catching skill?")} {data.catching === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.catching === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.catching === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -156,7 +158,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("catching", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.catching ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -164,9 +166,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.cutting === "" ? "text-rose-500" : ""}`}>
-                        Cutting skill? {data.cutting === "" && <span className="text-rose-500">*</span>}
+                        {t("Cutting skill?")} {data.cutting === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.cutting === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.cutting === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -188,7 +190,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("cutting", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.cutting ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -196,9 +198,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.defense === "" ? "text-rose-500" : ""}`}>
-                        Defense skill? {data.defense === "" && <span className="text-rose-500">*</span>}
+                        {t("Defense skill?")} {data.defense === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.defense === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.defense === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -220,7 +222,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("defense", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.defense ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -228,9 +230,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.fitness === "" ? "text-rose-500" : ""}`}>
-                        Fitness and agility? {data.fitness === "" && <span className="text-rose-500">*</span>}
+                        {t("Fitness and agility?")} {data.fitness === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.fitness === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.fitness === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -252,7 +254,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("fitness", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.fitness ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
@@ -260,9 +262,9 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.beACaptain === "" ? "text-rose-500" : ""}`}>
-                        Are you interested in the captain position or wish to be a captain? {data.beACaptain === "" && <span className="text-rose-500">*</span>}
+                        {t("Are you interested in the captain position or wish to be a captain?")} {data.beACaptain === "" && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.beACaptain === "" && <span className="text-rose-500">Please select one answer below</span>}
+                    {validate && data.beACaptain === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -283,7 +285,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                             onClick={() => handleChange("beACaptain", item.value)}
                         >
                             <div className={`font-semibold grid place-content-center`}>{item.value === data.beACaptain ? <CheckFat size={18} weight="fill" /> : item.value}</div>
-                            <div className={`flex items-center px-4 py-2`}>{item.label}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
                         </div>
                     ))}
                 </div>
