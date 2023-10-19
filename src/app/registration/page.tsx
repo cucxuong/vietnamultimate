@@ -6,12 +6,15 @@ import StepFinish from "@/components/Registration/StepFinish";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
+import { Button } from "@/components/ui/button";
+import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
 // import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Fragment, useState } from "react";
 
 export default function Registration() {
+    const { t, i18n } = useAppTranslation();
     const [validate, setValidate] = useState(false);
     const [valid, setValid] = useState(true);
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
@@ -92,6 +95,7 @@ export default function Registration() {
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
+            <Button onClick={()=>i18n.changeLanguage(i18n.resolvedLanguage==="vi"?"en":"vi")}>{i18n.resolvedLanguage}</Button>
             <ScrollArea className={`scroll-smooth ${(!scroll.isDown && !scroll.isEnd) || scroll.top <= 0 ? "overscroll-none" : "overscroll-contain"}`} onScroll={(v) => setScroll(v)}>
                 <Main>
                     <Indicator items={steps} active={activeStep} />
@@ -129,7 +133,7 @@ export default function Registration() {
                                 onClick={() => handleNext(activeStep - 1)}
                             >
                                 <ArrowLeft size={18} strokeWidth="2.5" />
-                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">Prev</span>}
+                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Prev")}</span>}
                             </button>
                             <button
                                 disabled={isShaking}
