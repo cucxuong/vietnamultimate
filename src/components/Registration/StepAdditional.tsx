@@ -36,71 +36,75 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>Player fee included: </p>
                 <div className="flex flex-wrap justify-center gap-4 py-4 z-0">
-                    <div className="bg-background flex-grow rounded-2xl border grid gap-4 p-4 lg:p-6">
-                        <div className="uppercase font-medium">Field</div>
-                        <div className="flex items-center justify-center">
-                            <div className="border-2 h-12 lg:h-16 w-36 lg:w-48 grid grid-cols-[minmax(0,25fr)_minmax(0,70fr)_minmax(0,25fr)] divide-x-2 border-foreground divide-foreground rounded">
-                                <div></div>
-                                <div className="px-6 lg:px-8 flex justify-between items-center">
+                    <div className="flex flex-grow gap-4">
+                        <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid gap-4 p-4 lg:p-6">
+                            <div className="uppercase font-medium">Field</div>
+                            <div className="flex items-center justify-center">
+                                <div className="border-2 h-12 lg:h-16 w-36 lg:w-48 grid grid-cols-[minmax(0,25fr)_minmax(0,70fr)_minmax(0,25fr)] divide-x-2 border-foreground divide-foreground rounded">
+                                    <div></div>
+                                    <div className="px-6 lg:px-8 flex justify-between items-center">
+                                        <span>
+                                            <X size={12} strokeWidth={3} className="-translate-x-1/2" />
+                                        </span>
+                                        <span>
+                                            <X size={12} strokeWidth={3} className="translate-x-1/2" />
+                                        </span>
+                                    </div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                            <div className="uppercase font-medium">Medic & First Aid</div>
+                            <div className="grid place-content-center">
+                                <div className="inline-grid grid-cols-2 place-content-center gap-1">
                                     <span>
-                                        <X size={12} strokeWidth={3} className="-translate-x-1/2" />
+                                        <Cross size={32} strokeWidth={1.5} />
                                     </span>
                                     <span>
-                                        <X size={12} strokeWidth={3} className="translate-x-1/2" />
+                                        <Stethoscope size={32} strokeWidth={1.5} />
                                     </span>
                                 </div>
-                                <div></div>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                        <div className="uppercase font-medium">Medic & First Aid</div>
-                        <div className="grid place-content-center">
-                            <div className="inline-grid grid-cols-2 place-content-center gap-1">
-                                <span>
-                                    <Cross size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <Stethoscope size={32} strokeWidth={1.5} />
-                                </span>
+                    <div className="flex flex-grow gap-4">
+                        <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                            <div className="uppercase font-medium">Beverage & electrolytes</div>
+                            <div className="grid place-content-center">
+                                <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
+                                    <span>
+                                        <Beer size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <CupSoda size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <GlassWater size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <Zap size={32} strokeWidth={1.5} />
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                        <div className="uppercase font-medium">Beverage & electrolytes</div>
-                        <div className="grid place-content-center">
-                            <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
-                                <span>
-                                    <Beer size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <CupSoda size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <GlassWater size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <Zap size={32} strokeWidth={1.5} />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-background flex-grow rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-                        <div className="uppercase font-medium">Fruits & Snack</div>
-                        <div className="grid place-content-center">
-                            <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
-                                <span>
-                                    <Banana size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <Citrus size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <Sandwich size={32} strokeWidth={1.5} />
-                                </span>
-                                <span>
-                                    <Croissant size={32} strokeWidth={1.5} />
-                                </span>
+                        <div className="bg-background flex-grow w-full sm:w-auto rounded-2xl border grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+                            <div className="uppercase font-medium">Fruits & Snack</div>
+                            <div className="grid place-content-center">
+                                <div className="inline-grid grid-cols-2 grid-rows-2 place-content-center gap-1">
+                                    <span>
+                                        <Banana size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <Citrus size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <Sandwich size={32} strokeWidth={1.5} />
+                                    </span>
+                                    <span>
+                                        <Croissant size={32} strokeWidth={1.5} />
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
