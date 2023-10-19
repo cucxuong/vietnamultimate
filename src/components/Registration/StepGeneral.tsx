@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
 import { CheckFat, X } from "@phosphor-icons/react";
 import { InputMask } from "@react-input/mask";
@@ -22,6 +23,7 @@ type Props = {
     onValidate?: (v: boolean) => void;
 };
 export default function StepGeneral({ data, validate, onChange, onValidate = (e: boolean) => {} }: Props) {
+    const { t, i18n } = useAppTranslation();
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
@@ -52,17 +54,18 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
     });
     return (
         <div className="flex flex-col gap-6 -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 pt-12 pb-4 bg-background grid-bg">General information</h3>
+            <h3 className="text-5xl font-semibold sticky top-0 pt-12 pb-4 bg-background grid-bg">{t("General information")}</h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
-                <p>Please provide the correct information so we can contact you properly.</p>
-                <p>The information provided will be used for registration purposes and to communicate important updates regarding the tournament.</p>
-                <p>Your privacy is important to us, and the information provided will be handled in accordance with our privacy policy.</p>
+                <p>{t("Please provide the correct information so we can contact you properly.")}</p>
+                <p>{t("The information provided will be used for registration purposes and to communicate important updates regarding the tournament.")}</p>
+                <p>{t("Your privacy is important to us, and the information provided will be handled in accordance with our privacy policy.")}</p>
             </div>
 
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.email === "" ? "text-rose-500 snap-start" : ""}`}>
-                        Email {data.email === "" && <span className="text-rose-500">*</span>}
+                        {t("Email")}
+                        {data.email === "" && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
                         value={data.email}
@@ -70,7 +73,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         onChange={(e) => handleChange("email", e)}
                         type="email"
                         inputMode="email"
-                        placeholder={validate && data.email === "" ? "This field is required" : "Your answer"}
+                        placeholder={validate && data.email === "" ? t("This field is required") || "" : t("Your answer") || ""}
                         className={`bg-background text-foreground rounded-md h-12 p-4  ${validate && data.email === "" ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                     />
                 </label>
@@ -79,32 +82,36 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-t-2xl rounded lg:rounded-tr p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.name === "" ? "text-rose-500 snap-start" : ""}`}>
-                        Full name{data.name === "" && <span className="text-rose-500">*</span>}
+                        {t("Full name")}
+                        {data.name === "" && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
                         value={data.name}
                         clearable
                         onChange={(e) => handleChange("name", e)}
                         type="text"
-                        placeholder={validate && data.name === "" ? "This field is required" : "Your answer"}
+                        placeholder={validate && data.name === "" ? t("This field is required") || "" : t("Your answer") || ""}
                         className={`bg-background text-foreground rounded-md h-12 p-4  ${validate && data.name === "" ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                     />
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-tr-2xl p-4 lg:p-6">
                     <div className="grid">
-                        <span className="text-2xl font-medium">Nickname</span>
+                        <span className="text-2xl font-medium">{t("Nickname")}</span>
                     </div>
                     <Input
                         value={data.nickname}
                         clearable
                         onChange={(e) => handleChange("nickname", e)}
                         type="text"
-                        placeholder="Which everyone could conveniently call you"
+                        placeholder={t("Which everyone could conveniently call you") || ""}
                         className="placeholder:opacity-50"
                     />
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-bl-2xl p-4 lg:p-6">
-                    <span className={`text-2xl font-medium ${validate && !data.yob ? "text-rose-500 snap-start" : ""}`}>Year of birth{!data.yob && <span className="text-rose-500">*</span>}</span>
+                    <span className={`text-2xl font-medium ${validate && !data.yob ? "text-rose-500 snap-start" : ""}`}>
+                        {t("Year of birth")}
+                        {!data.yob && <span className="text-rose-500">*</span>}
+                    </span>
                     <div className="relative inline-grid grid-cols-1">
                         <InputMask
                             mask="a___"
@@ -134,7 +141,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     </div>
                 </label>
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl p-4 lg:p-6">
-                    <span className="text-2xl font-medium">Gender{data.gender !== "female" && data.gender !== "male" && <span className="text-rose-500 snap-start">*</span>}</span>
+                    <span className="text-2xl font-medium">
+                        {t("Gender")}
+                        {data.gender !== "female" && data.gender !== "male" && <span className="text-rose-500 snap-start">*</span>}
+                    </span>
                     <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
                         <button
                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
@@ -147,7 +157,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                     <CheckFat size={18} weight="fill" />
                                 </span>
                             )}
-                            <span>Female</span>
+                            <span>{t("Female")}</span>
                         </button>
                         <div className="border-l border-foreground border-opacity-60"></div>
                         <button
@@ -161,7 +171,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                     <CheckFat size={18} weight="fill" />
                                 </span>
                             )}
-                            <span>Male</span>
+                            <span>{t("Male")}</span>
                         </button>
                     </div>
                 </div>
@@ -169,7 +179,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
 
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4 lg:p-6">
-                    <span className="text-2xl font-medium">Nationality</span>
+                    <span className="text-2xl font-medium">{t("Nationality")}</span>
                     <Input
                         value={data.nationality}
                         clearable
@@ -177,13 +187,14 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                             handleChange("nationality", e);
                         }}
                         type="text"
-                        placeholder="Your answer"
+                        placeholder={t("Your answer") || ""}
                         className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
                     />
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
-                        Which country are you staying?{!data.stayingCountry && <span className="text-rose-500">*</span>}
+                        {t("Which country are you staying?")}
+                        {!data.stayingCountry && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
                         value={data.stayingCountry}
@@ -195,7 +206,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                             }
                         }}
                         type="text"
-                        placeholder="Your answer"
+                        placeholder={t("Your answer") || ""}
                         className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
                     />
                 </label>
@@ -210,7 +221,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 leaveTo="translate-y-1/2 opacity-0"
             >
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
-                    <span className={`text-2xl font-medium`}>Are you a high school/college student?</span>
+                    <span className={`text-2xl font-medium`}>{t("Are you a high school/college student?")}</span>
                     <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
                         <button
                             className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
@@ -221,7 +232,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                     <CheckFat size={18} weight="fill" />
                                 </span>
                             )}
-                            <span>Yes</span>
+                            <span>{t("Yes")}</span>
                         </button>
                         <div className="border-l border-foreground border-opacity-60"></div>
                         <button
@@ -233,7 +244,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                                     <CheckFat size={18} weight="fill" />
                                 </span>
                             )}
-                            <span>No</span>
+                            <span>{t("No")}</span>
                         </button>
                     </div>
                 </div>

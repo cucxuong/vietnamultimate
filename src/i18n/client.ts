@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import i18next from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { defaultNS, fallbackLng, getOptions } from "./settings";
+import { defaultNS, fallbackLng, getOptions } from "@/i18n/settings";
 import { read, utils } from "xlsx";
 
 //

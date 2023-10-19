@@ -1,4 +1,4 @@
-export const fallbackLng = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'vi' : 'en'
+export const fallbackLng = 'en'
 export const languages = ['en', 'vi']
 export const defaultNS = 'translation'
 
