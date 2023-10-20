@@ -52,8 +52,8 @@
         @apply border-border;
     }
     body {
-      width: 100dvw;
-      height: 100dvh;
+        width: 100dvw;
+        height: 100dvh;
         @apply bg-background text-foreground dark grid-bg overscroll-none overflow-hidden font-sans;
     }
 }
@@ -79,5 +79,11 @@
             linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), var(--color) calc(100% - 1px), var(--color) 100%);
         background-size: 10px 10px;
         background-attachment: fixed;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
     }
 }

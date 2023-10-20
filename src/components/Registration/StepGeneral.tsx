@@ -62,7 +62,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             </div>
 
             <div className="grid gap-0.5 lg:grid-cols-2">
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-3xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.email === "" ? "text-rose-500 snap-start" : ""}`}>
                         {t("Email")}
                         {data.email === "" && <span className="text-rose-500">*</span>}
@@ -80,7 +80,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             </div>
 
             <div className="grid gap-0.5 lg:grid-cols-2">
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-t-2xl rounded lg:rounded-tr p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-t-3xl rounded lg:rounded-tr p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.name === "" ? "text-rose-500 snap-start" : ""}`}>
                         {t("Full name")}
                         {data.name === "" && <span className="text-rose-500">*</span>}
@@ -94,7 +94,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         className={`bg-background text-foreground rounded-md h-12 p-4  ${validate && data.name === "" ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                     />
                 </label>
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-tr-2xl p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-tr-3xl p-4 lg:p-6">
                     <div className="grid">
                         <span className="text-2xl font-medium">{t("Nickname")}</span>
                     </div>
@@ -107,7 +107,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         className="placeholder:opacity-50"
                     />
                 </label>
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-bl-2xl p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-bl-3xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && !data.yob ? "text-rose-500 snap-start" : ""}`}>
                         {t("Year of birth")}
                         {!data.yob && <span className="text-rose-500">*</span>}
@@ -140,7 +140,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         )}
                     </div>
                 </label>
-                <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl p-4 lg:p-6">
+                <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-3xl lg:rounded-bl p-4 lg:p-6">
                     <span className="text-2xl font-medium">
                         {t("Gender")}
                         {data.gender !== "female" && data.gender !== "male" && <span className="text-rose-500 snap-start">*</span>}
@@ -177,10 +177,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </div>
             </div>
 
-            <div className="grid gap-0.5 lg:grid-cols-2">
+            <div className={`grid gap-0.5`}>
                 <label
-                    className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl p-4 lg:p-6 ${
-                        toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam" ? "rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl" : "rounded-2xl"
+                    className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl p-4 lg:p-6 transition-all ${
+                        toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam" ? "rounded rounded-t-3xl" : "rounded-3xl"
                     }`}
                 >
                     <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
@@ -251,10 +251,10 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     as={Fragment}
                     enter="transition-all ease-in duration-200"
                     leave="transition-all ease-out duration-100"
-                    enterFrom="-translate-y-6 lg:-translate-x-4 opacity-0"
-                    leaveTo="translate-y-1/2 lg:translate-x-4 opacity-0"
+                    enterFrom="-translate-y-6 opacity-0"
+                    leaveTo="translate-y-1/2 opacity-0"
                 >
-                    <div className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6`}>
+                    <div className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-3xl p-4 lg:p-6`}>
                         <span className={`text-2xl font-medium`}>{t("Are you a high school/college student?")}</span>
                         <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
                             <button

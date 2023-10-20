@@ -1,9 +1,10 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import type { Metadata } from "next";
-import { Barlow } from "next/font/google";
+import { Barlow, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const barlow = Barlow({ weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], subsets: ["latin", "vietnamese"], variable:"--font-barlow" });
+const jetbrainsMono = JetBrains_Mono({ weight: ["100", "200", "300", "400", "500", "600", "700", "800"], subsets: ["latin", "vietnamese"], variable: "--font-jetbrains-mono" });
 
 export const metadata: Metadata = {
     title: "Vietnam Hat 2023",
@@ -17,7 +18,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
-            <body className={`${barlow.variable} ${barlow.className}`}>
+            <body className={`${barlow.variable} ${jetbrainsMono.variable} ${barlow.className}`}>
                 <MainLayout>{children}</MainLayout>
             </body>
         </html>

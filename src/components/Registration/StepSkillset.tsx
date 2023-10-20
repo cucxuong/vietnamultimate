@@ -35,7 +35,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                 <p>{t("Please BE HONEST about your so we can place teams that are balanced in level.")}</p>
             </div>
 
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.years === "" ? "text-rose-500" : ""}`}>
                         {t("How long have you played Ultimate frisbee?")} {data.years === "" && <span className="text-rose-500">*</span>}
@@ -67,7 +67,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.playExp === "" ? "text-rose-500" : ""}`}>
                         {t("Playing experience?")} {data.playExp === "" && <span className="text-rose-500">*</span>}
@@ -99,7 +99,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.throwing === "" ? "text-rose-500" : ""}`}>
                         {t("Throwing skill?")} {data.throwing === "" && <span className="text-rose-500">*</span>}
@@ -131,7 +131,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.catching === "" ? "text-rose-500" : ""}`}>
                         {t("Catching skill?")} {data.catching === "" && <span className="text-rose-500">*</span>}
@@ -163,7 +163,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.cutting === "" ? "text-rose-500" : ""}`}>
                         {t("Cutting skill?")} {data.cutting === "" && <span className="text-rose-500">*</span>}
@@ -195,7 +195,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.defense === "" ? "text-rose-500" : ""}`}>
                         {t("Defense skill?")} {data.defense === "" && <span className="text-rose-500">*</span>}
@@ -227,7 +227,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.fitness === "" ? "text-rose-500" : ""}`}>
                         {t("Fitness and agility?")} {data.fitness === "" && <span className="text-rose-500">*</span>}
@@ -259,7 +259,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-2xl p-4 lg:p-6">
+            <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
                     <span className={`text-2xl font-medium ${validate && data.beACaptain === "" ? "text-rose-500" : ""}`}>
                         {t("Are you interested in the captain position or wish to be a captain?")} {data.beACaptain === "" && <span className="text-rose-500">*</span>}

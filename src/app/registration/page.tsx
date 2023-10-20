@@ -18,6 +18,7 @@ export default function Registration() {
     const { t, i18n } = useAppTranslation();
     const [validate, setValidate] = useState(false);
     const [valid, setValid] = useState(true);
+    const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
         name: "",
         nickname: "",
@@ -43,7 +44,11 @@ export default function Registration() {
         isVegan: false,
         allergies: "",
         bus: true,
-        jerseys: [{ color: "black", size: "m" }],
+        jerseys: [
+            { id: "j-1", color: "black", size: "m" },
+            { id: "j-2", color: "white", size: "m" },
+        ],
+        shorts: [],
         disc: 1,
     });
     const steps: IndicatorItem[] = [
@@ -53,7 +58,13 @@ export default function Registration() {
             form: <StepGeneral data={dataStepGeneral} validate={validate} onChange={(e) => setDataStepGeneral(e)} onValidate={(e) => setValid(e)} />,
         },
         { id: 2, text: "2", form: <StepSkillset data={dataStepSkillset} validate={validate} onChange={(e) => setDataStepSkillset(e)} onValidate={(e) => setValid(e)} /> },
-        { id: 3, text: "3", form: <StepAdditional data={dataStepAdditional} validate={validate} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} /> },
+        {
+            id: 3,
+            text: "3",
+            form: (
+                <StepAdditional data={dataStepAdditional} validate={validate} scroll={scroll} isStudent={dataStepGeneral.isStudent} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} />
+            ),
+        },
         { id: 4, text: "4", form: <StepFinish /> },
     ];
     const [activeStep, setActiveStep] = useState(steps[0].id);
@@ -88,7 +99,6 @@ export default function Registration() {
             }, 200);
         }
     };
-    const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     const [langSelected, setLangSelected] = useState(false);
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>

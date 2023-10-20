@@ -7,6 +7,7 @@ const config: Config = {
         extend: {
             fontFamily: {
                 sans: ["var(--font-barlow)", ...fontFamily.sans],
+                mono: ["var(--font-jetbrains-mono)", ...fontFamily.mono],
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
