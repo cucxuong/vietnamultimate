@@ -68,7 +68,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                 }`}
             >
                 <span>{scroll && scroll.top > 0 ? t("Total") : t("Tournament fee")}</span>
-                {scroll && scroll.top > 0 && <span className="font-mono">${total}</span>}
+                {scroll && scroll.top > 0 && <span className="font-mono">${total} {isStudent&&<span className="line-through opacity-30">${total/0.75}</span>}</span>}
             </h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>{t("Player fee included:")} </p>
