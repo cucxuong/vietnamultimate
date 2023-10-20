@@ -24,7 +24,6 @@ export default function Registration() {
         yob: "",
         gender: "female",
         email: "",
-        nationality: "",
         stayingCountry: "",
         isStudent: false,
     });

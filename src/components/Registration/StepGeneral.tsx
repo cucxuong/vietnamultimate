@@ -4,7 +4,7 @@ import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
 import { CheckFat, X } from "@phosphor-icons/react";
 import { InputMask } from "@react-input/mask";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export type StepGeneralData = {
     name: string;
@@ -12,7 +12,6 @@ export type StepGeneralData = {
     yob: string;
     gender: "male" | "female";
     email: string;
-    nationality: string;
     stayingCountry: string;
     isStudent: boolean;
 };
@@ -24,6 +23,7 @@ type Props = {
 };
 export default function StepGeneral({ data, validate, onChange, onValidate = (e: boolean) => {} }: Props) {
     const { t, i18n } = useAppTranslation();
+    const [otherCountry, setOtherCountry] = useState(false);
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
@@ -178,109 +178,114 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             </div>
 
             <div className="grid gap-0.5 lg:grid-cols-2">
-                <label className="grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4 lg:p-6">
-                    <span className="text-2xl font-medium">{t("Nationality")}</span>
-                    <Input
-                        value={data.nationality}
-                        clearable
-                        onChange={(e) => {
-                            handleChange("nationality", e);
-                        }}
-                        type="text"
-                        placeholder={t("Your answer") || ""}
-                        className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
-                    />
-                    <Transition
-                        show={data.nationality === ""}
-                        as={Fragment}
-                        enter="transition-all ease-in duration-200"
-                        leave="transition-all ease-out duration-100"
-                        enterFrom="-translate-y-6 opacity-0"
-                        leaveTo="translate-y-1/2 opacity-0"
-                    >
-                        <div className="flex flex-wrap gap-2 -mt-2">
-                            {["Cambodia", "Malaysia", "Singapor", "Thailand", "Vietnam"].map((item) => (
-                                <Button key={item} variant="outline" size="sm" onClick={() => handleChange("nationality", item)}>
-                                    {t(item)}
-                                </Button>
-                            ))}
-                        </div>
-                    </Transition>
-                </label>
-                <label className="grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6">
+                <label
+                    className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl p-4 lg:p-6 ${
+                        toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam" ? "rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl" : "rounded-2xl"
+                    }`}
+                >
                     <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
                         {t("Which country are you staying?")}
                         {!data.stayingCountry && <span className="text-rose-500">*</span>}
                     </span>
-                    <Input
-                        value={data.stayingCountry}
-                        clearable
-                        onChange={(e) => handleChange("stayingCountry", e)}
-                        onFocus={() => {
-                            if (data.stayingCountry === "" && data.nationality) {
-                                handleChange("stayingCountry", data.nationality);
-                            }
-                        }}
-                        type="text"
-                        placeholder={t("Your answer") || ""}
-                        className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
-                    />
+                    <div
+                        className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
+                            validate && data.stayingCountry === "" ? "border-rose-500" : "border-foreground"
+                        }`}
+                    >
+                        {[
+                            { value: 1, label: "Cambodia" },
+                            { value: 2, label: "Malaysia" },
+                            { value: 3, label: "Singapor" },
+                            { value: 4, label: "Thailand" },
+                            { value: 5, label: "Vietnam" },
+                        ].map((item) => (
+                            <div
+                                key={item.value}
+                                className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
+                                    item.label === data.stayingCountry ? "bg-foreground bg-opacity-30" : ""
+                                }`}
+                                onClick={() => {
+                                    setOtherCountry(false);
+                                    handleChange("stayingCountry", item.label);
+                                }}
+                            >
+                                <div className={`font-semibold grid place-content-center`}>{item.label === data.stayingCountry ? <CheckFat size={18} weight="fill" /> : ""}</div>
+                                <div className={`flex items-center px-4 py-2`}>{t(item.label)}</div>
+                            </div>
+                        ))}
+                        <div
+                            className={`min-h-[3rem] grid grid-cols-[3rem_minmax(0,1fr)] divide-x divide-foreground divide-opacity-60 cursor-pointer select-none ${
+                                otherCountry ? "bg-foreground bg-opacity-30" : ""
+                            }`}
+                            onClick={() => {
+                                if (!otherCountry) {
+                                    setOtherCountry(true);
+                                    handleChange("stayingCountry", "");
+                                }
+                            }}
+                        >
+                            <div className={`font-semibold grid place-content-center`}>{otherCountry ? <CheckFat size={18} weight="fill" /> : ""}</div>
+                            <div className={`flex items-center px-4 py-2`}>{t("Other")}</div>
+                        </div>
+                    </div>
                     <Transition
-                        show={data.stayingCountry === ""}
+                        show={otherCountry}
                         as={Fragment}
                         enter="transition-all ease-in duration-200"
                         leave="transition-all ease-out duration-100"
                         enterFrom="-translate-y-6 opacity-0"
                         leaveTo="translate-y-1/2 opacity-0"
                     >
-                        <div className="flex flex-wrap gap-2 -mt-2">
-                            {["Cambodia", "Malaysia", "Singapor", "Thailand", "Vietnam"].map((item) => (
-                                <Button key={item} variant="outline" size="sm" onClick={() => handleChange("stayingCountry", item)}>
-                                    {t(item)}
-                                </Button>
-                            ))}
-                        </div>
+                        <Input
+                            value={data.stayingCountry}
+                            clearable
+                            onChange={(e) => handleChange("stayingCountry", e)}
+                            type="text"
+                            placeholder={t("Your answer") || ""}
+                            className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
+                        />
                     </Transition>
                 </label>
-            </div>
-
-            <Transition
-                show={toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam"}
-                as={Fragment}
-                enter="transition-all ease-in duration-200"
-                leave="transition-all ease-out duration-100"
-                enterFrom="-translate-y-6 opacity-0"
-                leaveTo="translate-y-1/2 opacity-0"
-            >
-                <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-2xl p-4 lg:p-6">
-                    <span className={`text-2xl font-medium`}>{t("Are you a high school/college student?")}</span>
-                    <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
-                        <button
-                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
-                            onClick={() => handleChange("isStudent", true)}
-                        >
-                            {data.isStudent && (
-                                <span>
-                                    <CheckFat size={18} weight="fill" />
-                                </span>
-                            )}
-                            <span>{t("Yes")}</span>
-                        </button>
-                        <div className="border-l border-foreground border-opacity-60"></div>
-                        <button
-                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${!data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
-                            onClick={() => handleChange("isStudent", false)}
-                        >
-                            {!data.isStudent && (
-                                <span>
-                                    <CheckFat size={18} weight="fill" />
-                                </span>
-                            )}
-                            <span>{t("No")}</span>
-                        </button>
+                <Transition
+                    show={toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam"}
+                    as={Fragment}
+                    enter="transition-all ease-in duration-200"
+                    leave="transition-all ease-out duration-100"
+                    enterFrom="-translate-y-6 lg:-translate-x-4 opacity-0"
+                    leaveTo="translate-y-1/2 lg:translate-x-4 opacity-0"
+                >
+                    <div className={`grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6`}>
+                        <span className={`text-2xl font-medium`}>{t("Are you a high school/college student?")}</span>
+                        <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                            <button
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
+                                onClick={() => handleChange("isStudent", true)}
+                            >
+                                {data.isStudent && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <span>{t("Yes")}</span>
+                            </button>
+                            <div className="border-l border-foreground border-opacity-60"></div>
+                            <button
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                    !data.isStudent ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                }`}
+                                onClick={() => handleChange("isStudent", false)}
+                            >
+                                {!data.isStudent && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <span>{t("No")}</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </Transition>
+                </Transition>
+            </div>
         </div>
     );
 }
