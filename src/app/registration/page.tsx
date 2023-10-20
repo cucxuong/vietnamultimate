@@ -39,14 +39,10 @@ export default function Registration() {
     });
     const [dataStepAdditional, setDataStepAdditional] = useState<StepAdditionalData>({
         height: "",
-        lunchD1: true,
-        lunchD2: true,
+        lunch: true,
         isVegan: false,
         allergies: "",
-        busD1Depart: true,
-        busD1Return: true,
-        busD2Depart: true,
-        busD2Return: true,
+        bus: true,
         jerseys: [{ color: "black", size: "m" }],
         disc: 1,
     });
