@@ -114,7 +114,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     {[
                         { value: 1, label: "Can throw backhand and forehand consistently" },
                         { value: 2, label: "Can throw backhand and forehand consistently if no defender is marking" },
-                        { value: 3, label: "Can throw backhand and forehand consistently when a defenderr is marking" },
+                        { value: 3, label: "Can throw backhand and forehand consistently when a defender is marking" },
                         { value: 4, label: "Make decent decisions, can break marks, and handle well" },
                         { value: 5, label: "Make significant decisions, very consitent with all kinds of throws, including hucking" },
                     ].map((item) => (
@@ -240,8 +240,8 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
                     }`}
                 >
                     {[
-                        { value: 1, label: "Have weak stamania and speed, can only play a few points" },
-                        { value: 2, label: "Have speed, can run in pong points but quickly lost stamania" },
+                        { value: 1, label: "Have weak stamina and speed, can only play a few points" },
+                        { value: 2, label: "Have speed, can run in pong points but quickly lost stamina" },
                         { value: 3, label: "Have endurance and quickness" },
                         { value: 4, label: "Have speed, ability to change direction rapidly and stability" },
                         { value: 5, label: "Have exceptional fitness and agility, can stay for the whole game" },
