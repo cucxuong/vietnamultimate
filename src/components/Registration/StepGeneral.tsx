@@ -178,7 +178,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             </div>
 
             <div className="grid gap-0.5 lg:grid-cols-2">
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-t-2xl lg:rounded-tr lg:rounded-l-2xl p-4 lg:p-6">
                     <span className="text-2xl font-medium">{t("Nationality")}</span>
                     <Input
                         value={data.nationality}
@@ -190,8 +190,24 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         placeholder={t("Your answer") || ""}
                         className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
                     />
+                    <Transition
+                        show={data.nationality === ""}
+                        as={Fragment}
+                        enter="transition-all ease-in duration-200"
+                        leave="transition-all ease-out duration-100"
+                        enterFrom="-translate-y-6 opacity-0"
+                        leaveTo="translate-y-1/2 opacity-0"
+                    >
+                        <div className="flex flex-wrap gap-2 -mt-2">
+                            {["Cambodia", "Malaysia", "Singapor", "Thailand", "Vietnam"].map((item) => (
+                                <Button key={item} variant="outline" size="sm" onClick={() => handleChange("nationality", item)}>
+                                    {t(item)}
+                                </Button>
+                            ))}
+                        </div>
+                    </Transition>
                 </label>
-                <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6">
+                <label className="grid grid-cols-1 content-start gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-2xl lg:rounded-bl lg:rounded-r-2xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
                         {t("Which country are you staying?")}
                         {!data.stayingCountry && <span className="text-rose-500">*</span>}
@@ -209,6 +225,22 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         placeholder={t("Your answer") || ""}
                         className="bg-background text-foreground rounded-md h-12 p-4 placeholder:opacity-50"
                     />
+                    <Transition
+                        show={data.stayingCountry === ""}
+                        as={Fragment}
+                        enter="transition-all ease-in duration-200"
+                        leave="transition-all ease-out duration-100"
+                        enterFrom="-translate-y-6 opacity-0"
+                        leaveTo="translate-y-1/2 opacity-0"
+                    >
+                        <div className="flex flex-wrap gap-2 -mt-2">
+                            {["Cambodia", "Malaysia", "Singapor", "Thailand", "Vietnam"].map((item) => (
+                                <Button key={item} variant="outline" size="sm" onClick={() => handleChange("stayingCountry", item)}>
+                                    {t(item)}
+                                </Button>
+                            ))}
+                        </div>
+                    </Transition>
                 </label>
             </div>
 
