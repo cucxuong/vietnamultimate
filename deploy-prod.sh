@@ -17,4 +17,4 @@ fi
 
 docker run -itd -p 3001:3000 --name $CONTAINER_NAME --network nvnhan-network --network-alias vietnam-ultimate-net $IMAGE_NAME:$DATE
 
-docker image prune -a -f 
+docker system prune -a -f 
