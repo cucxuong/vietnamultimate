@@ -7,14 +7,10 @@ import { useAppTranslation } from "@/i18n/client";
 
 export type StepAdditionalData = {
     height: string;
-    lunchD1: boolean;
-    lunchD2: boolean;
+    lunch: boolean;
     isVegan: boolean;
     allergies: string;
-    busD1Depart: boolean;
-    busD1Return: boolean;
-    busD2Depart: boolean;
-    busD2Return: boolean;
+    bus: boolean;
     jerseys: { color: "black" | "white"; size: "s" | "m" | "l" | "xl" | "2xl" | "3xl" }[];
     disc: number;
 };
@@ -34,7 +30,7 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
     });
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
-            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 pb-4 bg-background grid-bg">{t("Additional")}</h3>
+            <h3 className="text-5xl font-semibold sticky top-0 z-[1] pt-12 pb-4 bg-background grid-bg">{t("Tournament fee")}</h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>{t("Player fee included:")} </p>
                 <div className="flex flex-wrap justify-center gap-4 py-4 z-0">
@@ -117,36 +113,33 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                 <div className="grid text-base gap-4 py-4 z-10">
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
                         <div className="text-2xl font-medium">{t("Lunch")}</div>
-                        <div className="grid grid-cols-2 w-full max-w-lg mx-auto gap-4">
+                        <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
                             <button
-                                className={`flex items-center justify-center rounded-full border border-foreground border-opacity-60 gap-2 px-4 h-12 transition-all ease-in-out ${
-                                    data.lunchD1 ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                }`}
-                                onClick={() => handleChange("lunchD1", !data.lunchD1)}
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.lunch ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
+                                onClick={() => handleChange("lunch", true)}
                             >
-                                {data.lunchD1 && (
+                                {data.lunch && (
                                     <span>
                                         <CheckFat size={18} weight="fill" />
                                     </span>
                                 )}
-                                <span>{t("Day 1")}</span>
+                                <span>{t("Yes")}</span>
                             </button>
+                            <div className="border-l border-foreground border-opacity-60"></div>
                             <button
-                                className={`flex items-center justify-center rounded-full border border-foreground border-opacity-60 gap-2 px-4 h-12 transition-all ease-in-out ${
-                                    data.lunchD2 ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                }`}
-                                onClick={() => handleChange("lunchD2", !data.lunchD2)}
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${!data.lunch ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
+                                onClick={() => handleChange("lunch", false)}
                             >
-                                {data.lunchD2 && (
+                                {!data.lunch && (
                                     <span>
                                         <CheckFat size={18} weight="fill" />
                                     </span>
                                 )}
-                                <span>{t("Day 2")}</span>
+                                <span>{t("No")}</span>
                             </button>
                         </div>
                         <Transition
-                            show={data.lunchD1 || data.lunchD2}
+                            show={data.lunch}
                             as={Fragment}
                             enter="transition-all duration-200 ease-in"
                             leave="transition-all duration-100 ease-out"
@@ -195,71 +188,30 @@ export default function StepAdditional({ data, validate, onChange, onValidate = 
                     </div>
                     <div className="flex-grow rounded-2xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                         <div className="text-2xl font-medium">{t("Shuttle Bus")}</div>
-                        <div className="grid lg:grid-cols-2 gap-4">
-                            <div className="grid gap-2">
-                                <span className="text-center">{t("Day 1")}</span>
-                                <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
-                                    <button
-                                        className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                            data.busD1Depart ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                        }`}
-                                        onClick={() => handleChange("busD1Depart", !data.busD1Depart)}
-                                    >
-                                        {data.busD1Depart && (
-                                            <span>
-                                                <CheckFat size={18} weight="fill" />
-                                            </span>
-                                        )}
-                                        <span className="flex items-center gap-2">Depart</span>
-                                    </button>
-                                    <div className="border-l border-foreground border-opacity-60"></div>
-                                    <button
-                                        className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                            data.busD1Return ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                        }`}
-                                        onClick={() => handleChange("busD1Return", !data.busD1Return)}
-                                    >
-                                        {data.busD1Return && (
-                                            <span>
-                                                <CheckFat size={18} weight="fill" />
-                                            </span>
-                                        )}
-                                        <span className="flex items-center gap-2">Return</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="grid gap-2">
-                                <span className="text-center">{t("Day 2")}</span>
-                                <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
-                                    <button
-                                        className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                            data.busD2Depart ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                        }`}
-                                        onClick={() => handleChange("busD2Depart", !data.busD2Depart)}
-                                    >
-                                        {data.busD2Depart && (
-                                            <span>
-                                                <CheckFat size={18} weight="fill" />
-                                            </span>
-                                        )}
-                                        <span className="flex items-center gap-2">Depart</span>
-                                    </button>
-                                    <div className="border-l border-foreground border-opacity-60"></div>
-                                    <button
-                                        className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                            data.busD2Return ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                        }`}
-                                        onClick={() => handleChange("busD2Return", !data.busD2Return)}
-                                    >
-                                        {data.busD2Return && (
-                                            <span>
-                                                <CheckFat size={18} weight="fill" />
-                                            </span>
-                                        )}
-                                        <span className="flex items-center gap-2">Return</span>
-                                    </button>
-                                </div>
-                            </div>
+                        <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                            <button
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${data.bus ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
+                                onClick={() => handleChange("bus", true)}
+                            >
+                                {data.bus && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <span>{t("Yes")}</span>
+                            </button>
+                            <div className="border-l border-foreground border-opacity-60"></div>
+                            <button
+                                className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${!data.bus ? "bg-primary bg-opacity-30 duration-200" : "duration-100"}`}
+                                onClick={() => handleChange("bus", false)}
+                            >
+                                {!data.bus && (
+                                    <span>
+                                        <CheckFat size={18} weight="fill" />
+                                    </span>
+                                )}
+                                <span>{t("No")}</span>
+                            </button>
                         </div>
 
                         <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 pt-4 border-t">Bus stop location...</div>
