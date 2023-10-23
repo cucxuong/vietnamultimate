@@ -52,7 +52,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
             const lunch = data.lunch ? 9 : 0;
             const bus = data.bus ? 11 : 0;
             const jersey = data.jerseys.length * 6;
-            const short = data.shorts.length * 4;
+            const short = data.shorts.length * 3;
             const disc = (data.disc || 0) * 10;
             return (fixed + lunch + bus + jersey + short + disc) * (isStudent ? 0.75 : 1);
         });
