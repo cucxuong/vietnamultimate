@@ -29,14 +29,14 @@ export default function Registration() {
         isStudent: false,
     });
     const [dataStepSkillset, setDataStepSkillset] = useState<StepSkillsetData>({
-        years: "",
-        throwing: "",
-        catching: "",
-        cutting: "",
-        defense: "",
-        fitness: "",
-        playExp: "",
-        beACaptain: "",
+        years: 0,
+        throwing: 0,
+        catching: 0,
+        cutting: 0,
+        defense: 0,
+        fitness: 0,
+        playExp: 0,
+        beACaptain: 0,
     });
     const [dataStepAdditional, setDataStepAdditional] = useState<StepAdditionalData>({
         height: "",
@@ -62,10 +62,17 @@ export default function Registration() {
             id: 3,
             text: "3",
             form: (
-                <StepAdditional data={dataStepAdditional} validate={validate} scroll={scroll} isStudent={dataStepGeneral.isStudent} onChange={(e) => setDataStepAdditional(e)} onValidate={(e) => setValid(e)} />
+                <StepAdditional
+                    data={dataStepAdditional}
+                    validate={validate}
+                    scroll={scroll}
+                    isStudent={dataStepGeneral.isStudent}
+                    onChange={(e) => setDataStepAdditional(e)}
+                    onValidate={(e) => setValid(e)}
+                />
             ),
         },
-        { id: 4, text: "4", form: <StepFinish /> },
+        { id: 4, text: "4", form: <StepFinish dataGeneral={dataStepGeneral} dataSkillset={dataStepSkillset} dataAdditional={dataStepAdditional} /> },
     ];
     const [activeStep, setActiveStep] = useState(steps[0].id);
     const [isNext, setIsNext] = useState(true);
@@ -73,31 +80,31 @@ export default function Registration() {
     const [delay, setDelay] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
-        // setValidate(true);
-        // if (valid || id < activeStep) {
-        //     setValidate(false);
-        //     if (id >= 1 && id <= steps.length) {
-        //         setDelay(true);
-        //         setTimeout(() => {
-        //             setDelay(false);
-        //             setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-        //         }, 200);
-        //     }
-        // }
-        // if (!valid || id < 1 || id > steps.length) {
-        //     setIsShaking(true);
-        //     setTimeout(() => {
-        //         setIsShaking(false);
-        //     }, 400);
-        // }
-
-        if (id >= 1 && id <= steps.length) {
-            setDelay(true);
-            setTimeout(() => {
-                setDelay(false);
-                setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
-            }, 200);
+        setValidate(true);
+        if (valid || id < activeStep) {
+            setValidate(false);
+            if (id >= 1 && id <= steps.length) {
+                setDelay(true);
+                setTimeout(() => {
+                    setDelay(false);
+                    setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+                }, 200);
+            }
         }
+        if (!valid || id < 1 || id > steps.length) {
+            setIsShaking(true);
+            setTimeout(() => {
+                setIsShaking(false);
+            }, 400);
+        }
+
+        // if (id >= 1 && id <= steps.length) {
+        //     setDelay(true);
+        //     setTimeout(() => {
+        //         setDelay(false);
+        //         setActiveStep(id < 1 ? 1 : id > steps.length ? steps.length : id);
+        //     }, 200);
+        // }
     };
     const [langSelected, setLangSelected] = useState(false);
     return (

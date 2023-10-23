@@ -47,7 +47,6 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
         onChange({ ...data, [prop]: value });
     };
     useEffect(() => {
-        onValidate(data.height !== "");
         setTotal((v) => {
             const fixed = 30;
             const lunch = data.lunch ? 9 : 0;

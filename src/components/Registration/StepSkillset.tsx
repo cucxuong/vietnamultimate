@@ -3,14 +3,14 @@ import { CheckFat } from "@phosphor-icons/react";
 import { useEffect } from "react";
 
 export type StepSkillsetData = {
-    years: 1 | 2 | 3 | 4 | 5 | "";
-    throwing: 1 | 2 | 3 | 4 | 5 | "";
-    catching: 1 | 2 | 3 | 4 | 5 | "";
-    cutting: 1 | 2 | 3 | 4 | 5 | "";
-    defense: 1 | 2 | 3 | 4 | 5 | "";
-    fitness: 1 | 2 | 3 | 4 | 5 | "";
-    playExp: 1 | 2 | 3 | 4 | 5 | "";
-    beACaptain: 1 | 2 | 3 | 4 | "";
+    years: 1 | 2 | 3 | 4 | 5 | 0;
+    throwing: 1 | 2 | 3 | 4 | 5 | 0;
+    catching: 1 | 2 | 3 | 4 | 5 | 0;
+    cutting: 1 | 2 | 3 | 4 | 5 | 0;
+    defense: 1 | 2 | 3 | 4 | 5 | 0;
+    fitness: 1 | 2 | 3 | 4 | 5 | 0;
+    playExp: 1 | 2 | 3 | 4 | 5 | 0;
+    beACaptain: 1 | 2 | 3 | 4 | 0;
 };
 type Props = {
     data: StepSkillsetData;
@@ -25,7 +25,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
     };
     useEffect(() => {
         onValidate(
-            data.years !== "" && data.throwing !== "" && data.catching !== "" && data.cutting !== "" && data.defense !== "" && data.fitness !== "" && data.playExp !== "" && data.beACaptain !== "",
+            data.years >0 && data.throwing >0 && data.catching >0 && data.cutting >0 && data.defense >0 && data.fitness >0 && data.playExp >0 && data.beACaptain >0,
         );
     });
     return (
@@ -37,14 +37,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
 
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.years === "" ? "text-rose-500" : ""}`}>
-                        {t("How long have you played Ultimate frisbee?")} {data.years === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.years ===0 ? "text-rose-500" : ""}`}>
+                        {t("How long have you played Ultimate frisbee?")} {data.years ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.years === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.years ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.years === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.years ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -69,14 +69,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.playExp === "" ? "text-rose-500" : ""}`}>
-                        {t("Playing experience?")} {data.playExp === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.playExp ===0 ? "text-rose-500" : ""}`}>
+                        {t("Playing experience?")} {data.playExp ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.playExp === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.playExp ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.playExp === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.playExp ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -101,14 +101,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.throwing === "" ? "text-rose-500" : ""}`}>
-                        {t("Throwing skill?")} {data.throwing === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.throwing ===0 ? "text-rose-500" : ""}`}>
+                        {t("Throwing skill?")} {data.throwing ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.throwing === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.throwing ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.throwing === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.throwing ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -133,14 +133,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.catching === "" ? "text-rose-500" : ""}`}>
-                        {t("Catching skill?")} {data.catching === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.catching ===0 ? "text-rose-500" : ""}`}>
+                        {t("Catching skill?")} {data.catching ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.catching === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.catching ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.catching === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.catching ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -165,14 +165,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.cutting === "" ? "text-rose-500" : ""}`}>
-                        {t("Cutting skill?")} {data.cutting === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.cutting ===0 ? "text-rose-500" : ""}`}>
+                        {t("Cutting skill?")} {data.cutting ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.cutting === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.cutting ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.cutting === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.cutting ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -197,14 +197,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.defense === "" ? "text-rose-500" : ""}`}>
-                        {t("Defense skill?")} {data.defense === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.defense ===0 ? "text-rose-500" : ""}`}>
+                        {t("Defense skill?")} {data.defense ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.defense === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.defense ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.defense === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.defense ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -229,14 +229,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.fitness === "" ? "text-rose-500" : ""}`}>
-                        {t("Fitness and agility?")} {data.fitness === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.fitness ===0 ? "text-rose-500" : ""}`}>
+                        {t("Fitness and agility?")} {data.fitness ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.fitness === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.fitness ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.fitness === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.fitness ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
@@ -261,14 +261,14 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
-                    <span className={`text-2xl font-medium ${validate && data.beACaptain === "" ? "text-rose-500" : ""}`}>
-                        {t("Are you interested in the captain position or wish to be a captain?")} {data.beACaptain === "" && <span className="text-rose-500">*</span>}
+                    <span className={`text-2xl font-medium ${validate && data.beACaptain ===0 ? "text-rose-500" : ""}`}>
+                        {t("Are you interested in the captain position or wish to be a captain?")} {data.beACaptain ===0 && <span className="text-rose-500">*</span>}
                     </span>
-                    {validate && data.beACaptain === "" && <span className="text-rose-500">{t("Please select one answer below")}</span>}
+                    {validate && data.beACaptain ===0 && <span className="text-rose-500">{t("Please select one answer below")}</span>}
                 </div>
                 <div
                     className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
-                        validate && data.beACaptain === "" ? "border-rose-500" : "border-foreground"
+                        validate && data.beACaptain ===0 ? "border-rose-500" : "border-foreground"
                     }`}
                 >
                     {[
