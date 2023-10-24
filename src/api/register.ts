@@ -1,9 +1,10 @@
+import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
 import axiosInstance from "./axios";
 
-const fetchTournamentInfo = async ({ id }: { id: string }) => {
-    const response = await axiosInstance.get(`/tournaments/${id}`);
+const tournamentID = VIETNAM_HAT_TOURNAMENT_ID;
 
-    console.log(response);
+const fetchTournamentInfo = async ({ id }: { id: string }) => {
+    await axiosInstance.get(`/tournaments/${tournamentID}`);
 };
 
 interface RegisterProps {
@@ -25,7 +26,7 @@ const registerTournament = async (data: RegisterProps) => {
         year_of_birth: data.yob,
         is_student: data.stayingCountry === "vietnam" ? data.isStudent : null,
         selected_options: data.options,
-        tournament: "653761306d34b11e8c3ccc0f",
+        tournament: tournamentID,
     });
 
     return response;

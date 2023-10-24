@@ -112,35 +112,30 @@ export default function Registration() {
     };
     const [langSelected, setLangSelected] = useState(false);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        // API-EVENT: Call api fetch info of tournament
-        await fetchTournamentInfo({ id: "653761306d34b11e8c3ccc0f" });
-
-        setLoading(false);
-    };
-
+    // Call api register Tournament
     const submitData = async () => {
-        // API-EVENT: Call api submit data
-        await registerTournament({
-            ...dataStepGeneral,
-            options: JSON.stringify({
-                skills: dataStepSkillset,
-                addition: dataStepAdditional,
-            }),
-        });
+        try {
+            // API-EVENT: Start call API, need loading behavior
+            const response = await registerTournament({
+                ...dataStepGeneral,
+                options: JSON.stringify({
+                    skills: dataStepSkillset,
+                    addition: dataStepAdditional,
+                }),
+            });
 
-        // API-EVENT: Finish Call api - response success
+            // API-EVENT: Call API Suucess, Redirect to page success
+            const { player_code: playerCode } = response.data.data;
+            // This is player code of user to tracking info
+            console.log(playerCode);
+        } catch (e) {
+            // API-EVENT: Have error
+        }
     };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            {loading ? (
-                <Loading />
-            ) : !langSelected ? (
+            {!langSelected ? (
                 <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid gap-6 min-w-[15rem]">
                     <Button
                         onClick={() => {
