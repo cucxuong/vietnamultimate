@@ -27,6 +27,8 @@ COPY --from=development /app/node_modules ./node_modules
 
 COPY . .
 
+COPY ./src/config/vietnam-hat.env.prod.ts ./src/config/vietnam-hat.env.ts
+
 # Set NODE_ENV environment variable
 ENV NODE_ENV production
 

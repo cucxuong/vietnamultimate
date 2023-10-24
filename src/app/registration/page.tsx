@@ -1,21 +1,25 @@
 "use client";
 
+import { fetchTournamentInfo, registerTournament } from "@/api/register";
 import Main from "@/components/Home/Main";
 import Indicator, { IndicatorItem } from "@/components/Registration/Indicator";
 import StepAdditional, { StepAdditionalData } from "@/components/Registration/StepAdditional";
 import StepFinish from "@/components/Registration/StepFinish";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
+import Loading from "@/components/UIs/Loading";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
 // import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
-import { ArrowRight, ArrowLeft } from "lucide-react";
-import { Fragment, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Fragment, useEffect, useState } from "react";
 
 export default function Registration() {
     const { t, i18n } = useAppTranslation();
+
+    const [loading, setLoading] = useState(true);
     const [validate, setValidate] = useState(false);
     const [valid, setValid] = useState(true);
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
@@ -107,6 +111,28 @@ export default function Registration() {
         // }
     };
     const [langSelected, setLangSelected] = useState(false);
+
+    // Call api register Tournament
+    const submitData = async () => {
+        try {
+            // API-EVENT: Start call API, need loading behavior
+            const response = await registerTournament({
+                ...dataStepGeneral,
+                options: JSON.stringify({
+                    skills: dataStepSkillset,
+                    addition: dataStepAdditional,
+                }),
+            });
+
+            // API-EVENT: Call API Suucess, Redirect to page success
+            const { player_code: playerCode } = response.data.data;
+            // This is player code of user to tracking info
+            console.log(playerCode);
+        } catch (e) {
+            // API-EVENT: Have error
+        }
+    };
+
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             {!langSelected ? (
@@ -183,7 +209,7 @@ export default function Registration() {
                                                       : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
                                               }`
                                     }`}
-                                    onClick={() => handleNext(activeStep + 1)}
+                                    onClick={() => (activeStep === steps.length ? submitData() : handleNext(activeStep + 1))}
                                 >
                                     <Transition
                                         as="span"
