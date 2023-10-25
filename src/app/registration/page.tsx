@@ -134,30 +134,62 @@ export default function Registration() {
         }
     };
 
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 100);
+    }, []);
+
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             {!langSelected ? (
-                <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid gap-6 min-w-[15rem]">
-                    <Button
-                        onClick={() => {
-                            i18n.changeLanguage("en");
-                            setLangSelected(true);
-                        }}
-                        className="flex justify-between rounded-full px-6 gap-2"
+                <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid gap-16 min-w-[15rem] place-content-center">
+                    <Transition
+                        as={Fragment}
+                        show={!loading}
+                        enter="transition-all ease-in-out duration-200"
+                        leave="transition-all ease-in-out duration-100"
+                        enterFrom={"translate-y-1/4 opacity-0"}
+                        leaveTo={"-translate-y-1/4 opacity-0"}
                     >
-                        {"English"}
-                        <ArrowRight />
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            i18n.changeLanguage("vi");
-                            setLangSelected(true);
-                        }}
-                        className="flex justify-between rounded-full px-6 gap-2"
+                        <h1 className="text-5xl text-center font-bold">
+                            VIETNAM HAT <br />
+                            2023
+                            <br />
+                            REGISTRATION
+                        </h1>
+                    </Transition>
+                    <Transition
+                        as={Fragment}
+                        show={!loading}
+                        enter="transition-all ease-in-out duration-200"
+                        leave="transition-all ease-in-out duration-100"
+                        enterFrom={"-translate-y-1/4 opacity-0"}
+                        leaveTo={"translate-y-1/4 opacity-0"}
                     >
-                        {"Tiếng Việt"}
-                        <ArrowRight />
-                    </Button>
+                        <div className="grid w-full max-w-[15rem] gap-6 mx-auto">
+                            <Button
+                                onClick={() => {
+                                    i18n.changeLanguage("en");
+                                    setLangSelected(true);
+                                }}
+                                className={`flex justify-between rounded-full px-6 gap-2`}
+                            >
+                                {"English"}
+                                <ArrowRight />
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    i18n.changeLanguage("vi");
+                                    setLangSelected(true);
+                                }}
+                                className="flex justify-between rounded-full px-6 gap-2"
+                            >
+                                {"Tiếng Việt"}
+                                <ArrowRight />
+                            </Button>
+                        </div>
+                    </Transition>
                 </div>
             ) : (
                 <ScrollArea className={`scroll-smooth ${(!scroll.isDown && !scroll.isEnd) || scroll.top <= 0 ? "overscroll-none" : "overscroll-contain"}`} onScroll={(v) => setScroll(v)}>
