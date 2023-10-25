@@ -22,10 +22,11 @@ type Props = {
     validate?: boolean;
     scroll?: ScrollTarget;
     isStudent?: boolean;
+    country?: string;
     onChange: (d: StepAdditionalData) => void;
     onValidate?: (v: boolean) => void;
 };
-export default function StepAdditional({ data, validate, scroll, isStudent, onChange, onValidate = (e: boolean) => {} }: Props) {
+export default function StepAdditional({ data, validate, scroll, isStudent, country, onChange, onValidate = (e: boolean) => {} }: Props) {
     const { t, i18n } = useAppTranslation();
     const [total, setTotal] = useState(0);
     const [useBlackJersey, setUseBlackJersey] = useState(true);
@@ -48,15 +49,15 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
     };
     useEffect(() => {
         setTotal((v) => {
-            const fixed = 30;
-            const lunch = data.lunch ? 9 : 0;
-            const bus = data.bus ? 11 : 0;
-            const jersey = data.jerseys.length * 6;
-            const short = data.shorts.length * 3;
-            const disc = (data.disc || 0) * 10;
+            const fixed = 700000;
+            const lunch = data.lunch ? 170000 : 0;
+            const bus = data.bus ? 200000 : 0;
+            const jersey = data.jerseys.length * 170000;
+            const short = data.shorts.length * 200000;
+            const disc = (data.disc) * 200000;
             return (fixed + lunch + bus + jersey + short + disc) * (isStudent ? 0.75 : 1);
         });
-    });
+    },[data]);
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3
@@ -67,7 +68,39 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                 }`}
             >
                 <span>{scroll && scroll.top > 0 ? t("Total") : t("Tournament fee")}</span>
-                {scroll && scroll.top > 0 && <span className="font-mono">${total} {isStudent&&<span className="line-through opacity-30">${total/0.75}</span>}</span>}
+                {scroll &&
+                    scroll.top > 0 &&
+                    (country === "Vietnam" ? (
+                        <span className="font-mono">{Intl.NumberFormat("en-US").format(total).replaceAll(",", "'")} VND</span>
+                    ) : country === "Philippines" ? (
+                        <span className="font-mono text-right">
+                            {Intl.NumberFormat("en-US")
+                                .format(Math.ceil(total / 425))
+                                .replaceAll(",", "'")}{" "}
+                            PHP
+                        </span>
+                    ) : country === "Singapore" ? (
+                        <span className="font-mono text-right">
+                            {Intl.NumberFormat("en-US")
+                                .format(Math.ceil(total / 17500))
+                                .replaceAll(",", "'")}{" "}
+                            SGD
+                        </span>
+                    ) : country === "Malaysia" ? (
+                        <span className="font-mono text-right">
+                            {Intl.NumberFormat("en-US")
+                                .format(Math.ceil(total / 5145))
+                                .replaceAll(",", "'")}{" "}
+                            MYR
+                        </span>
+                    ) : (
+                        <span className="font-mono text-right">
+                            {Intl.NumberFormat("en-US")
+                                .format(Math.ceil(total / 24500))
+                                .replaceAll(",", "'")}{" "}
+                            USD
+                        </span>
+                    ))}
             </h3>
             <div className="grid gap-2 text-sm lg:text-base lg:gap-0 -mt-4">
                 <p>{t("Player fee included:")} </p>
@@ -325,12 +358,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
                                             <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">
-                                                    X cm
-                                                </span>
-                                                <span className="text-xs">
-                                                    Y cm
-                                                </span>
+                                                <span className="text-xs">X cm</span>
+                                                <span className="text-xs">Y cm</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
@@ -430,12 +459,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
                                             <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">
-                                                    X cm
-                                                </span>
-                                                <span className="text-xs">
-                                                    Y cm
-                                                </span>
+                                                <span className="text-xs">X cm</span>
+                                                <span className="text-xs">Y cm</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
@@ -535,12 +560,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
                                             <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">
-                                                    X cm
-                                                </span>
-                                                <span className="text-xs">
-                                                    Y cm
-                                                </span>
+                                                <span className="text-xs">X cm</span>
+                                                <span className="text-xs">Y cm</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
@@ -640,12 +661,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, onCh
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
                                             <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">
-                                                    X cm
-                                                </span>
-                                                <span className="text-xs">
-                                                    Y cm
-                                                </span>
+                                                <span className="text-xs">X cm</span>
+                                                <span className="text-xs">Y cm</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>

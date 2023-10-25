@@ -64,7 +64,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-3xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.email === "" ? "text-rose-500 snap-start" : ""}`}>
-                        {t("Email")}{" "}{data.email === "" && <span className="text-rose-500">*</span>}
+                        {t("Email")} {data.email === "" && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
                         value={data.email}
@@ -81,7 +81,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-t-3xl rounded lg:rounded-tr p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && data.name === "" ? "text-rose-500 snap-start" : ""}`}>
-                        {t("Full name")}{" "}{data.name === "" && <span className="text-rose-500">*</span>}
+                        {t("Full name")} {data.name === "" && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
                         value={data.name}
@@ -107,7 +107,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </label>
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded lg:rounded-bl-3xl p-4 lg:p-6">
                     <span className={`text-2xl font-medium ${validate && !data.yob ? "text-rose-500 snap-start" : ""}`}>
-                        {t("Year of birth")}{" "}{!data.yob && <span className="text-rose-500">*</span>}
+                        {t("Year of birth")} {!data.yob && <span className="text-rose-500">*</span>}
                     </span>
                     <div className="relative inline-grid grid-cols-1">
                         <InputMask
@@ -139,7 +139,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                 </label>
                 <div className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded rounded-b-3xl lg:rounded-bl p-4 lg:p-6">
                     <span className="text-2xl font-medium">
-                        {t("Gender")}{" "}{data.gender !== "female" && data.gender !== "male" && <span className="text-rose-500 snap-start">*</span>}
+                        {t("Gender")} {data.gender !== "female" && data.gender !== "male" && <span className="text-rose-500 snap-start">*</span>}
                     </span>
                     <div className="flex rounded-full overflow-hidden border border-foreground border-opacity-60 h-12">
                         <button
@@ -180,7 +180,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                     }`}
                 >
                     <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
-                        {t("Which country are you staying?")}{" "}{!data.stayingCountry && <span className="text-rose-500">*</span>}
+                        {t("Which country are you staying?")} {!data.stayingCountry && <span className="text-rose-500">*</span>}
                     </span>
                     <div
                         className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
@@ -190,8 +190,8 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         {[
                             { value: 1, label: "Cambodia" },
                             { value: 2, label: "Malaysia" },
-                            { value: 3, label: "Singapor" },
-                            { value: 4, label: "Thailand" },
+                            { value: 3, label: "Philippines" },
+                            { value: 4, label: "Singapore" },
                             { value: 5, label: "Vietnam" },
                         ].map((item) => (
                             <div

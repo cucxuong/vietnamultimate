@@ -71,6 +71,7 @@ export default function Registration() {
                     validate={validate}
                     scroll={scroll}
                     isStudent={dataStepGeneral.isStudent}
+                    country={dataStepGeneral.stayingCountry}
                     onChange={(e) => setDataStepAdditional(e)}
                     onValidate={(e) => setValid(e)}
                 />
