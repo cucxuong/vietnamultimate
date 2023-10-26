@@ -12,7 +12,7 @@ import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
 
@@ -134,7 +134,7 @@ export default function Registration() {
                 tournament: VIETNAM_HAT_TOURNAMENT_ID,
                 options: JSON.stringify({
                     info: {
-                      is_student: dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null,
+                        is_student: dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null,
                     },
                     skills: dataStepSkillset,
                     addition: dataStepAdditional,
@@ -223,14 +223,19 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <div>
-                        <div className="text-3xl">Thank you for registered</div>
-                        <div className="text-3xl">Your registration has been successfull</div>
-                        <div>An email with the details was sent to _your_email.</div>
-                        <div>
-                            Contact us via <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a> if you've not received it
+                    <div className="w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
+                        <div className="flex justify-center text-green-600">
+                            <BadgeCheck size={96} strokeWidth={1} />
                         </div>
-                        <pre>{JSON.stringify(submittedData)}</pre>
+                        <div className="text-3xl text-center">{t("Sent successfully")}</div>
+                        <div className="font-medium">
+                            {t("Thank you for registered.")} <br />
+                            {t("An email of details has been sent to {{_email}}.", { _email: "your email" })} {/* submittedData?.email */} <br />
+                            <br />
+                            {t("If you've not received it")}, <br />
+                            {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
+                        </div>
+                        <pre className="text-xs">{JSON.stringify(submittedData)}</pre>
                     </div>
                 ) : (
                     <Main>
