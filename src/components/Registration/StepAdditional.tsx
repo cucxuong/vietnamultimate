@@ -55,7 +55,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
             const jersey = data.jerseys.length * 170000;
             const short = data.shorts.length * 200000;
             const disc = (data.disc) * 200000;
-            return (fixed + lunch + bus + jersey + short + disc) * (isStudent ? 0.75 : 1);
+            return fixed + lunch + bus + jersey + short + disc;
         });
     },[data]);
     return (
