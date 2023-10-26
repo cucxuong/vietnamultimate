@@ -12,7 +12,7 @@ import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
-import { ArrowLeft, ArrowRight, BadgeCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, Loader2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
 
@@ -84,6 +84,7 @@ export default function Registration() {
     const [isShaking, setIsShaking] = useState(false);
     const [delay, setDelay] = useState(false);
     const [delayStart, setDelayStart] = useState(false);
+    const [delaySent, setDelaySent] = useState(false);
     const handleNext = (id: number) => {
         setIsNext(id >= activeStep);
         setValidate(true);
@@ -145,7 +146,11 @@ export default function Registration() {
             const { player_code: playerCode } = response.data.data;
             // This is player code of user to tracking info
             // console.log(playerCode);
-            setSubmittedData(response.data);
+            setDelaySent(true);
+            setTimeout(() => {
+                setSubmittedData(response.data);
+                setDelaySent(false);
+            }, 1000);
         } catch (e) {
             // API-EVENT: Have error
         }
@@ -223,19 +228,26 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <div className="w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
-                        <div className="flex justify-center text-green-600">
-                            <BadgeCheck size={96} strokeWidth={1} />
+                    <Transition
+                        as={Fragment}
+                        show={!delaySent}
+                        enter="transition-all ease-in-out duration-500"
+                        enterFrom={"scale-90 opacity-0"}
+                    >
+                        <div className="w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
+                            <div className="flex justify-center text-green-600">
+                                <BadgeCheck size={96} strokeWidth={1} />
+                            </div>
+                            <div className="text-3xl text-center">{t("Sent successfully")}</div>
+                            <div className="font-medium">
+                                {t("Thank you for registered.")} <br />
+                                {t("An email of details has been sent to {{_email}}.", { _email: "your email" })} {/* submittedData?.email */} <br />
+                                <br />
+                                {t("If you've not received it")}, <br />
+                                {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
+                            </div>
                         </div>
-                        <div className="text-3xl text-center">{t("Sent successfully")}</div>
-                        <div className="font-medium">
-                            {t("Thank you for registered.")} <br />
-                            {t("An email of details has been sent to {{_email}}.", { _email: "your email" })} {/* submittedData?.email */} <br />
-                            <br />
-                            {t("If you've not received it")}, <br />
-                            {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
-                        </div>
-                    </div>
+                    </Transition>
                 ) : (
                     <Main>
                         <Indicator items={steps} active={activeStep} />
@@ -299,7 +311,11 @@ export default function Registration() {
                                         {t("Send the registration")}
                                     </Transition>
                                     {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Next")}</span>}
-                                    <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                                    {delaySent ? (
+                                        <Loader2 size={18} strokeWidth={2.5} className="animate-spin inline-block" />
+                                    ) : (
+                                        <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                                    )}
                                 </button>
                             </div>
                         </div>
