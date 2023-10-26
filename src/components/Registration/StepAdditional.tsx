@@ -331,7 +331,12 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         !useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseBlackJersey(false)}
+                                    onClick={() => {
+                                        setUseBlackJersey(false);
+                                        handleChange('jerseys', [
+                                            ...data.jerseys.filter(e => e.color !== "black"),
+                                        ]);
+                                    }}
                                 >
                                     {!useBlackJersey && (
                                         <span>
@@ -432,7 +437,12 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         !useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseWhiteJersey(false)}
+                                    onClick={() => {
+                                        setUseWhiteJersey(false);
+                                        handleChange('jerseys', [
+                                            ...data.jerseys.filter(e => e.color !== "white"),
+                                        ]);
+                                    }}
                                 >
                                     {!useWhiteJersey && (
                                         <span>
@@ -533,7 +543,12 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         !useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseBlackShort(false)}
+                                    onClick={() => {
+                                        setUseBlackShort(false);
+                                        handleChange('shorts', [
+                                            ...data.shorts.filter(e => e.color !== "black"),
+                                        ]);
+                                    }}
                                 >
                                     {!useBlackShort && (
                                         <span>
@@ -634,7 +649,12 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         !useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseWhiteShort(false)}
+                                    onClick={() => {
+                                        setUseWhiteShort(false);
+                                        handleChange('shorts', [
+                                            ...data.shorts.filter(e => e.color !== "white"),
+                                        ]);
+                                    }}
                                 >
                                     {!useWhiteShort && (
                                         <span>

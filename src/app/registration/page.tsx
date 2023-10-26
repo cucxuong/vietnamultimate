@@ -129,6 +129,9 @@ export default function Registration() {
             const response = await registerTournament({
                 ...dataStepGeneral,
                 options: JSON.stringify({
+                    info: {
+                      is_student: dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null,
+                    },
                     skills: dataStepSkillset,
                     addition: dataStepAdditional,
                 }),
