@@ -14,6 +14,7 @@ import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
+import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
 
 export default function Registration() {
     const { t, i18n } = useAppTranslation();
@@ -128,6 +129,7 @@ export default function Registration() {
             // API-EVENT: Start call API, need loading behavior
             const response = await registerTournament({
                 ...dataStepGeneral,
+                tournament: VIETNAM_HAT_TOURNAMENT_ID,
                 options: JSON.stringify({
                     info: {
                       is_student: dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null,

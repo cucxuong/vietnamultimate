@@ -15,6 +15,7 @@ interface RegisterProps {
     email: string;
     stayingCountry: string;
     isStudent: boolean | null;
+    tournament: string;
     options: string;
 }
 
