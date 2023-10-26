@@ -235,7 +235,6 @@ export default function Registration() {
                             {t("If you've not received it")}, <br />
                             {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
                         </div>
-                        <pre className="text-xs">{JSON.stringify(submittedData)}</pre>
                     </div>
                 ) : (
                     <Main>
