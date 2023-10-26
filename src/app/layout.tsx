@@ -20,8 +20,8 @@ type Props = {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
-            <body className={`${barlow.variable} ${jetbrainsMono.variable} ${barlow.className}`}>
-                <Suspense fallback={<Loading/>}>
+            <body className={`${barlow.variable} ${jetbrainsMono.variable} ${barlow.className} grid-bg`}>
+                <Suspense fallback={<Loading />}>
                     <MainLayout>{children}</MainLayout>
                 </Suspense>
             </body>
