@@ -123,6 +123,8 @@ export default function Registration() {
         }, 10);
     };
 
+    const [submittedData, setSubmittedData] = useState<unknown>();
+
     // Call api register Tournament
     const submitData = async () => {
         try {
@@ -142,7 +144,8 @@ export default function Registration() {
             // API-EVENT: Call API Suucess, Redirect to page success
             const { player_code: playerCode } = response.data.data;
             // This is player code of user to tracking info
-            console.log(playerCode);
+            // console.log(playerCode);
+            setSubmittedData(response.data);
         } catch (e) {
             // API-EVENT: Have error
         }
@@ -164,7 +167,7 @@ export default function Registration() {
                 enterFrom={"translate-y-full opacity-0"}
                 leaveTo={"-translate-y-full"}
             >
-                <div className={`fixed inset-0 light bg-background grid-bg grid lg:grid-cols-2 lg:gap-16 min-w-[15rem] place-content-center`}>
+                <div className={`fixed inset-0 light bg-background grid-bg grid lg:grid-cols-2 lg:gap-16 min-w-[15rem] max-h-[100dvh] overflow-y-auto overflow-x-hidden lg:place-content-center`}>
                     <Transition
                         as={Fragment}
                         show={!loading}
@@ -174,7 +177,7 @@ export default function Registration() {
                         leaveTo={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
                     >
                         <div className="flex justify-center lg:justify-end">
-                            <img src="./heading.svg" className="w-[calc(100dvw)] max-h-[50dvh] max-w-2xl" />
+                            <img src="./heading.svg" className="w-[calc(100dvw)] max-h-[40dvh] max-w-2xl" />
                         </div>
                     </Transition>
                     <Transition
@@ -185,16 +188,29 @@ export default function Registration() {
                         enterFrom={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
                         leaveTo={"translate-y-1/4 lg:translate-y-0 lg:translate-x-1/4 opacity-0"}
                     >
-                        <div className="grid w-full max-w-[15rem] gap-4 m-auto lg:mx-0">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio natus libero doloremque ex odio aliquid sint asperiores dolor ad dignissimos.</p>
-                            <Button onClick={() => handleSelectLang("en")} className={`flex justify-between rounded-full px-6 gap-2`}>
-                                {"English"}
-                                <ArrowRight />
-                            </Button>
-                            <Button onClick={() => handleSelectLang("vi")} className="flex justify-between rounded-full px-6 gap-2">
-                                {"Tiếng Việt"}
-                                <ArrowRight />
-                            </Button>
+                        <div className="grid gap-6 w-full lg:content-center">
+                            <div className="px-8 lg:px-0 text-sm lg:text-base">
+                                {t("Welcome to Vietnam Hat 2023: BLACK & WHITE HAT, an exciting tournament that brings together disc players.")} <br />
+                                {t("Please mark the important information:")}
+                                <ul className="pl-4">
+                                    <li>📆{t("Date: 16-17 December 2023")}</li>
+                                    <li>🕜{t("Time: 7:00 AM - 5:00 PM each day")}</li>
+                                    <li>🟩{t("Location: tbd")}</li>
+                                </ul>
+                                <br />
+                                {t("The player kit would include: Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋 Other items are detailed in the Registration Form.")} <br />
+                                {t("Save the date and secure your spot with us. See you at the 18th Vietnam Hat 2023: BLACK & WHITE HAT")}
+                            </div>
+                            <div className="grid w-full max-w-[15rem] gap-4 m-auto lg:mx-0 sticky bottom-8">
+                                <Button onClick={() => handleSelectLang("en")} className={`flex justify-between rounded-full px-6 gap-2`}>
+                                    {"English"}
+                                    <ArrowRight />
+                                </Button>
+                                <Button onClick={() => handleSelectLang("vi")} className="flex justify-between rounded-full px-6 gap-2">
+                                    {"Tiếng Việt"}
+                                    <ArrowRight />
+                                </Button>
+                            </div>
                         </div>
                     </Transition>
                 </div>
@@ -206,73 +222,85 @@ export default function Registration() {
                 }`}
                 onScroll={(v) => setScroll(v)}
             >
-                <Main>
-                    <Indicator items={steps} active={activeStep} />
-
-                    <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-lg mx-auto pb-6">
-                        {steps.map((step) => (
-                            <div key={step.id} className={isShaking ? "animate-shake-horizontal" : ""}>
-                                <Transition
-                                    as={Fragment}
-                                    show={activeStep === step.id && !delay}
-                                    enter="transition-all ease-in-out duration-200"
-                                    leave="transition-all ease-in-out duration-100"
-                                    enterFrom={isNext ? "translate-x-1/4 opacity-0" : "-translate-x-1/4 opacity-0"}
-                                    leaveTo={isNext ? "-translate-x-1/4 opacity-0" : "translate-x-1/4 opacity-0"}
-                                >
-                                    <div className="">{step.form || step.text}</div>
-                                </Transition>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6">
-                        <div className={`flex justify-center transition-all h-12 ${!scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"}`}>
-                            <button
-                                disabled={isShaking}
-                                className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                    activeStep === steps.length
-                                        ? "left-0 right-[calc(100%_-_3rem)] w-12"
-                                        : `bg-foreground text-background w-12 lg:w-32 ${
-                                              activeStep > 1
-                                                  ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
-                                                  : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
-                                          }`
-                                }`}
-                                onClick={() => handleNext(activeStep - 1)}
-                            >
-                                <ArrowLeft size={18} strokeWidth="2.5" />
-                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Prev")}</span>}
-                            </button>
-                            <button
-                                disabled={isShaking}
-                                className={`bg-foreground text-background rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                    activeStep === steps.length
-                                        ? "right-0 left-16 w-[calc(100%_-_4rem)]"
-                                        : `w-12 lg:w-32 ${
-                                              activeStep > 1
-                                                  ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
-                                                  : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
-                                          }`
-                                }`}
-                                onClick={() => (activeStep === steps.length ? submitData() : handleNext(activeStep + 1))}
-                            >
-                                <Transition
-                                    as="span"
-                                    show={activeStep === steps.length}
-                                    enter="transiton-all ease-in-out"
-                                    entered="font-medium truncate min-w-max"
-                                    enterFrom="opacity-0 w-0"
-                                    leaveTo="opacity-0 w-0"
-                                >
-                                    {t("Send the registration")}
-                                </Transition>
-                                {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Next")}</span>}
-                                <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
-                            </button>
+                {submittedData ? (
+                    <div>
+                        <div className="text-3xl">Thank you for registered</div>
+                        <div className="text-3xl">Your registration has been successfull</div>
+                        <div>An email with the details was sent to _your_email.</div>
+                        <div>
+                            Contact us via <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a> if you've not received it
                         </div>
+                        <pre>{JSON.stringify(submittedData)}</pre>
                     </div>
-                </Main>
+                ) : (
+                    <Main>
+                        <Indicator items={steps} active={activeStep} />
+
+                        <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-lg mx-auto pb-6">
+                            {steps.map((step) => (
+                                <div key={step.id} className={isShaking ? "animate-shake-horizontal" : ""}>
+                                    <Transition
+                                        as={Fragment}
+                                        show={activeStep === step.id && !delay}
+                                        enter="transition-all ease-in-out duration-200"
+                                        leave="transition-all ease-in-out duration-100"
+                                        enterFrom={isNext ? "translate-x-1/4 opacity-0" : "-translate-x-1/4 opacity-0"}
+                                        leaveTo={isNext ? "-translate-x-1/4 opacity-0" : "translate-x-1/4 opacity-0"}
+                                    >
+                                        <div className="">{step.form || step.text}</div>
+                                    </Transition>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6">
+                            <div className={`flex justify-center transition-all h-12 ${!scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"}`}>
+                                <button
+                                    disabled={isShaking}
+                                    className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                        activeStep === steps.length
+                                            ? "left-0 right-[calc(100%_-_3rem)] w-12"
+                                            : `bg-foreground text-background w-12 lg:w-32 ${
+                                                  activeStep > 1
+                                                      ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
+                                                      : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
+                                              }`
+                                    }`}
+                                    onClick={() => handleNext(activeStep - 1)}
+                                >
+                                    <ArrowLeft size={18} strokeWidth="2.5" />
+                                    {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Prev")}</span>}
+                                </button>
+                                <button
+                                    disabled={isShaking}
+                                    className={`bg-foreground text-background rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                        activeStep === steps.length
+                                            ? "right-0 left-16 w-[calc(100%_-_4rem)]"
+                                            : `w-12 lg:w-32 ${
+                                                  activeStep > 1
+                                                      ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
+                                                      : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
+                                              }`
+                                    }`}
+                                    onClick={() => (activeStep === steps.length ? submitData() : handleNext(activeStep + 1))}
+                                >
+                                    <Transition
+                                        as="span"
+                                        show={activeStep === steps.length}
+                                        enter="transiton-all ease-in-out"
+                                        entered="font-medium truncate min-w-max"
+                                        enterFrom="opacity-0 w-0"
+                                        leaveTo="opacity-0 w-0"
+                                    >
+                                        {t("Send the registration")}
+                                    </Transition>
+                                    {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Next")}</span>}
+                                    <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                                </button>
+                            </div>
+                        </div>
+                    </Main>
+                )}
             </ScrollArea>
         </section>
     );
