@@ -124,7 +124,7 @@ export default function Registration() {
         }, 10);
     };
 
-    const [submittedData, setSubmittedData] = useState<unknown>();
+    const [submittedData, setSubmittedData] = useState<any>();
 
     // Call api register Tournament
     const submitData = async () => {
@@ -241,7 +241,7 @@ export default function Registration() {
                             <div className="text-3xl text-center">{t("Sent successfully")}</div>
                             <div className="font-medium">
                                 {t("Thank you for registered.")} <br />
-                                {t("An email of details has been sent to {{_email}}.", { _email: "your email" })} {/* submittedData?.email */} <br />
+                                {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email||"your email" })} <br />
                                 <br />
                                 {t("If you've not received it")}, <br />
                                 {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
