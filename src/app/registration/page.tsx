@@ -182,7 +182,7 @@ export default function Registration() {
                         leaveTo={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
                     >
                         <div className="flex justify-center lg:justify-end">
-                            <img src="./heading.svg" className="w-[calc(100dvw)] max-h-[40dvh] max-w-2xl" />
+                            <img src="./heading.svg" className="w-[calc(100dvw)] max-h-[35dvh] max-w-2xl" />
                         </div>
                     </Transition>
                     <Transition
@@ -196,8 +196,9 @@ export default function Registration() {
                         <div className="grid gap-6 w-full lg:content-center">
                             <div className="px-8 lg:px-0 text-sm lg:text-base">
                                 {t("Welcome to Vietnam Hat 2023: BLACK & WHITE HAT, an exciting tournament that brings together disc players.")} <br />
+                                <br />
                                 {t("Please mark the important information:")}
-                                <ul className="pl-4">
+                                <ul className="pl-4 font-semibold">
                                     <li>📆{t("Date: 16-17 December 2023")}</li>
                                     <li>🕜{t("Time: 7:00 AM - 5:00 PM each day")}</li>
                                     <li>🟩{t("Location: tbd")}</li>
@@ -206,7 +207,7 @@ export default function Registration() {
                                 {t("The player kit would include: Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋 Other items are detailed in the Registration Form.")} <br />
                                 {t("Save the date and secure your spot with us. See you at the 18th Vietnam Hat 2023: BLACK & WHITE HAT")}
                             </div>
-                            <div className="grid w-full max-w-[15rem] gap-4 m-auto lg:mx-0 sticky bottom-8">
+                            <div className="grid w-full max-w-[15rem] gap-4 mx-auto lg:mx-0 sticky bottom-8">
                                 <Button onClick={() => handleSelectLang("en")} className={`flex justify-between rounded-full px-6 gap-2`}>
                                     {"English"}
                                     <ArrowRight />
@@ -228,12 +229,7 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <Transition
-                        as={Fragment}
-                        show={!delaySent}
-                        enter="transition-all ease-in-out duration-500"
-                        enterFrom={"scale-90 opacity-0"}
-                    >
+                    <Transition as={Fragment} show={!delaySent} enter="transition-all ease-in-out duration-500" enterFrom={"scale-90 opacity-0"}>
                         <div className="w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
                             <div className="flex justify-center text-green-600">
                                 <BadgeCheck size={96} strokeWidth={1} />
@@ -241,7 +237,7 @@ export default function Registration() {
                             <div className="text-3xl text-center">{t("Sent successfully")}</div>
                             <div className="font-medium">
                                 {t("Thank you for registered.")} <br />
-                                {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email||"your email" })} <br />
+                                {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email || "your email" })} <br />
                                 <br />
                                 {t("If you've not received it")}, <br />
                                 {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
