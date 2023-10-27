@@ -151,7 +151,7 @@ export default function Registration() {
             setTimeout(() => {
                 setSubmittedData(response.data);
                 setDelaySent(false);
-            }, 1000);
+            }, 2000);
         } catch (e) {
             // API-EVENT: Have error
         }
@@ -266,6 +266,8 @@ export default function Registration() {
                             </div>
                         </div>
                     </Transition>
+                ) : delaySent ? (
+                    <Loading />
                 ) : (
                     <Main>
                         <Indicator items={steps} active={activeStep} />
