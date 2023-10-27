@@ -27,7 +27,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
             <div className="grid grid-cols-1 border rounded-3xl divide-y overflow-hidden bg-background bg-opacity-5 backdrop-blur">
                 <div className="p-4 lg:p-6">
                     <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-2">
-                        <span className="capitalize text-2xl font-medium col-span-full">{dataGeneral.name} {dataGeneral.nickname!==""&&<span>aka {dataGeneral.nickname}</span>}</span>
+                        <span className="capitalize text-2xl font-medium col-span-full">{dataGeneral.name} {dataGeneral.nickname!==""&&<span className="text-base opacity-75 font-normal"><span className="lowercase">aka</span> {dataGeneral.nickname}</span>}</span>
 
                         <span>{t("From")}</span>
                         <span>
