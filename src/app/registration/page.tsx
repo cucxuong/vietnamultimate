@@ -163,7 +163,6 @@ export default function Registration() {
         }, 100);
     }, []);
 
-
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             <Transition
@@ -199,26 +198,45 @@ export default function Registration() {
                     >
                         <div className="grid gap-12 w-full max-w-xl content-start lg:content-center">
                             <div className="px-2 lg:px-0 text-sm lg:text-base grid gap-2">
-                                <p>{t("Welcome to Vietnam Hat 2023: BLACK & WHITE HAT, an exciting tournament that brings together disc players.")}</p>
+                                <p>{t("Welcome to 18th Vietnam BLACK & WHITE Hat 2023, an exciting tournament that brings together disc players.")}</p>
                                 <div>
                                     <p>{t("Please mark the important information:")}</p>
-                                    <ul className="pl-4 font-semibold">
-                                        <li>📆{t("Date: 16-17 December 2023")}</li>
-                                        <li>🕜{t("Time: 7:00 AM - 5:00 PM each day")}</li>
-                                        <li>🟩{t("Location: tbd")}</li>
-                                    </ul>
+                                    <div className="pl-4 font-semibold grid grid-cols-[auto_auto_minmax(0,1fr)] gap-x-2">
+                                        <span>📆</span>
+                                        <span>{t("Date")}:</span>
+                                        <span>{t("16-17 December 2023")}</span>
+
+                                        <span>🕜</span>
+                                        <span>{t("Time")}:</span>
+                                        <span>{t("7:00 AM - 5:00 PM each day")}</span>
+
+                                        <span>🟩</span>
+                                        <span>{t("Location")}:</span>
+                                        <span>TBD (Ho Chi Minh City)</span>
+                                    </div>
                                 </div>
-                                <p>{t("The player kit would include: Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋 Other items are detailed in the Registration Form.")}</p>
-                                <p>{t("Save the date and secure your spot with us. See you at the 18th Vietnam Hat 2023: BLACK & WHITE HAT")}</p>
+                                <p>
+                                    {t("The player kit would include:")} <br />
+                                    {t("Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋")} <br />
+                                    {t("Other items are detailed in the Registration Form.")}
+                                </p>
+                                <p>
+                                    {t("Save the date and secure your spot with us.")} <br />
+                                    {t("See you at the 18th Vietnam BLACK & WHITE Hat 2023")}
+                                </p>
                             </div>
-                            <div className="grid w-full max-w-[15rem] gap-4 mx-auto lg:mx-0 sticky bottom-8">
-                                <Button onClick={() => handleSelectLang("en")} className={`flex justify-between rounded-full px-6 gap-2`}>
-                                    {"English"}
-                                    <ArrowRight />
+                            <div className="grid w-full max-w-xs gap-4 mx-auto lg:mx-0 sticky bottom-8">
+                                <Button onClick={() => handleSelectLang("en")} className={`flex rounded-full px-6 gap-2`}>
+                                    <span className="w-full">English</span>
+                                    <span>
+                                        <ArrowRight size={20} />
+                                    </span>
                                 </Button>
-                                <Button onClick={() => handleSelectLang("vi")} className="flex justify-between rounded-full px-6 gap-2">
-                                    {"Tiếng Việt"}
-                                    <ArrowRight />
+                                <Button onClick={() => handleSelectLang("vi")} className="flex rounded-full px-6 gap-2">
+                                    <span className="w-full">Tiếng Việt</span>
+                                    <span>
+                                        <ArrowRight size={20} />
+                                    </span>
                                 </Button>
                             </div>
                         </div>
