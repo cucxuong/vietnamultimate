@@ -289,7 +289,7 @@ export default function Registration() {
                                     ))}
                                 </div>
 
-                                <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6">
+                                <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6 mx-auto min-w-[112px] lg:min-w-[17rem]">
                                     <div
                                         className={`flex justify-center transition-all h-12 ${
                                             !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
