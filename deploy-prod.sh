@@ -19,4 +19,4 @@ docker run -itd -p 3001:3000 --name $CONTAINER_NAME --network nvnhan-network --n
 
 docker builder prune -a -f
 docker image prune -a -f
-docker continer prune -a -f
+docker container prune -a -f
