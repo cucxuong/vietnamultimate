@@ -13,7 +13,6 @@ type Props = {
 };
 export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }: Props) {
     const { t, i18n } = useAppTranslation();
-    const pts = Math.round((dataSkillset.years + dataSkillset.throwing + dataSkillset.playExp + dataSkillset.fitness + dataSkillset.defense + dataSkillset.cutting + dataSkillset.catching) / 7);
     const [fee, setFee] = useState(
         700000 +
             (dataAdditional.lunch ? 170000 : 0) +
@@ -113,7 +112,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                 {dataGeneral.stayingCountry === "Singapore"
                                     ? "1 SGD = 17'500 VND"
                                     : dataGeneral.stayingCountry === "Malaysia"
-                                    ? "1 MYR = 5'145 VND"
+                                    ? "1 MYR = 5'000 VND"
                                     : dataGeneral.stayingCountry === "Philippines"
                                     ? "1 PHP = 425 VND"
                                     : "1 USD = 24'500 VND"}
@@ -134,7 +133,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                             <span className="text-right">
                                 <span className="font-sans font-medium">≈ </span>
                                 {Intl.NumberFormat("en-US")
-                                    .format(Math.ceil(fee / 5145))
+                                    .format(Math.ceil(fee / 5000))
                                     .replaceAll(",", "'")}{" "}
                                 MYR
                             </span>

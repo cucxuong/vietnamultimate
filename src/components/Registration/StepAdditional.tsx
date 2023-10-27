@@ -7,14 +7,29 @@ import { useAppTranslation } from "@/i18n/client";
 import { ScrollTarget } from "../UIs/ScrollArea";
 import { Button } from "../ui/button";
 
+export enum clothColor {
+    BLACK = "black",
+    WHITE = "white",
+}
+export enum clothSize {
+    S = "s",
+    M = "m",
+    L = "l",
+    XL = "xl",
+    XL2 = "2xl",
+    XL3 = "3xl",
+    XL4 = "4xl",
+    XL5 = "5xl",
+}
+export type Cloth = { id: string; color: clothColor; size: clothSize };
 export type StepAdditionalData = {
     height: string;
     lunch: boolean;
     isVegan: boolean;
     allergies: string;
     bus: boolean;
-    jerseys: { id: string; color: "black" | "white"; size: "s" | "m" | "l" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" }[];
-    shorts: { id: string; color: "black" | "white"; size: "s" | "m" | "l" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" }[];
+    jerseys: Cloth[];
+    shorts: Cloth[];
     disc: number;
 };
 type Props = {
@@ -33,17 +48,21 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
     const [useWhiteJersey, setUseWhiteJersey] = useState(true);
     const [useBlackShort, setUseBlackShort] = useState(true);
     const [useWhiteShort, setUseWhiteShort] = useState(true);
-    const sizeChart = [
-        { size: "s", x: 43, y: 65 },
-        { size: "m", x: 45, y: 67 },
-        { size: "l", x: 47, y: 69 },
-        { size: "xl", x: 49, y: 71 },
-        { size: "2xl", x: 51, y: 73 },
-        { size: "3xl", x: 53, y: 75 },
-        { size: "4xl", x: 55, y: 77 },
-        { size: "5xl", x: 57, y: 79 },
+    const sizeChart: { size: clothSize; x: number; y: number }[] = [
+        { size: clothSize.S, x: 43, y: 65 },
+        { size: clothSize.M, x: 45, y: 67 },
+        { size: clothSize.L, x: 47, y: 69 },
+        { size: clothSize.XL, x: 49, y: 71 },
+        { size: clothSize.XL2, x: 51, y: 73 },
+        { size: clothSize.XL3, x: 53, y: 75 },
+        { size: clothSize.XL4, x: 55, y: 77 },
+        { size: clothSize.XL5, x: 57, y: 79 },
         // { size: "6xl", x: 59, y: 81 },
     ];
+    const [blackJerseys, setBlackJerseys] = useState<Cloth[]>(data.jerseys.filter((j) => j.color === clothColor.BLACK));
+    const [whiteJerseys, setWhiteJerseys] = useState<Cloth[]>(data.jerseys.filter((j) => j.color === clothColor.WHITE));
+    const [blackShorts, setBlackShorts] = useState<Cloth[]>(data.shorts.filter((s) => s.color === clothColor.BLACK));
+    const [whiteShorts, setWhiteShorts] = useState<Cloth[]>(data.shorts.filter((s) => s.color === clothColor.WHITE));
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
@@ -54,10 +73,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
             const bus = data.bus ? 200000 : 0;
             const jersey = data.jerseys.length * 170000;
             const short = data.shorts.length * 200000;
-            const disc = (data.disc) * 200000;
+            const disc = data.disc * 200000;
             return fixed + lunch + bus + jersey + short + disc;
         });
-    },[data]);
+    }, [data]);
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3
@@ -317,7 +336,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseBlackJersey(true)}
+                                    onClick={() => {
+                                        setUseBlackJersey(true);
+                                        handleChange("jerseys", [...blackJerseys, ...data.jerseys]);
+                                    }}
                                 >
                                     {useBlackJersey && (
                                         <span>
@@ -333,9 +355,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     }`}
                                     onClick={() => {
                                         setUseBlackJersey(false);
-                                        handleChange('jerseys', [
-                                            ...data.jerseys.filter(e => e.color !== "black"),
-                                        ]);
+                                        handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.BLACK)]);
                                     }}
                                 >
                                     {!useBlackJersey && (
@@ -374,7 +394,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
                                                         className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
-                                                            data.jerseys.filter((e) => e.color === "black" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
@@ -383,11 +403,13 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() =>
-                                                            handleChange("jerseys", [
-                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === "black" && s.size === j.size)?.id || "")),
-                                                            ])
-                                                        }
+                                                        onClick={() => {
+                                                            const val = [
+                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || "")),
+                                                            ];
+                                                            handleChange("jerseys", [...val]);
+                                                            setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Minus size={18} />
@@ -395,14 +417,18 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </button>
                                                     <div
                                                         className={`grid place-content-center ${
-                                                            data.jerseys.filter((e) => e.color === "black" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
-                                                        <span>{data.jerseys.filter((e) => e.color === "black" && e.size === j.size).length}</span>
+                                                        <span>{data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() => handleChange("jerseys", [{ id: `j-${Math.round(Math.random() * 100)}`, color: "black", size: j.size }, ...data.jerseys])}
+                                                        onClick={() => {
+                                                            const val: Cloth[] = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.BLACK, size: j.size }, ...data.jerseys];
+                                                            handleChange("jerseys", [...val]);
+                                                            setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Plus size={18} />
@@ -423,7 +449,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseWhiteJersey(true)}
+                                    onClick={() => {
+                                        setUseWhiteJersey(true);
+                                        handleChange("jerseys", [...whiteJerseys, ...data.jerseys]);
+                                    }}
                                 >
                                     {useWhiteJersey && (
                                         <span>
@@ -439,9 +468,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     }`}
                                     onClick={() => {
                                         setUseWhiteJersey(false);
-                                        handleChange('jerseys', [
-                                            ...data.jerseys.filter(e => e.color !== "white"),
-                                        ]);
+                                        handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.WHITE)]);
                                     }}
                                 >
                                     {!useWhiteJersey && (
@@ -480,7 +507,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
                                                         className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
-                                                            data.jerseys.filter((e) => e.color === "white" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
@@ -489,11 +516,13 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() =>
-                                                            handleChange("jerseys", [
-                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === "white" && s.size === j.size)?.id || "")),
-                                                            ])
-                                                        }
+                                                        onClick={() => {
+                                                            const val = [
+                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || "")),
+                                                            ];
+                                                            handleChange("jerseys", [...val]);
+                                                            setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Minus size={18} />
@@ -501,14 +530,18 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </button>
                                                     <div
                                                         className={`grid place-content-center ${
-                                                            data.jerseys.filter((e) => e.color === "white" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
-                                                        <span>{data.jerseys.filter((e) => e.color === "white" && e.size === j.size).length}</span>
+                                                        <span>{data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() => handleChange("jerseys", [{ id: `j-${Math.round(Math.random() * 100)}`, color: "white", size: j.size }, ...data.jerseys])}
+                                                        onClick={() => {
+                                                            const val = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.WHITE, size: j.size }, ...data.jerseys];
+                                                            handleChange("jerseys", [...val]);
+                                                            setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Plus size={18} />
@@ -529,7 +562,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseBlackShort(true)}
+                                    onClick={() => {
+                                        setUseBlackShort(true);
+                                        handleChange("shorts", [...blackShorts, ...data.shorts]);
+                                    }}
                                 >
                                     {useBlackShort && (
                                         <span>
@@ -545,9 +581,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     }`}
                                     onClick={() => {
                                         setUseBlackShort(false);
-                                        handleChange('shorts', [
-                                            ...data.shorts.filter(e => e.color !== "black"),
-                                        ]);
+                                        handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.BLACK)]);
                                     }}
                                 >
                                     {!useBlackShort && (
@@ -586,7 +620,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
                                                         className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
-                                                            data.shorts.filter((e) => e.color === "black" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
@@ -595,11 +629,11 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() =>
-                                                            handleChange("shorts", [
-                                                                ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === "black" && s.size === j.size)?.id || "")),
-                                                            ])
-                                                        }
+                                                        onClick={() => {
+                                                            const val = [...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || ""))];
+                                                            handleChange("shorts", [...val]);
+                                                            setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Minus size={18} />
@@ -607,14 +641,18 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </button>
                                                     <div
                                                         className={`grid place-content-center ${
-                                                            data.shorts.filter((e) => e.color === "black" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
-                                                        <span>{data.shorts.filter((e) => e.color === "black" && e.size === j.size).length}</span>
+                                                        <span>{data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() => handleChange("shorts", [{ id: `j-${Math.round(Math.random() * 100)}`, color: "black", size: j.size }, ...data.shorts])}
+                                                        onClick={() => {
+                                                            const val = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.BLACK, size: j.size }, ...data.shorts];
+                                                            handleChange("shorts", [...val]);
+                                                            setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Plus size={18} />
@@ -635,7 +673,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
                                         useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
                                     }`}
-                                    onClick={() => setUseWhiteShort(true)}
+                                    onClick={() => {
+                                        setUseWhiteShort(true);
+                                        handleChange("shorts", [...whiteShorts, ...data.shorts]);
+                                    }}
                                 >
                                     {useWhiteShort && (
                                         <span>
@@ -651,9 +692,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                     }`}
                                     onClick={() => {
                                         setUseWhiteShort(false);
-                                        handleChange('shorts', [
-                                            ...data.shorts.filter(e => e.color !== "white"),
-                                        ]);
+                                        handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.WHITE)]);
                                     }}
                                 >
                                     {!useWhiteShort && (
@@ -692,7 +731,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
                                                         className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
-                                                            data.shorts.filter((e) => e.color === "white" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
@@ -701,11 +740,11 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() =>
-                                                            handleChange("shorts", [
-                                                                ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === "white" && s.size === j.size)?.id || "")),
-                                                            ])
-                                                        }
+                                                        onClick={() => {
+                                                            const val = [...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || ""))];
+                                                            handleChange("shorts", [...val]);
+                                                            setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Minus size={18} />
@@ -713,14 +752,18 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     </button>
                                                     <div
                                                         className={`grid place-content-center ${
-                                                            data.shorts.filter((e) => e.color === "white" && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                            data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
-                                                        <span>{data.shorts.filter((e) => e.color === "white" && e.size === j.size).length}</span>
+                                                        <span>{data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
-                                                        onClick={() => handleChange("shorts", [{ id: `j-${Math.round(Math.random() * 100)}`, color: "white", size: j.size }, ...data.shorts])}
+                                                        onClick={() => {
+                                                            const val = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.WHITE, size: j.size }, ...data.shorts]
+                                                            handleChange("shorts", [...val]);
+                                                            setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                        }}
                                                     >
                                                         <span>
                                                             <Plus size={18} />

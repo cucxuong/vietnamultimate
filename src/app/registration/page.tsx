@@ -3,7 +3,7 @@
 import { fetchTournamentInfo, registerTournament } from "@/api/register";
 import Main from "@/components/Home/Main";
 import Indicator, { IndicatorItem } from "@/components/Registration/Indicator";
-import StepAdditional, { StepAdditionalData } from "@/components/Registration/StepAdditional";
+import StepAdditional, { StepAdditionalData, clothColor, clothSize } from "@/components/Registration/StepAdditional";
 import StepFinish from "@/components/Registration/StepFinish";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
@@ -15,6 +15,7 @@ import { Transition } from "@headlessui/react";
 import { ArrowLeft, ArrowRight, BadgeCheck, Loader2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
+import { Cloud } from "@phosphor-icons/react";
 
 export default function Registration() {
     const { t, i18n } = useAppTranslation();
@@ -49,8 +50,8 @@ export default function Registration() {
         allergies: "",
         bus: true,
         jerseys: [
-            { id: "j-1", color: "black", size: "m" },
-            { id: "j-2", color: "white", size: "m" },
+            { id: "j-1", color: clothColor.BLACK, size: clothSize.M },
+            { id: "j-2", color: clothColor.WHITE, size: clothSize.M },
         ],
         shorts: [],
         disc: 1,
@@ -162,6 +163,7 @@ export default function Registration() {
         }, 100);
     }, []);
 
+
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             <Transition
@@ -172,7 +174,9 @@ export default function Registration() {
                 enterFrom={"translate-y-full opacity-0"}
                 leaveTo={"-translate-y-full"}
             >
-                <div className={`fixed inset-0 light bg-background grid-bg grid lg:grid-cols-2 lg:gap-16 min-w-[15rem] max-h-[100dvh] overflow-y-auto overflow-x-hidden lg:place-content-center`}>
+                <div
+                    className={`fixed top-0 left-0 light bg-background grid-bg grid grid-cols-1 lg:grid-cols-2 lg:gap-12 w-[100dvw] h-[100dvh] overflow-y-auto overflow-x-hidden lg:place-content-center p-6`}
+                >
                     <Transition
                         as={Fragment}
                         show={!loading}
@@ -181,8 +185,8 @@ export default function Registration() {
                         enterFrom={"translate-y-1/4 lg:translate-y-0 lg:translate-x-1/4 opacity-0"}
                         leaveTo={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
                     >
-                        <div className="flex justify-center lg:justify-end">
-                            <img src="./heading.svg" className="w-[calc(100dvw)] max-h-[35dvh] max-w-2xl" />
+                        <div className="flex justify-center lg:justify-end relative">
+                            <img src="./heading.svg" className="w-full max-h-[35dvh] max-w-2xl" />
                         </div>
                     </Transition>
                     <Transition
@@ -193,19 +197,19 @@ export default function Registration() {
                         enterFrom={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
                         leaveTo={"translate-y-1/4 lg:translate-y-0 lg:translate-x-1/4 opacity-0"}
                     >
-                        <div className="grid gap-6 w-full lg:content-center">
-                            <div className="px-8 lg:px-0 text-sm lg:text-base">
-                                {t("Welcome to Vietnam Hat 2023: BLACK & WHITE HAT, an exciting tournament that brings together disc players.")} <br />
-                                <br />
-                                {t("Please mark the important information:")}
-                                <ul className="pl-4 font-semibold">
-                                    <li>📆{t("Date: 16-17 December 2023")}</li>
-                                    <li>🕜{t("Time: 7:00 AM - 5:00 PM each day")}</li>
-                                    <li>🟩{t("Location: tbd")}</li>
-                                </ul>
-                                <br />
-                                {t("The player kit would include: Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋 Other items are detailed in the Registration Form.")} <br />
-                                {t("Save the date and secure your spot with us. See you at the 18th Vietnam Hat 2023: BLACK & WHITE HAT")}
+                        <div className="grid gap-12 w-full max-w-xl content-start lg:content-center">
+                            <div className="px-2 lg:px-0 text-sm lg:text-base grid gap-2">
+                                <p>{t("Welcome to Vietnam Hat 2023: BLACK & WHITE HAT, an exciting tournament that brings together disc players.")}</p>
+                                <div>
+                                    <p>{t("Please mark the important information:")}</p>
+                                    <ul className="pl-4 font-semibold">
+                                        <li>📆{t("Date: 16-17 December 2023")}</li>
+                                        <li>🕜{t("Time: 7:00 AM - 5:00 PM each day")}</li>
+                                        <li>🟩{t("Location: tbd")}</li>
+                                    </ul>
+                                </div>
+                                <p>{t("The player kit would include: Field⛳; Medic👨🏻‍⚕️; Beverage🥤; Fruits 🍌and Snack🥪🤤😋 Other items are detailed in the Registration Form.")}</p>
+                                <p>{t("Save the date and secure your spot with us. See you at the 18th Vietnam Hat 2023: BLACK & WHITE HAT")}</p>
                             </div>
                             <div className="grid w-full max-w-[15rem] gap-4 mx-auto lg:mx-0 sticky bottom-8">
                                 <Button onClick={() => handleSelectLang("en")} className={`flex justify-between rounded-full px-6 gap-2`}>
