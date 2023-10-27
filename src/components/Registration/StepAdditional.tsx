@@ -375,8 +375,19 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="grid place-content-center bg-secondary rounded-2xl">
-                                        <Image size="200" weight="fill" className="opacity-10" />
+                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
                                     </div>
 
                                     <div className="grid">
@@ -488,8 +499,19 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="grid place-content-center bg-secondary rounded-2xl">
-                                        <Image size="200" weight="fill" className="opacity-10" />
+                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
                                     </div>
 
                                     <div className="grid">
@@ -601,8 +623,19 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="grid place-content-center bg-secondary rounded-2xl">
-                                        <Image size="200" weight="fill" className="opacity-10" />
+                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
                                     </div>
 
                                     <div className="grid">
@@ -712,8 +745,19 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="grid place-content-center bg-secondary rounded-2xl">
-                                        <Image size="200" weight="fill" className="opacity-10" />
+                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
+                                        <div className="snap-center">
+                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        </div>
                                     </div>
 
                                     <div className="grid">
@@ -760,7 +804,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                                     <button
                                                         className="grid place-content-center"
                                                         onClick={() => {
-                                                            const val = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.WHITE, size: j.size }, ...data.shorts]
+                                                            const val = [{ id: `j-${Math.round(Math.random() * 100)}`, color: clothColor.WHITE, size: j.size }, ...data.shorts];
                                                             handleChange("shorts", [...val]);
                                                             setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
                                                         }}
