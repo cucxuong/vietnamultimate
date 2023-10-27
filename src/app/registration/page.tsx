@@ -225,7 +225,7 @@ export default function Registration() {
                                     {t("See you at the 18th Vietnam BLACK & WHITE Hat 2023")}
                                 </p>
                             </div>
-                            <div className="grid w-full max-w-xs gap-4 mx-auto lg:mx-0 sticky bottom-6">
+                            <div className="grid w-full max-w-xs gap-4 mx-auto lg:mx-0 sticky bottom-2 content-end">
                                 <Button onClick={() => handleSelectLang("en")} className={`flex rounded-full px-6 gap-2`}>
                                     <span className="w-full">English</span>
                                     <span>
