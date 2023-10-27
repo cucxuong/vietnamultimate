@@ -251,95 +251,101 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <Transition as={Fragment} show={!delaySent} enter="transition-all ease-in-out duration-500" enterFrom={"scale-90 opacity-0"}>
-                        <div className="w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
-                            <div className="flex justify-center text-green-600">
-                                <BadgeCheck size={96} strokeWidth={1} />
-                            </div>
-                            <div className="text-3xl text-center">{t("Sent successfully")}</div>
-                            <div className="font-medium">
-                                {t("Thank you for registered.")} <br />
-                                {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email || "your email" })} <br />
-                                <br />
-                                {t("If you've not received it")}, <br />
-                                {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
-                            </div>
+                    <div className="animate-scale-in w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
+                        <div className="flex justify-center text-green-600">
+                            <BadgeCheck size={96} strokeWidth={1} />
                         </div>
-                    </Transition>
-                ) : delaySent ? (
-                    <Loading />
+                        <div className="text-3xl text-center">{t("Sent successfully")}</div>
+                        <div className="font-medium">
+                            {t("Thank you for registered.")} <br />
+                            {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email || "your email" })} <br />
+                            <br />
+                            {t("If you've not received it")}, <br />
+                            {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
+                        </div>
+                    </div>
                 ) : (
-                    <Main>
-                        <Indicator items={steps} active={activeStep} />
+                    <>
+                        {delaySent ? (
+                            <Loading />
+                        ) : (
+                            <Main>
+                                <Indicator items={steps} active={activeStep} />
 
-                        <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-lg mx-auto pb-6">
-                            {steps.map((step) => (
-                                <div key={step.id} className={isShaking ? "animate-shake-horizontal" : ""}>
-                                    <Transition
-                                        as={Fragment}
-                                        show={activeStep === step.id && !delay}
-                                        enter="transition-all ease-in-out duration-200"
-                                        leave="transition-all ease-in-out duration-100"
-                                        enterFrom={isNext ? "translate-x-1/4 opacity-0" : "-translate-x-1/4 opacity-0"}
-                                        leaveTo={isNext ? "-translate-x-1/4 opacity-0" : "translate-x-1/4 opacity-0"}
-                                    >
-                                        <div className="">{step.form || step.text}</div>
-                                    </Transition>
+                                <div className="relative min-h-[calc(100dvh_-_6rem)] w-full max-w-screen-lg mx-auto pb-6">
+                                    {steps.map((step) => (
+                                        <div key={step.id} className={isShaking ? "animate-shake-horizontal" : ""}>
+                                            <Transition
+                                                as={Fragment}
+                                                show={activeStep === step.id && !delay}
+                                                enter="transition-all ease-in-out duration-200"
+                                                leave="transition-all ease-in-out duration-100"
+                                                enterFrom={isNext ? "translate-x-1/4 opacity-0" : "-translate-x-1/4 opacity-0"}
+                                                leaveTo={isNext ? "-translate-x-1/4 opacity-0" : "translate-x-1/4 opacity-0"}
+                                            >
+                                                <div className="">{step.form || step.text}</div>
+                                            </Transition>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
 
-                        <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6">
-                            <div className={`flex justify-center transition-all h-12 ${!scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"}`}>
-                                <button
-                                    disabled={isShaking}
-                                    className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                        activeStep === steps.length
-                                            ? "left-0 right-[calc(100%_-_3rem)] w-12"
-                                            : `bg-foreground text-background w-12 lg:w-32 ${
-                                                  activeStep > 1
-                                                      ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
-                                                      : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
-                                              }`
-                                    }`}
-                                    onClick={() => handleNext(activeStep - 1)}
-                                >
-                                    <ArrowLeft size={18} strokeWidth="2.5" />
-                                    {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Prev")}</span>}
-                                </button>
-                                <button
-                                    disabled={isShaking}
-                                    className={`bg-foreground text-background rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
-                                        activeStep === steps.length
-                                            ? "right-0 left-16 w-[calc(100%_-_4rem)]"
-                                            : `w-12 lg:w-32 ${
-                                                  activeStep > 1
-                                                      ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
-                                                      : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
-                                              }`
-                                    }`}
-                                    onClick={() => (activeStep === steps.length ? submitData() : handleNext(activeStep + 1))}
-                                >
-                                    <Transition
-                                        as="span"
-                                        show={activeStep === steps.length}
-                                        enter="transiton-all ease-in-out"
-                                        entered="font-medium truncate min-w-max"
-                                        enterFrom="opacity-0 w-0"
-                                        leaveTo="opacity-0 w-0"
+                                <div className="flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6">
+                                    <div
+                                        className={`flex justify-center transition-all h-12 ${
+                                            !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
+                                        }`}
                                     >
-                                        {t("Send the registration")}
-                                    </Transition>
-                                    {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Next")}</span>}
-                                    {delaySent ? (
-                                        <Loader2 size={18} strokeWidth={2.5} className="animate-spin inline-block" />
-                                    ) : (
-                                        <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                    </Main>
+                                        <button
+                                            disabled={isShaking}
+                                            className={`rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                                activeStep === steps.length
+                                                    ? "left-0 right-[calc(100%_-_3rem)] w-12"
+                                                    : `bg-foreground text-background w-12 lg:w-32 ${
+                                                          activeStep > 1
+                                                              ? "right-[calc(50%_+_0.5rem)] left-[calc(50%_-_3.5rem)] lg:left-[calc(50%_-_8.5rem)]"
+                                                              : "right-[calc(50%_-_1.5rem)] left-[calc(50%_-_1.5rem)] lg:right-[calc(50%_-_4rem)] lg:left-[calc(50%_-_4rem)]"
+                                                      }`
+                                            }`}
+                                            onClick={() => handleNext(activeStep - 1)}
+                                        >
+                                            <ArrowLeft size={18} strokeWidth="2.5" />
+                                            {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Prev")}</span>}
+                                        </button>
+                                        <button
+                                            disabled={isShaking}
+                                            className={`bg-foreground text-background rounded-full h-12 flex items-center gap-2 justify-center disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:backdrop-blur active:scale-95 absolute top-0 transition-all ${
+                                                activeStep === steps.length
+                                                    ? "right-0 left-16 w-[calc(100%_-_4rem)]"
+                                                    : `w-12 lg:w-32 ${
+                                                          activeStep > 1
+                                                              ? "left-[calc(50%_+_0.5rem)] right-[calc(50%_-_3.5rem)] lg:right-[calc(50%_-_8.5rem)]"
+                                                              : "left-[calc(50%_-_1.5rem)] right-[calc(50%_-_1.5rem)] lg:left-[calc(50%_-_4rem)] lg:right-[calc(50%_-_4rem)]"
+                                                      }`
+                                            }`}
+                                            onClick={() => (activeStep === steps.length ? submitData() : handleNext(activeStep + 1))}
+                                        >
+                                            <Transition
+                                                as="span"
+                                                show={activeStep === steps.length}
+                                                enter="transiton-all ease-in-out"
+                                                entered="font-medium truncate min-w-max"
+                                                enterFrom="opacity-0 w-0"
+                                                leaveTo="opacity-0 w-0"
+                                            >
+                                                {t("Send the registration")}
+                                            </Transition>
+                                            {activeStep < steps.length && <span className="hidden lg:inline leading-none font-medium">{t("Next")}</span>}
+                                            {delaySent ? (
+                                                <Loader2 size={18} strokeWidth={2.5} className="animate-spin inline-block" />
+                                            ) : (
+                                                <ArrowRight size={18} strokeWidth="2.5" className={`inline-block transition-all ${activeStep < steps.length ? "" : "-rotate-45"}`} />
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+                            </Main>
+                        )}
+                    </>
                 )}
             </ScrollArea>
         </section>
