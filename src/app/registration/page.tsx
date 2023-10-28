@@ -12,10 +12,10 @@ import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
-import { ArrowLeft, ArrowRight, BadgeCheck, Loader2 } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, BadgeCheck, Loader2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
-import { Cloud } from "@phosphor-icons/react";
+import { Cloud, SealCheck } from "@phosphor-icons/react";
 
 export default function Registration() {
     const { t, i18n } = useAppTranslation();
@@ -42,6 +42,7 @@ export default function Registration() {
         fitness: 0,
         playExp: 0,
         beACaptain: 0,
+        team: "",
     });
     const [dataStepAdditional, setDataStepAdditional] = useState<StepAdditionalData>({
         height: "",
@@ -146,7 +147,7 @@ export default function Registration() {
             // API-EVENT: Call API Suucess, Redirect to page success
             const { player_code: playerCode } = response.data.data;
             // This is player code of user to tracking info
-            // console.log(playerCode);
+            console.log(playerCode);
             setDelaySent(true);
             setTimeout(() => {
                 setSubmittedData(response.data);
@@ -173,19 +174,17 @@ export default function Registration() {
                 enterFrom={"translate-y-full opacity-0"}
                 leaveTo={"-translate-y-full"}
             >
-                <div
-                    className={`fixed top-0 left-0 light bg-background grid-bg grid grid-cols-1 lg:grid-cols-2 lg:gap-12 w-[100dvw] h-[100dvh] overflow-y-auto overflow-x-hidden lg:place-content-center p-6`}
-                >
+                <div className={`fixed top-0 left-0 light bg-background grid-bg grid grid-cols-1 gap-12 w-[100dvw] h-[100dvh] overflow-y-auto overflow-x-hidden place-content-center p-6`}>
                     <Transition
                         as={Fragment}
                         show={!loading}
                         enter="transition-all ease-in-out duration-200"
                         leave="transition-all ease-in-out duration-100"
-                        enterFrom={"translate-y-1/4 lg:translate-y-0 lg:translate-x-1/4 opacity-0"}
-                        leaveTo={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
+                        enterFrom={"translate-y-1/4 opacity-0"}
+                        leaveTo={"-translate-y-1/4 opacity-0"}
                     >
-                        <div className="flex justify-center lg:justify-end relative">
-                            <img src="./heading.svg" className="w-full max-h-[35dvh] max-w-2xl" />
+                        <div className="flex justify-center relative">
+                            <img src="./heading.svg" className="w-full max-h-[50dvh] max-w-2xl" />
                         </div>
                     </Transition>
                     <Transition
@@ -193,10 +192,10 @@ export default function Registration() {
                         show={!loading}
                         enter="transition-all ease-in-out duration-200"
                         leave="transition-all ease-in-out duration-100"
-                        enterFrom={"-translate-y-1/4 lg:translate-y-0 lg:-translate-x-1/4 opacity-0"}
-                        leaveTo={"translate-y-1/4 lg:translate-y-0 lg:translate-x-1/4 opacity-0"}
+                        enterFrom={"-translate-y-1/4 opacity-0"}
+                        leaveTo={"translate-y-1/4 opacity-0"}
                     >
-                        <div className="grid gap-12 w-full max-w-xl content-start lg:content-center">
+                        {/* <div className="grid gap-12 w-full max-w-xl content-start lg:content-center">
                             <div className="px-2 lg:px-0 text-sm lg:text-base grid gap-2">
                                 <p>{t("Welcome to 18th Vietnam BLACK & WHITE Hat 2023, an exciting tournament that brings together disc players.")}</p>
                                 <div>
@@ -225,20 +224,20 @@ export default function Registration() {
                                     {t("See you at the 18th Vietnam BLACK & WHITE Hat 2023")}
                                 </p>
                             </div>
-                            <div className="grid w-full max-w-xs gap-4 mx-auto lg:mx-0 sticky bottom-2 content-end">
-                                <Button onClick={() => handleSelectLang("en")} className={`flex rounded-full px-6 gap-2`}>
-                                    <span className="w-full">English</span>
-                                    <span>
-                                        <ArrowRight size={20} />
-                                    </span>
-                                </Button>
-                                <Button onClick={() => handleSelectLang("vi")} className="flex rounded-full px-6 gap-2">
-                                    <span className="w-full">Tiếng Việt</span>
-                                    <span>
-                                        <ArrowRight size={20} />
-                                    </span>
-                                </Button>
-                            </div>
+                        </div> */}
+                        <div className="grid w-full max-w-xs gap-4 mx-auto sticky bottom-2 content-end">
+                            <Button onClick={() => handleSelectLang("en")} className={`flex rounded-full px-6 gap-2`}>
+                                <span className="w-full">English</span>
+                                <span>
+                                    <ArrowDown size={20} />
+                                </span>
+                            </Button>
+                            <Button onClick={() => handleSelectLang("vi")} className="flex rounded-full px-6 gap-2">
+                                <span className="w-full">Tiếng Việt</span>
+                                <span>
+                                    <ArrowDown size={20} />
+                                </span>
+                            </Button>
                         </div>
                     </Transition>
                 </div>
@@ -251,17 +250,42 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <div className="animate-scale-in w-full max-w-xs mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
+                    <div className="animate-scale-in w-full max-w-xs lg:max-w-xl mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
                         <div className="flex justify-center text-green-600">
-                            <BadgeCheck size={96} strokeWidth={1} />
+                            <SealCheck size={96} weight="fill" />
                         </div>
                         <div className="text-3xl text-center">{t("Sent successfully")}</div>
-                        <div className="font-medium">
-                            {t("Thank you for registered.")} <br />
-                            {t("An email of details has been sent to {{_email}}.", { _email: submittedData.email || "your email" })} <br />
+                        <div>
+                            <span>{t("Thank you for registered.")}</span> <br /> <br />
+                            <p className="font-medium">
+                                <span className="text-yellow-500 font-semibold">{t("IMPORTANT")}: </span>
+                                <br />
+                                {submittedData?.stayingCountry === "Vietnam" ||
+                                submittedData?.stayingCountry === "Singapore" ||
+                                submittedData?.stayingCountry === "Malaysia" ||
+                                submittedData?.stayingCountry === "Cambodia" ||
+                                submittedData?.stayingCountry === "Philippines" ? (
+                                    <span>{t("You need to make the full payment within 7 days of your registered date")}.</span>
+                                ) : (
+                                    <span>{t("You need to provide us an evidence of your flight booking within 7 days of your registered date")}.</span>
+                                )}
+                            </p>
+                            <br />
+                            {t("An email of details has been sent to your email")}. <br />
+                            {t("Please check it in your inbox or even the sneaky Junk box to not miss out")}. <br />
                             <br />
                             {t("If you've not received it")}, <br />
-                            {t("Contact us via")} <a href="mailto:vietnamhat.ultimate@gmail.com">vietnamhat.ultimate@gmail.com</a>.
+                            {t("Contact us via")}: <br />
+                            {t("Email")}:{" "}
+                            <a href="mailto:vietnamhat.ultimate@gmail.com" target="_blank">
+                                vietnamhat.ultimate@gmail.com
+                            </a>
+                            <br />
+                            {t("Fanpage")}:{" "}
+                            <a href="https://www.facebook.com/VietNamHatCNH" target="_blank">
+                                Vietnam HAT 2023
+                            </a>
+                            <br />
                         </div>
                     </div>
                 ) : (
@@ -289,7 +313,11 @@ export default function Registration() {
                                     ))}
                                 </div>
 
-                                <div className={`flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6 ${activeStep === steps.length?"min-w-full":"min-w-[112px] lg:min-w-[17rem]"} mx-auto`}>
+                                <div
+                                    className={`flex justify-center transition-all overflow-hidden sticky bottom-0 z-20 -mb-6 pb-6 ${
+                                        activeStep === steps.length ? "min-w-full" : "min-w-[112px] lg:min-w-[17rem]"
+                                    } mx-auto`}
+                                >
                                     <div
                                         className={`flex justify-center transition-all h-12 ${
                                             !scroll.isDown && scroll.top + 24 < scroll.bottom ? "translate-y-full opacity-0 delay-200" : "delay-300"
