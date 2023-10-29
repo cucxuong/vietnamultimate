@@ -250,7 +250,7 @@ export default function Registration() {
                 onScroll={(v) => setScroll(v)}
             >
                 {submittedData ? (
-                    <div className="animate-scale-in w-full max-w-xs lg:max-w-xl mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
+                    <div className="animate-scale-in-center w-full max-w-xs lg:max-w-xl mt-24 mx-auto rounded-3xl bg-primary bg-opacity-5 backdrop-blur grid place-content-center gap-4 p-6">
                         <div className="flex justify-center text-green-600">
                             <SealCheck size={96} weight="fill" />
                         </div>
