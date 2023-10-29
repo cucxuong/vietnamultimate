@@ -376,17 +376,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
                                     <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        <div className="snap-center w-full">
+                                            <img src="./VNHAT2023-(Front-View).png" alt="" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
 
@@ -500,17 +491,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
                                     <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        <div className="snap-center w-full">
+                                            <img src="./VNHAT2023-W-(Front-View).png" alt="" className="w-full h-full object-contain" />
                                         </div>
                                     </div>
 
@@ -624,17 +606,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
                                     <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        <div className="snap-center w-full">
+                                            <img src="./blackshorts.png" alt="" className="w-full h-full object-contain" />
                                         </div>
                                     </div>
 
@@ -746,17 +719,8 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
                                     <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
-                                        </div>
-                                        <div className="snap-center">
-                                            <Image size="200" weight="fill" className="opacity-10" />
+                                        <div className="snap-center w-full">
+                                            <img src="./whiteshorts.png" alt="" className="w-full h-full object-contain" />
                                         </div>
                                     </div>
 
@@ -825,8 +789,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                     <div className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                         <div className="text-2xl font-medium">{t("Tournament disc")}</div>
                         <div className="grid lg:gap-6 gap-4 w-full max-w-lg mx-auto">
-                            <div className="grid place-content-center bg-secondary rounded-2xl">
-                                <Image size="200" weight="fill" className="opacity-10" />
+                            <div className="grid place-content-center bg-secondary rounded-2xl overflow-hidden">
+                                <div className="snap-center w-full">
+                                    <img src="./VNHAT2023-Disc.png" alt="" className="w-full h-full object-contain" />
+                                </div>
                             </div>
 
                             <div className="flex flex-wrap justify-center items-center">
