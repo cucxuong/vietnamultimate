@@ -55,7 +55,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                         <span>{t("Base")}</span>
                         <span className="font-mono">{Intl.NumberFormat("en-US").format(700000).replaceAll(",", "'")} VND</span>
                     </div>
-                    <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
+                    {dataAdditional.lunch&&<div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
                         <span>{t("Lunch")}</span>
                         <span className="font-mono">
                             {Intl.NumberFormat("en-US")
@@ -63,8 +63,8 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                 .replaceAll(",", "'")}{" "}
                             VND
                         </span>
-                    </div>
-                    <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
+                    </div>}
+                    {dataAdditional.bus&&<div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
                         <span>{t("Shuttle Bus")}</span>
                         <span className="font-mono">
                             {Intl.NumberFormat("en-US")
@@ -72,8 +72,8 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                 .replaceAll(",", "'")}{" "}
                             VND
                         </span>
-                    </div>
-                    <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
+                    </div>}
+                    {dataAdditional.jerseys.length>0&&<div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
                         <span>
                             {dataAdditional.jerseys.length} x {t("Jersey")}
                         </span>
@@ -83,8 +83,8 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                 .replaceAll(",", "'")}{" "}
                             VND
                         </span>
-                    </div>
-                    <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
+                    </div>}
+                    {dataAdditional.shorts.length>0&&<div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
                         <span>
                             {dataAdditional.shorts.length} x {t("Shorts")}
                         </span>
@@ -94,18 +94,20 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                 .replaceAll(",", "'")}{" "}
                             VND
                         </span>
-                    </div>
-                    <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
-                        <span>
-                            {dataAdditional.disc} x {t("Disc")}
-                        </span>
-                        <span className="font-mono">
-                            {Intl.NumberFormat("en-US")
-                                .format(dataAdditional.disc * 200000)
-                                .replaceAll(",", "'")}{" "}
-                            VND
-                        </span>
-                    </div>
+                    </div>}
+                    {dataAdditional.disc > 0 && (
+                        <div className="flex justify-between items-baseline gap-4 pl-6 opacity-80">
+                            <span>
+                                {dataAdditional.disc} x {t("Disc")}
+                            </span>
+                            <span className="font-mono">
+                                {Intl.NumberFormat("en-US")
+                                    .format(dataAdditional.disc * 200000)
+                                    .replaceAll(",", "'")}{" "}
+                                VND
+                            </span>
+                        </div>
+                    )}
                     <div className="grid grid-cols-[minmax(0,1fr)_auto] justify-between items-baseline gap-x-4 border-t pt-2 text-2xl font-medium">
                         <span>{t("Total")}</span>
 
