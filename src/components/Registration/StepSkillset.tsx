@@ -103,7 +103,7 @@ export default function StepSkillset({ data, validate, onChange, onValidate = (e
             </div>
             <div className={`bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6 rounded-3xl`}>
                 <span className="text-2xl font-medium">{t("What Team/Club are you playing for?")}</span>
-                <Input value={data.team} onChange={(e) => handleChange("allergies", e.target.value)} clearable placeholder={t("Your answer") || ""} />
+                <Input value={data.team} onChange={(e) => handleChange("team", e.target.value)} clearable placeholder={t("Your answer") || ""} />
             </div>
             <div className="grid grid-cols-1 content-between gap-4 bg-foreground bg-opacity-5 backdrop-blur-2xl snap-start rounded-3xl p-4 lg:p-6">
                 <div className="grid">
