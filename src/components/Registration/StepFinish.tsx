@@ -27,7 +27,14 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
             <div className="grid grid-cols-1 border rounded-3xl divide-y overflow-hidden bg-background bg-opacity-5 backdrop-blur">
                 <div className="p-4 lg:p-6">
                     <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-2">
-                        <span className="capitalize text-2xl font-medium col-span-full">{dataGeneral.name} {dataGeneral.nickname!==""&&<span className="text-base opacity-75 font-normal"><span className="lowercase">aka</span> {dataGeneral.nickname}</span>}</span>
+                        <span className="capitalize text-2xl font-medium col-span-full">
+                            {dataGeneral.name}{" "}
+                            {dataGeneral.nickname !== "" && (
+                                <span className="text-base opacity-75 font-normal">
+                                    <span className="lowercase">aka</span> {dataGeneral.nickname}
+                                </span>
+                            )}
+                        </span>
 
                         <span>{t("From")}</span>
                         <span>
@@ -99,7 +106,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                             VND
                         </span>
                     </div>
-                    <div className="grid grid-cols-[minmax(0,1fr)_auto] justify-between items-baseline gap-x-4 border-t pt-2 text-2xl font-semibold">
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] justify-between items-baseline gap-x-4 border-t pt-2 text-2xl font-medium">
                         <span>{t("Total")}</span>
 
                         <span className={`text-right font-mono ${dataGeneral.stayingCountry === "Vietnam" ? "" : "text-base opacity-80 font-medium"}`}>
@@ -159,6 +166,11 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                                     USD
                                 </span>
                             )}
+                    </div>
+
+                    <div className="grid gap-4 font-semibold invert bg-background -mx-4 -mb-4 lg:-mb-6 lg:-mx-6 p-4 lg:p-6">
+                        <p>{t("Payment menthod details will be sent to your email after we reveive your registration")}.</p>
+                        <p>{t("Please make the full payment within 7 days of your registered date")}.</p>
                     </div>
                 </div>
             </div>

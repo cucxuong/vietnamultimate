@@ -258,21 +258,10 @@ export default function Registration() {
                         <div>
                             <span>{t("Thank you for registered.")}</span> <br /> <br />
                             <p className="font-medium">
-                                <span className="text-yellow-500 font-semibold">{t("IMPORTANT")}: </span>
-                                <br />
-                                {submittedData?.stayingCountry === "Vietnam" ||
-                                submittedData?.stayingCountry === "Singapore" ||
-                                submittedData?.stayingCountry === "Malaysia" ||
-                                submittedData?.stayingCountry === "Cambodia" ||
-                                submittedData?.stayingCountry === "Philippines" ? (
-                                    <span>{t("You need to make the full payment within 7 days of your registered date")}.</span>
-                                ) : (
-                                    <span>{t("You need to provide us an evidence of your flight booking within 7 days of your registered date")}.</span>
-                                )}
+                                <span className="text-yellow-500 font-semibold">
+                                    {t("YOU ARE NOT YET CONFIRMED. PLEASE CHECK YOUR EMAIL (INBOX/JUNK BOX) FOR THE DETAILS TO COMPLETTE THE REGISTRATION.")}
+                                </span>
                             </p>
-                            <br />
-                            {t("An email of details has been sent to your email")}. <br />
-                            {t("Please check it in your inbox or even the sneaky Junk box to not miss out")}. <br />
                             <br />
                             {t("If you've not received it")}, <br />
                             {t("Contact us via")}: <br />
