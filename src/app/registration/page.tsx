@@ -259,7 +259,7 @@ export default function Registration() {
                             <span>{t("Thank you for registered.")}</span> <br /> <br />
                             <p className="font-medium">
                                 <span className="text-yellow-500 font-semibold">
-                                    {t("YOU ARE NOT YET CONFIRMED. PLEASE CHECK YOUR EMAIL (INBOX/JUNK BOX) FOR THE DETAILS TO COMPLETTE THE REGISTRATION.")}
+                                    {t("YOU ARE NOT YET CONFIRMED. TO COMPLETE THE REGISTRATION, PLEASE CHECK YOUR EMAIL (INBOX/JUNK BOX) FOR THE DETAILS.")}
                                 </span>
                             </p>
                             <br />
