@@ -316,7 +316,9 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             </button>
                         </div>
 
-                        {/* <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 pt-4 border-t">Bus stop location...</div> */}
+                        <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 pt-4 border-t">
+                            {t("Route is from Central District 1 Hochiminh City to the field in the morning and back in the afternoon both days.")}
+                        </div>
                     </div>
 
                     <div className="grid gap-0.5">
