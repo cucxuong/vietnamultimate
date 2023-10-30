@@ -49,6 +49,9 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
         str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
         return str;
     }
+    function isValidEmail(email: string) {
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    }
     useEffect(() => {
         onValidate(data.name !== "" && data.yob !== "" && data.email !== "" && data.stayingCountry !== "");
     });
@@ -63,7 +66,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
 
             <div className="grid gap-0.5 lg:grid-cols-2">
                 <label className="grid grid-cols-1 content-between gap-4 bg-card-foreground bg-opacity-5 backdrop-blur-2xl rounded-3xl p-4 lg:p-6">
-                    <span className={`text-2xl font-medium ${validate && data.email === "" ? "text-rose-500 snap-start" : ""}`}>
+                    <span className={`text-2xl font-medium ${validate && (data.email === "" || !isValidEmail(data.email)) ? "text-rose-500 snap-start" : ""}`}>
                         {t("Email")} {data.email === "" && <span className="text-rose-500">*</span>}
                     </span>
                     <Input
@@ -75,6 +78,7 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         placeholder={validate && data.email === "" ? t("This field is required") || "" : t("Your answer") || ""}
                         className={`bg-background text-foreground rounded-md h-12 p-4  ${validate && data.email === "" ? "placeholder:text-rose-500" : "placeholder:opacity-50"}`}
                     />
+                    {data.email !== "" && !isValidEmail(data.email) && <span className="text-rose-500">{t("You have entered an invalid email address!")}</span>}
                 </label>
             </div>
 
