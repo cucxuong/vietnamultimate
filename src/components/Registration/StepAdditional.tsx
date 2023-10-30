@@ -12,6 +12,7 @@ export enum clothColor {
     WHITE = "white",
 }
 export enum clothSize {
+    XS = "xs",
     S = "s",
     M = "m",
     L = "l",
@@ -19,7 +20,6 @@ export enum clothSize {
     XL2 = "2xl",
     XL3 = "3xl",
     XL4 = "4xl",
-    XL5 = "5xl",
 }
 export type Cloth = { id: string; color: clothColor; size: clothSize };
 export type StepAdditionalData = {
@@ -48,16 +48,23 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
     const [useWhiteJersey, setUseWhiteJersey] = useState(true);
     const [useBlackShort, setUseBlackShort] = useState(true);
     const [useWhiteShort, setUseWhiteShort] = useState(true);
-    const sizeChart: { size: clothSize; x: number; y: number }[] = [
-        { size: clothSize.S, x: 43, y: 65 },
-        { size: clothSize.M, x: 45, y: 67 },
-        { size: clothSize.L, x: 47, y: 69 },
-        { size: clothSize.XL, x: 49, y: 71 },
-        { size: clothSize.XL2, x: 51, y: 73 },
-        { size: clothSize.XL3, x: 53, y: 75 },
-        { size: clothSize.XL4, x: 55, y: 77 },
-        { size: clothSize.XL5, x: 57, y: 79 },
-        // { size: "6xl", x: 59, y: 81 },
+    const sizeChart: { size: clothSize; x: number; y: number; z:number }[] = [
+        { size: clothSize.XS, x: 25, y: 18, z: 17},
+        { size: clothSize.S, x: 26, y: 19,z:18 },
+        { size: clothSize.M, x: 27, y: 20,z:19 },
+        { size: clothSize.L, x: 28, y: 21, z:20 },
+        { size: clothSize.XL, x: 29, y: 22, z:21 },
+        { size: clothSize.XL2, x: 30, y: 23,z:22 },
+        { size: clothSize.XL3, x: 31, y: 24, z:23 },
+        { size: clothSize.XL4, x: 32, y: 25, z:24 },
+    ];
+    const sSizeChart: { size: clothSize; x: number; y: number; z:number }[] = [
+        { size: clothSize.XS, x: 12.5, y: 21, z:17},
+        { size: clothSize.S, x: 13.5, y: 22,z:18 },
+        { size: clothSize.M, x: 14.5, y: 23,z:19 },
+        { size: clothSize.L, x: 15.5, y: 24, z:20 },
+        { size: clothSize.XL, x: 16.5, y: 25, z:21 },
+        { size: clothSize.XL2, x: 17.5, y: 26,z:22 },
     ];
     const [blackJerseys, setBlackJerseys] = useState<Cloth[]>(data.jerseys.filter((j) => j.color === clothColor.BLACK));
     const [whiteJerseys, setWhiteJerseys] = useState<Cloth[]>(data.jerseys.filter((j) => j.color === clothColor.WHITE));
@@ -377,18 +384,22 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center w-full">
+                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center w-full min-w-[250px]">
                                             <img src="./VNHAT2023-(Front-View).png" alt="" className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="snap-center w-full min-w-[250px]">
+                                            <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
 
                                     <div className="grid">
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                            <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
+                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">X cm</span>
-                                                <span className="text-xs">Y cm</span>
+                                                <span className="text-xs">A inch</span>
+                                                <span className="text-xs">B inch</span>
+                                                <span className="text-xs">C inch</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
@@ -397,13 +408,14 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                             {sizeChart.map((j) => (
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
-                                                        className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
+                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
                                                             data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
                                                         <span>{j.x}</span>
                                                         <span>{j.y}</span>
+                                                        <span>{j.z}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
@@ -492,18 +504,22 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center w-full">
+                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center w-full min-w-[250px]">
                                             <img src="./VNHAT2023-W-(Front-View).png" alt="" className="w-full h-full object-contain" />
+                                        </div>
+                                        <div className="snap-center w-full min-w-[250px]">
+                                            <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
 
                                     <div className="grid">
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                            <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
+                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">X cm</span>
-                                                <span className="text-xs">Y cm</span>
+                                                <span className="text-xs">A inch</span>
+                                                <span className="text-xs">B inch</span>
+                                                <span className="text-xs">C inch</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
@@ -512,13 +528,14 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                             {sizeChart.map((j) => (
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
-                                                        className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
+                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
                                                             data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
                                                         <span>{j.x}</span>
                                                         <span>{j.y}</span>
+                                                        <span>{j.z}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
@@ -607,33 +624,38 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center w-full">
+                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center w-full min-w-[250px]">
                                             <img src="./blackshorts.png" alt="" className="w-full h-full object-contain" />
+                                        </div>
+                                        <div className="snap-center w-full min-w-[250px]">
+                                            <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
 
                                     <div className="grid">
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                            <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
+                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">X cm</span>
-                                                <span className="text-xs">Y cm</span>
+                                                <span className="text-xs">A inch</span>
+                                                <span className="text-xs">B inch</span>
+                                                <span className="text-xs">C inch</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
                                         </div>
                                         <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                            {sizeChart.map((j) => (
+                                            {sSizeChart.map((j) => (
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
-                                                        className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
+                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
                                                             data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
                                                         <span>{j.x}</span>
                                                         <span>{j.y}</span>
+                                                        <span>{j.z}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
@@ -720,33 +742,38 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                                 leaveTo="-translate-y-4 opacity-0"
                             >
                                 <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                    <div className="flex items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                        <div className="snap-center w-full">
+                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                        <div className="snap-center w-full min-w-[250px]">
                                             <img src="./whiteshorts.png" alt="" className="w-full h-full object-contain" />
+                                        </div>
+                                        <div className="snap-center w-full min-w-[250px]">
+                                            <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
 
                                     <div className="grid">
                                         <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                            <div className="grid grid-cols-3 gap-2 text-center leading-none px-4">
+                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
                                                 <span></span>
-                                                <span className="text-xs">X cm</span>
-                                                <span className="text-xs">Y cm</span>
+                                                <span className="text-xs">A inch</span>
+                                                <span className="text-xs">B inch</span>
+                                                <span className="text-xs">C inch</span>
                                             </div>
                                             <span></span>
                                             <span className="text-xs text-center">QTY</span>
                                         </div>
                                         <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                            {sizeChart.map((j) => (
+                                            {sSizeChart.map((j) => (
                                                 <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
                                                     <div
-                                                        className={`grid grid-cols-3 gap-2 px-4 items-center text-center ${
+                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
                                                             data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
                                                         }`}
                                                     >
                                                         <span className="uppercase text-left">{j.size}</span>
                                                         <span>{j.x}</span>
                                                         <span>{j.y}</span>
+                                                        <span>{j.z}</span>
                                                     </div>
                                                     <button
                                                         className="grid place-content-center"
@@ -792,7 +819,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                         <div className="text-2xl font-medium">{t("Tournament disc")}</div>
                         <div className="grid lg:gap-6 gap-4 w-full max-w-lg mx-auto">
                             <div className="grid place-content-center bg-secondary rounded-2xl overflow-hidden">
-                                <div className="snap-center w-full">
+                                <div className="snap-center w-full min-w-[250px]">
                                     <img src="./VNHAT2023-Disc.png" alt="" className="w-full h-full object-contain" />
                                 </div>
                             </div>
