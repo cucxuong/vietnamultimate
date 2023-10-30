@@ -283,7 +283,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                         >
                             <div className={`bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6 rounded rounded-b-3xl`}>
                                 <span className="text-2xl font-medium">{t("Allergies?")}</span>
-                                <Input value={data.allergies} onChange={(e) => handleChange("allergies", e.target.value)} clearable placeholder={t("Your answer") || ""} />
+                                <Input value={data.allergies} onChange={(e) => handleChange("allergies", e)} clearable placeholder={t("Your answer") || ""} />
                             </div>
                         </Transition>
                     </div>
@@ -316,7 +316,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             </button>
                         </div>
 
-                        <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 pt-4 border-t">Bus stop location...</div>
+                        {/* <div className="px-4 lg:px-6 -mx-4 lg:-mx-6 pt-4 border-t">Bus stop location...</div> */}
                     </div>
 
                     <div className="grid gap-0.5">
