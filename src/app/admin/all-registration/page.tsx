@@ -55,7 +55,7 @@ export default function AllRegistration() {
                         </div>
 
                         <div className="border border-primary rounded-3xl grid grid-cols-[3rem_4rem_minmax(0,1fr)_repeat(6,minmax(0,5rem))_repeat(2,minmax(0,1fr))_5rem_5rem] divide-y divide-primary -mx-2 lg:mx-0">
-                            <div className={`col-span-full grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase`}>
+                            <div className={`col-span-full grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-sm`}>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center"></span>
                                 <span className="py-2 flex items-center justify-center">Code</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center gap-2">Player</span>
@@ -67,13 +67,13 @@ export default function AllRegistration() {
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Bus</span>
                                 <div className="grid grid-cols-2">
                                     <span className="px-3 lg:px-4 py-2 flex justify-center items-center col-span-full border-b border-primary">Jersey</span>
-                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center">Black</span>
-                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center border-l border-primary">White</span>
+                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center truncate">Black</span>
+                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center border-l border-primary truncate">White</span>
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <span className="px-3 lg:px-4 py-2 flex justify-center items-center col-span-full border-b border-primary">Shorts</span>
-                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center">Black</span>
-                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center border-l border-primary">White</span>
+                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center truncate">Black</span>
+                                    <span className="px-3 lg:px-4 py-2 flex justify-center items-center border-l border-primary truncate">White</span>
                                 </div>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Disc</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Paid</span>
