@@ -141,7 +141,7 @@ export default function AllRegistration() {
 
                                                     <div className="grid">
                                                         <span className="truncate font-normal">Cutting skill?</span>
-                                                        <span className="truncate font-normal">Answer...</span>
+                                                        <span className="truncate">Answer...</span>
                                                     </div>
 
                                                     <div className="grid">
