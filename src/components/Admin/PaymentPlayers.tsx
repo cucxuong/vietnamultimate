@@ -62,7 +62,7 @@ export default function PaymentPlayers({
 
     useEffect(() => {
         setPlayers(items.filter((p) => (p.registrationCode + p.name + p.nickname).toLowerCase().replace(/\s/g, "").includes(query.toLowerCase().replace(/\s/g, ""))));
-    }, [query]);
+    }, [query, items]);
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
@@ -104,7 +104,7 @@ export default function PaymentPlayers({
                                     <div className="px-3 lg:px-4 py-2 grid lg:flex lg:justify-between lg:gap-4 items-baseline">
                                         <div className="grid">
                                             <span>{player.name}</span>
-                                            {player.nickname !== "" && <small>({player.nickname})</small>}
+                                            {player.nickname && player.nickname !== "" && <small>({player.nickname})</small>}
                                         </div>
                                         <span className="font-mono text-right">{total(player.fee)}</span>
                                     </div>
