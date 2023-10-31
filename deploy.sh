@@ -22,7 +22,7 @@ echo $NETWORK_NAME
 echo $IMAGE_NAME
 echo $CONTAINER_NAME
 echo $EXPOSE_PORT
-echo CONFIG_FILE_NAME;
+echo $CONFIG_FILE_NAME;
 
 cp ./src/config/$CONFIG_FILE_NAME ./src/config/vietnam-hat.env.ts
 
