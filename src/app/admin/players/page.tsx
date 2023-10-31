@@ -30,7 +30,7 @@ export default function Players() {
             // @ts-ignore
             setPlayers([...transformedData]);
         } catch (e: any) {
-            if (e.response?.status === 422) {
+            if (e.response.status === 422) {
                 router.push("/admin/authorize");
             } else {
                 router.push("/");

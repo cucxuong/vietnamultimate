@@ -4,13 +4,36 @@ import Main from "@/components/Home/Main";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Input } from "@/components/ui/input";
 import { CheckFat } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getVietnamHatPlayers } from "@/api/admin/vietnam-hat-2023/players";
+import { useRouter } from "next/navigation";
 
 export default function AllRegistration() {
+    const [players, setPlayers] = useState<any[]>([]);
+    const router = useRouter();
     // GET Players
-    const getRegs = () => {
-        return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const fetchPlayers = async () => {
+        try {
+            // @ts-ignore
+            const response = await getVietnamHatPlayers();
+
+            const data = response.data.data;
+
+            // @ts-ignore
+            setPlayers([...data]);
+        } catch (e: any) {
+            // @ts-ignore
+            if (e.response.status === 422) {
+                router.push("/admin/authorize");
+            } else {
+                router.push("/");
+            }
+        }
     };
+
+    useEffect(() => {
+        fetchPlayers();
+    }, []);
 
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     const [query, setQuery] = useState("");
@@ -57,13 +80,13 @@ export default function AllRegistration() {
                             </div>
 
                             {/* Loop reg list */}
-                            {getRegs().map((item, index) => (
+                            {players.map((player, index) => (
                                 <div
-                                    key={item}
+                                    key={player.player_code}
                                     className={`col-span-full grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary bg-foreground cursor-pointer ${
-                                        selectedReg === item.toString() ? "bg-opacity-10 font-medium backdrop-blur" : "bg-opacity-0 hover:bg-opacity-5"
+                                        selectedReg === player.player_code ? "bg-opacity-10 font-medium backdrop-blur" : "bg-opacity-0 hover:bg-opacity-5"
                                     }`}
-                                    onClick={() => setSelectedReg((v) => (v === item.toString() ? "" : item.toString()))}
+                                    onClick={() => setSelectedReg((v) => (v === player.player_code ? "" : player.player_code))}
                                 >
                                     <span className="px-3 lg:px-4 py-2 flex items-center justify-center">{index + 1}</span>
                                     <span className="py-2 flex items-center justify-center">Code</span>
@@ -110,7 +133,7 @@ export default function AllRegistration() {
                                         <CheckFat size={18} weight="fill" />
                                     </span>
 
-                                    {selectedReg === item.toString() && (
+                                    {selectedReg === player.player_code && (
                                         <div className="col-span-full border-t !border-t-primary !border-opacity-30 !border-x-0 p-4">
                                             <div className="grid grid-cols-5 gap-6">
                                                 <div className="col-span-4 grid grid-cols-2 gap-y-4 gap-x-8">
