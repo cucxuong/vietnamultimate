@@ -53,7 +53,7 @@ const VietnamHat2023 = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {players.map(item => (
+                {players.map((item: any) => (
                     <tr key={`player-${item.player_code}`}>
                         <td className="px-2">{item.player_code}</td>
                         <td className="px-2">{item.full_name}</td>
