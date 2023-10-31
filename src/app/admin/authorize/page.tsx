@@ -36,7 +36,7 @@ const Players = () => {
 
             <div className="flex items-center justify-center">
                 <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)} className="w-full grid gap-4">
-                    <Input type="text" placeholder="Passcode" name="code" value={code} onChange={(e) => setCode(e)} />
+                    <Input type="password" placeholder="Passcode" name="code" value={code} onChange={(e) => setCode(e)} />
                     {error !== "" && <div className="text-rose-700">{error}</div>}
                     <Button type="submit" className="w-full">
                         Submit
