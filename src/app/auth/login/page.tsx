@@ -1,15 +1,29 @@
-"use client"
+"use client";
 
 import { FormEvent, useState } from "react";
+import { login } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const router = useRouter();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        try {
+            setError('');
 
-    }
+            await login({ email, password });
+
+            router.push('/admin/vietnam-hat-2023/players');
+        } catch (e) {
+            setError('Have error login api');
+        }
+    };
 
     return (
         <>
@@ -17,10 +31,12 @@ const LoginPage = () => {
 
             <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
                 <div className="mb-3">
-                    <input type="email" placeholder="Email" name="email" value={email} />
+                    <input type="email" placeholder="Email" name="email" value={email}
+                           onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <input type="password" placeholder="Password" name="email" value={password} />
+                    <input type="password" placeholder="Password" name="email" value={password}
+                           onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div>
                     <button type="submit">Login</button>
@@ -28,6 +44,6 @@ const LoginPage = () => {
             </form>
         </>
     );
-}
+};
 
 export default LoginPage;
