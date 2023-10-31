@@ -2,8 +2,10 @@
 import Main from "@/components/Home/Main";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Input } from "@/components/ui/input";
+import { Transition } from "@headlessui/react";
 import { CheckFat } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 export default function PaymentPlayers({
     items,
@@ -18,6 +20,9 @@ export default function PaymentPlayers({
 
     const [query, setQuery] = useState("");
 
+    const [dialog, setDialog] = useState(false);
+    const [openDialog, setOpenDialog] = useState<{ registrationCode: string; name: string; nickname: string; fee: number; isPaid: boolean } | null>(null);
+
     const [players, setPlayers] = useState<{ registrationCode: string; name: string; nickname: string; fee: number; isPaid: boolean }[]>([...items]);
     function tooglePaid(code: string) {
         setPlayers((ps) => [
@@ -28,6 +33,7 @@ export default function PaymentPlayers({
                 return { ...p };
             }),
         ]);
+        setOpenDialog(null);
     }
 
     const total = (fee: number) => {
@@ -106,8 +112,11 @@ export default function PaymentPlayers({
                                         <button
                                             className={`h-6 w-6 rounded ${player.isPaid ? "bg-green-100" : "border-2 border-primary"} grid place-content-center`}
                                             onClick={() => {
-                                                onChange(player.registrationCode, !player.isPaid);
-                                                tooglePaid(player.registrationCode);
+                                                if (player.isPaid) {
+                                                    setDialog(true);
+                                                } else {
+                                                    setOpenDialog(player);
+                                                }
                                             }}
                                         >
                                             {player.isPaid && <CheckFat size={18} weight="fill" className="text-green-600" />}
@@ -119,6 +128,72 @@ export default function PaymentPlayers({
                     </div>
                 </Main>
             </ScrollArea>
+
+            <Transition
+                show={openDialog !== null}
+                as={Fragment}
+                enter="transition-all duration-200 ease-in"
+                leave="transition-all duration-100 ease-out"
+                enterFrom="translate-y-full opacity-0"
+                leaveTo="translate-y-full opacity-0"
+            >
+                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
+                    <h3 className="text-3xl">Confirm payment?</h3>
+                    <div className="rounded-xl border p-4 grid bg-foreground text-background place-content-center">
+                        <span>
+                            {openDialog?.registrationCode} - <span className="font-semibold">{openDialog?.name}</span>
+                        </span>
+
+                        <span className="font-mono font-semibold">{total(openDialog?.fee || 0)}</span>
+                    </div>
+                    <p>We will send an payment confirmination email to this player.</p>
+                    <p>Once you confirm, the action can not be undo.</p>
+                    <p>Please make sure that all information are correct.</p>
+                    <div className="flex gap-4">
+                        <Button
+                            variant={"outline"}
+                            onClick={() => {
+                                setOpenDialog(null);
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                onChange(openDialog?.registrationCode || "", true);
+                                tooglePaid(openDialog?.registrationCode || "");
+                            }}
+                            className="w-full"
+                        >
+                            Confirm Paid
+                        </Button>
+                    </div>
+                </div>
+            </Transition>
+            <Transition
+                show={dialog}
+                as={Fragment}
+                enter="transition-all duration-200 ease-in"
+                leave="transition-all duration-100 ease-out"
+                enterFrom="translate-y-full opacity-0"
+                leaveTo="translate-y-full opacity-0"
+            >
+                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
+                    <h3 className="text-3xl">Cannot uncheck</h3>
+                    <p>If there is something wrong, <div>please contact organizers.</div></p>
+                    <div className="flex justify-center gap-4">
+                        <Button
+                            variant={"outline"}
+                            onClick={() => {
+                                setDialog(false);
+                            }}
+                            className=""
+                        >
+                            Cancel
+                        </Button>
+                    </div>
+                </div>
+            </Transition>
         </section>
     );
 }
