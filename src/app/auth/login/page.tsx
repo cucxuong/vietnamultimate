@@ -19,7 +19,7 @@ const LoginPage = () => {
 
             await login({ email, password });
 
-            router.push('/admin/dashboard');
+            router.push('/admin/vietnam-hat-2023/players');
         } catch (e) {
             setError('Have error login api');
         }
