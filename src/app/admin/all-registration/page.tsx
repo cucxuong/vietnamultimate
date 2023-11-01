@@ -9,6 +9,7 @@ import { getVietnamHatPlayers } from "@/api/admin/vietnam-hat-2023/players";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { format } from "date-fns";
 
 export default function AllRegistration() {
     // Temp
@@ -35,6 +36,7 @@ export default function AllRegistration() {
         };
         totalFee?: number;
         status?: string;
+        createdAt?: Date;
     };
 
     const [players, setPlayers] = useState<PlayerReg[]>([
@@ -64,7 +66,8 @@ export default function AllRegistration() {
                 },
             },
             totalFee: 2180000,
-            status: "",
+            status: "paid",
+            createdAt: new Date(2023, 9, 30),
         },
         {
             code: "1235",
@@ -85,14 +88,14 @@ export default function AllRegistration() {
                     jerseys: [
                         { id: "j-1", color: "black", size: "2xl" },
                         { id: "j-2", color: "white", size: "2xl" },
-                        { id: "j-2", color: "white", size: "xl" },
                     ],
                     shorts: [{ id: "j-3", color: "black", size: "xl" }],
-                    disc: 1,
+                    disc: 0,
                 },
             },
             totalFee: 1610000,
-            status: "",
+            status: "paid",
+            createdAt: new Date(),
         },
     ]);
     const router = useRouter();
@@ -138,6 +141,7 @@ export default function AllRegistration() {
                     },
                     totalFee: player.total_fee,
                     status: player.status,
+                    createdAt: player.created_at,
                 };
             });
 
@@ -219,19 +223,25 @@ export default function AllRegistration() {
                         <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid gap-1 content-center">
                             <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                 <div className="font-medium opacity-70">Normal Lunch</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.addition.lunch && !p.options?.addition.isVegan).length}</div>
+                                <div className="font-semibold text-right font-mono">
+                                    {players.filter((p) => p.options?.addition.lunch && !p.options?.addition.isVegan && p.status !== "expired").length}
+                                </div>
                             </div>
                             <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                 <div className="font-medium opacity-70">Vegan Lunch</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.addition.lunch && p.options?.addition.isVegan).length}</div>
+                                <div className="font-semibold text-right font-mono">
+                                    {players.filter((p) => p.options?.addition.lunch && p.options?.addition.isVegan && p.status !== "expired").length}
+                                </div>
                             </div>
                             <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                 <div className="font-medium opacity-70">Bus</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.addition.bus).length}</div>
+                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.addition.bus && p.status !== "expired").length}</div>
                             </div>
                             <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                 <div className="font-medium opacity-70">Disc</div>
-                                <div className="font-semibold text-right font-mono">{players.reduce((total, p) => total + (p.options?.addition.disc || 0), 0)}</div>
+                                <div className="font-semibold text-right font-mono">
+                                    {players.filter((p) => p.status !== "expired").reduce((total, p) => total + (p.options?.addition.disc || 0), 0)}
+                                </div>
                             </div>
                         </div>
 
@@ -245,7 +255,9 @@ export default function AllRegistration() {
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
-                                                        {players.reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                        {players
+                                                            .filter((p) => p.status !== "expired")
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -261,7 +273,9 @@ export default function AllRegistration() {
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
-                                                        {players.reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                        {players
+                                                            .filter((p) => p.status !== "expired")
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -279,7 +293,9 @@ export default function AllRegistration() {
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
-                                                        {players.reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                        {players
+                                                            .filter((p) => p.status !== "expired")
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -295,7 +311,9 @@ export default function AllRegistration() {
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
-                                                        {players.reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                        {players
+                                                            .filter((p) => p.status !== "expired")
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -306,36 +324,55 @@ export default function AllRegistration() {
                         </div>
 
                         <div className="w-full sm:min-w-max grid grid-cols-2 gap-[inherit]">
-                            <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid grid-rows-[auto_minmax(0,1fr)] gap-1 text-lg dark">
-                                <div className="flex justify-between items-center gap-4">
-                                    <div className="font-medium opacity-70 leading-tight">Total Registration</div>
-                                    <div className="font-semibold text-right font-mono">{players.length}</div>
+                            <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid grid-rows-[auto_minmax(0,1fr)] gap-1 dark">
+                                <div className="flex justify-between items-center gap-4 truncate">
+                                    <div className="font-medium opacity-70 leading-tight truncate">Total Players</div>
+                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.status !== "expired").length}</div>
                                 </div>
-                                <div className="grid content-center gap-1">
-                                    <div className="flex justify-between items-baseline gap-4 pl-4">
+                                <div className="grid content-center gap-1 pl-4">
+                                    <div className="flex justify-between items-baseline gap-4">
                                         <div className="font-medium opacity-70 text-sm">Female</div>
-                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "female").length}</div>
+                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "female" && p.status !== "expired").length}</div>
                                     </div>
-                                    <div className="flex justify-between items-baseline gap-4 pl-4">
+                                    <div className="flex justify-between items-baseline gap-4">
                                         <div className="font-medium opacity-70 text-sm">Male</div>
-                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "male").length}</div>
+                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "male" && p.status !== "expired").length}</div>
                                     </div>
-                                    <div className="flex justify-between items-baseline gap-4 pl-4">
+                                    <div className="flex justify-between items-baseline gap-4">
                                         <div className="font-medium opacity-70 text-sm">Student</div>
-                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.info.isStudent).length}</div>
+                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.info.isStudent && p.status !== "expired").length}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground flex flex-col justify-between gap-4 text-lg dark">
-                                <div className="flex justify-between items-baseline gap-4">
-                                    <div className="font-medium opacity-70">Total Paid</div>
-                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "paid").length}</div>
+                            <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground flex flex-col justify-between gap-4 dark">
+                                <div className="grid">
+                                    <div className="flex justify-between items-center gap-4 truncate">
+                                        <div className="font-medium opacity-70 leading-tight truncate">Total Registration</div>
+                                        <div className="font-semibold text-right font-mono">{players.length}</div>
+                                    </div>
+                                    <div className="grid content-center gap-1 pl-4">
+                                        <div className="flex justify-between items-center gap-4">
+                                            <div className="font-medium opacity-70 text-sm">Waiting</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status !== "expired" && p.status !== "paid").length}</div>
+                                        </div>
+                                        <div className="flex justify-between items-center gap-4">
+                                            <div className="font-medium opacity-70 text-sm">Expired</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "expired").length}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="font-semibold text-right font-mono">
-                                    {totalAmount(
-                                        players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
-                                        "Vietnam",
-                                    )}
+
+                                <div className="grid">
+                                    <div className="flex justify-between items-baseline gap-4">
+                                        <div className="font-medium opacity-70">Total Paid</div>
+                                        <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "paid").length}</div>
+                                    </div>
+                                    <div className="font-semibold text-right font-mono">
+                                        {totalAmount(
+                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
+                                            "Vietnam",
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -343,9 +380,8 @@ export default function AllRegistration() {
 
                     {/* Reg datatable */}
                     <div className="grid gap-4">
-                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[3rem_4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_4rem] sm:divide-y sm:divide-primary -mx-2 max-sm:gap-4 lg:mx-0">
+                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary -mx-2 max-sm:gap-4 lg:mx-0">
                             <div className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs`}>
-                                <span className="px-3 lg:px-4 py-2 flex items-center justify-center"></span>
                                 <span className="py-2 flex items-center justify-center">Code</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center gap-2">Player</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Team</span>
@@ -366,21 +402,32 @@ export default function AllRegistration() {
                                 </div>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Disc</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-end gap-2">Total</span>
-                                <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Paid</span>
+                                <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Status</span>
                             </div>
 
                             {/* Loop reg list */}
                             {players
-                                .filter((p) => JSON.stringify(p).toLowerCase().replace(/\s/, "").includes(query.toLowerCase().replace(/\s/, "")))
+                                .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(query.toLowerCase().replace(/\s/, "")))
+                                .sort((a, b) => {
+                                    const aOrder = a.status === "expired" ? 0 : a.status === "paid" ? 1 : 2;
+                                    const bOrder = b.status === "expired" ? 0 : b.status === "paid" ? 1 : 2;
+                                    const c1 = bOrder - aOrder;
+                                    if (c1 !== 0) {
+                                        return c1;
+                                    }
+                                    return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
+                                })
                                 .map((player, index) => (
                                     <div
                                         key={player.code}
                                         className={`col-span-full grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary bg-foreground cursor-pointer ${
                                             selectedReg === player.code ? "bg-opacity-10 font-semibold backdrop-blur" : "bg-opacity-0 hover:bg-opacity-5"
-                                        } ${index === players.length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""}`}
+                                        } ${index === players.length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
+                                            player.status === "expired" ? "text-gray-400" : ""
+                                        }`}
                                         onClick={() => setSelectedReg((v) => (v === player.code ? "" : player.code))}
+                                        title={`Registered at ${format(player.createdAt || 0, "dd/MM/yyyy")}`}
                                     >
-                                        <span className="px-3 lg:px-4 py-2 flex items-center justify-center max-sm:!hidden">{index + 1}</span>
                                         <span className="py-2 flex items-center max-sm:self-center sm:justify-center max-sm:px-4 max-sm:text-2xl">{player.code}</span>
                                         <div className="max-sm:col-span-3 max-sm:self-center max-sm:pl-4 sm:px-3 lg:px-4 py-2 grid">
                                             <span>
@@ -489,7 +536,7 @@ export default function AllRegistration() {
                                         </div>
 
                                         <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Disc</span>
-                                        <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x 1</span>
+                                        <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {player.options?.addition.disc || 0}</span>
 
                                         <span className="max-sm:col-start-1 sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Total fee</span>
                                         <div className="max-sm:col-span-3 sm:px-3 lg:px-4 sm:py-2 sm:grid content-center sm:text-right font-mono">
@@ -497,9 +544,12 @@ export default function AllRegistration() {
                                             {player.country && player.country !== "Vietnam" && <span> ≈ {totalAmount(player.totalFee || 0, player.country)}</span>}
                                         </div>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Paid</span>
+                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Status</span>
                                         <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.status === "paid" ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                            {player.status === "paid" && (
+                                                <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
+                                            )}
+                                            {player.status === "expired" && <span className="uppercase px-1.5 py-0.5 bg-accent text-gray-400 grid place-content-center text-sm rounded">EXPIRED</span>}
                                         </span>
 
                                         {selectedReg === player.code && (
