@@ -43,7 +43,7 @@ export default function AllRegistration() {
             nickname: "CX",
             yob: "1991",
             gender: "male",
-            country: "Singapore",
+            country: "Malaysia",
             options: {
                 info: { isStudent: false },
                 skills: { years: 5, throwing: 3, catching: 3, cutting: 3, defense: 3, fitness: 2, playExp: 3, beACaptain: 2, team: "Baymax" },
@@ -62,7 +62,7 @@ export default function AllRegistration() {
                 },
             },
             totalFee: 2180000,
-            status: "paid",
+            status: "",
         },
     ]);
     const router = useRouter();
