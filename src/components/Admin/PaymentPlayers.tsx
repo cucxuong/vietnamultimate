@@ -146,7 +146,7 @@ export default function PaymentPlayers({
 
                         <span className="font-mono font-semibold">{total(openDialog?.fee || 0)}</span>
                     </div>
-                    <p>We will send an payment confirmination email to this player.</p>
+                    <p>We will send a payment confirmination email to this player.</p>
                     <p>Once you confirm, the action can not be undo.</p>
                     <p>Please make sure that all information are correct.</p>
                     <div className="flex gap-4">
@@ -180,14 +180,15 @@ export default function PaymentPlayers({
             >
                 <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
                     <h3 className="text-3xl">Cannot uncheck</h3>
-                    <p>If there is something wrong, <div>please contact organizers.</div></p>
+                    <p>
+                        If there is something wrong, <div>please contact organizers.</div>
+                    </p>
                     <div className="flex justify-center gap-4">
                         <Button
                             variant={"outline"}
                             onClick={() => {
                                 setDialog(false);
                             }}
-                            className=""
                         >
                             Cancel
                         </Button>
