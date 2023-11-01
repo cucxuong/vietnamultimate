@@ -4,6 +4,7 @@ import PaymentPlayers from "@/components/Admin/PaymentPlayers";
 import { useEffect, useState } from "react";
 import { getVietnamHatPlayers, updatePaymentStatus } from "@/api/admin/vietnam-hat-2023/players";
 import { useRouter } from "next/navigation";
+import AllRegistration from "@/components/Admin/AllPlayers";
 
 export default function Players() {
     const [players, setPlayers] = useState([]);
@@ -17,16 +18,39 @@ export default function Players() {
 
             const data = response.data.data;
 
-            const transformedData = data.map((player: any) => {
+            let transformedData = [];
+            if (localStorage.getItem("country") !== "All") {
 
-                return {
-                    registrationCode: player.player_code,
-                    name: player.full_name,
-                    nickname: player.nickname,
-                    fee: player.total_fee,
-                    isPaid: player.status == "paid",
-                };
-            });
+                transformedData = data.map((player: any) => {
+
+                    return {
+                        registrationCode: player.player_code,
+                        name: player.full_name,
+                        nickname: player.nickname,
+                        fee: player.total_fee,
+                        isPaid: player.status == "paid",
+                    };
+                });
+            } else {
+                transformedData = data.map((player: any) => {
+                    const selectOptions = JSON.parse(player.selected_options);
+
+                    return {
+                        code: player.player_code,
+                        name: player.full_name,
+                        email: player.email,
+                        nickname: player.nickname,
+                        yob: player.year_of_birth,
+                        gender: player.gender,
+                        country: player?.current_country,
+                        totalFee: player.total_fee,
+                        status: player.status,
+                        options: selectOptions,
+                        createdAt: new Date(player.created_at),
+                    };
+                });
+            }
+
             // @ts-ignore
             setPlayers([...transformedData]);
         } catch (e: any) {
@@ -42,15 +66,18 @@ export default function Players() {
         fetchPlayers();
     }, []);
 
-    useEffect(() => {
-        console.log(players);
-    }, [players]);
+    return localStorage.getItem("country") === "All" ? <AllRegistration players={players} /> :
+        <CountryPlayers players={players} />;
+}
+
+
+const CountryPlayers = ({ players }: { players: Array<any> }) => {
 
     // POST Players
     const tooglePaid = async (code: string, value: boolean) => {
 
-        await updatePaymentStatus({player_code: code});
-    }
+        await updatePaymentStatus({ player_code: code });
+    };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
@@ -58,4 +85,4 @@ export default function Players() {
                             country={localStorage.getItem("country") ?? ""} />
         </section>
     );
-}
+};
