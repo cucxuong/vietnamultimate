@@ -381,7 +381,7 @@ export default function AllRegistration() {
                     {/* Reg datatable */}
                     <div className="grid gap-4">
                         <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary -mx-2 max-sm:gap-4 lg:mx-0">
-                            <div className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs`}>
+                            <div className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs rounded-t-[inherit] bg-background`}>
                                 <span className="py-2 flex items-center justify-center">Code</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center gap-2">Player</span>
                                 <span className="px-3 lg:px-4 py-2 flex items-center justify-center gap-2">Team</span>
@@ -420,8 +420,8 @@ export default function AllRegistration() {
                                 .map((player, index) => (
                                     <div
                                         key={player.code}
-                                        className={`col-span-full grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary bg-foreground cursor-pointer ${
-                                            selectedReg === player.code ? "bg-opacity-10 font-semibold backdrop-blur" : "bg-opacity-0 hover:bg-opacity-5"
+                                        className={`col-span-full backdrop-blur grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary cursor-pointer ${
+                                            selectedReg === player.code ? "bg-primary bg-opacity-10 font-semibold" : "bg-background hover:bg-opacity-5 hover:bg-foreground"
                                         } ${index === players.length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
                                             player.status === "expired" ? "text-gray-400" : ""
                                         }`}
@@ -558,7 +558,7 @@ export default function AllRegistration() {
                                                     <div className="sm:col-span-4 grid sm:grid-cols-2 gap-y-4 gap-x-8">
                                                         <div className="grid">
                                                             <span className="truncate font-normal">How long have you played Ultimate Frisbee?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.years}.{" "}
                                                                 {["Less than 1 year", "1 - 3 years", "3 - 5 years", "5 - 10 years", "More than 10 years"][(player.options?.skills.years || 1) - 1]}
                                                             </span>
@@ -566,7 +566,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Playing experience?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.playExp}.{" "}
                                                                 {
                                                                     [
@@ -582,7 +582,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Throwing skill?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.throwing}.{" "}
                                                                 {
                                                                     [
@@ -598,7 +598,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Catching skill?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.catching}.{" "}
                                                                 {
                                                                     [
@@ -614,7 +614,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Cutting skill?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.cutting}.{" "}
                                                                 {
                                                                     [
@@ -630,7 +630,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Defense skill?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.defense}.{" "}
                                                                 {
                                                                     [
@@ -646,7 +646,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Fitness and agility?</span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.fitness}.{" "}
                                                                 {
                                                                     [
@@ -662,7 +662,7 @@ export default function AllRegistration() {
 
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Are you interested in the captain position or wish to be a captain? </span>
-                                                            <span className="truncate">
+                                                            <span>
                                                                 {player.options?.skills.beACaptain}.{" "}
                                                                 {["Yes", "No", "I can try", "If I'm the only choice"][(player.options?.skills.beACaptain || 1) - 1]}
                                                             </span>
@@ -672,7 +672,7 @@ export default function AllRegistration() {
                                                     <div className="grid items-center content-start gap-4">
                                                         <div className="grid">
                                                             <span className="truncate font-normal">Are you vegan? </span>
-                                                            <span className="truncate">{player.options?.addition.isVegan ? "Yes" : "No"}</span>
+                                                            <span>{player.options?.addition.isVegan ? "Yes" : "No"}</span>
                                                         </div>
 
                                                         {player.options?.addition.allergies && (
