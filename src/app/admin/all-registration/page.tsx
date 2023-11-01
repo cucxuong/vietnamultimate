@@ -148,7 +148,9 @@ export default function AllRegistration() {
                 .replaceAll(",", "'")} PHP`;
         }
         if (country === "Vietnam") {
-            return `${Intl.NumberFormat("en-US").format(Math.ceil(fee/1000)).replaceAll(",", "'")}K VND`;
+            return `${Intl.NumberFormat("en-US")
+                .format(Math.ceil(fee / 1000))
+                .replaceAll(",", "'")}K VND`;
         }
         return `${Intl.NumberFormat("en-US")
             .format(Math.ceil(fee / 24500))
@@ -199,9 +201,9 @@ export default function AllRegistration() {
                             </div>
                         </div>
 
-                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid gap-2 text-lg">
+                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 text-lg">
                             <div className="grid">
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex justify-between items-baseline gap-4">
                                     <div className="font-medium opacity-70 leading-tight">Black Jerseys</div>
                                     <div className="flex gap-2">
                                         {["xs", "s", "lg", "xl", "2xl", "3xl", "4xl"].map((size) => (
@@ -217,7 +219,7 @@ export default function AllRegistration() {
                             </div>
                             <div className="border-t"></div>
                             <div className="grid">
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex justify-between items-baseline gap-4">
                                     <div className="font-medium opacity-70 leading-tight">White Jerseys</div>
                                     <div className="flex gap-2">
                                         {["xs", "s", "lg", "xl", "2xl", "3xl", "4xl"].map((size) => (
@@ -233,12 +235,12 @@ export default function AllRegistration() {
                             </div>
                         </div>
 
-                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid gap-2 text-lg">
+                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 text-lg">
                             <div className="grid">
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex justify-between items-baseline gap-4">
                                     <div className="font-medium opacity-70 leading-tight">Black Shorts</div>
                                     <div className="flex gap-2">
-                                        {["xs", "s", "lg", "xl", "2xl", "3xl", "4xl"].map((size) => (
+                                        {["xs", "s", "lg", "xl", "2xl"].map((size) => (
                                             <div key={size} className="grid justify-center text-center pl-4">
                                                 <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                 <div className="font-semibold font-mono">
@@ -251,10 +253,10 @@ export default function AllRegistration() {
                             </div>
                             <div className="border-t"></div>
                             <div className="grid">
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex justify-between items-baseline gap-4">
                                     <div className="font-medium opacity-70 leading-tight">White Shorts</div>
                                     <div className="flex gap-2">
-                                        {["xs", "s", "lg", "xl", "2xl", "3xl", "4xl"].map((size) => (
+                                        {["xs", "s", "lg", "xl", "2xl"].map((size) => (
                                             <div key={size} className="grid justify-center text-center pl-4">
                                                 <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                 <div className="font-semibold font-mono">
@@ -267,37 +269,36 @@ export default function AllRegistration() {
                             </div>
                         </div>
 
-                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid content-center text-lg dark">
+                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground grid grid-rows-[auto_minmax(0,1fr)] gap-2 text-lg dark">
                             <div className="flex justify-between items-center gap-4">
                                 <div className="font-medium opacity-70 leading-tight">Total Registration</div>
                                 <div className="font-semibold text-right font-mono">{players.length}</div>
                             </div>
-                            <div className="flex justify-between items-baseline gap-4 pl-4">
-                                <div className="font-medium opacity-70 text-sm">Female</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "female").length}</div>
-                            </div>
-                            <div className="flex justify-between items-baseline gap-4 pl-4">
-                                <div className="font-medium opacity-70 text-sm">Male</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "male").length}</div>
-                            </div>
-                            <div className="flex justify-between items-baseline gap-4 pl-4">
-                                <div className="font-medium opacity-70 text-sm">Student</div>
-                                <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.info.isStudent).length}</div>
+                            <div className="grid content-center gap-1">
+                                <div className="flex justify-between items-baseline gap-4 pl-4">
+                                    <div className="font-medium opacity-70 text-sm">Female</div>
+                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "female").length}</div>
+                                </div>
+                                <div className="flex justify-between items-baseline gap-4 pl-4">
+                                    <div className="font-medium opacity-70 text-sm">Male</div>
+                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.gender === "male").length}</div>
+                                </div>
+                                <div className="flex justify-between items-baseline gap-4 pl-4">
+                                    <div className="font-medium opacity-70 text-sm">Student</div>
+                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.info.isStudent).length}</div>
+                                </div>
                             </div>
                         </div>
-                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground flex flex-col justify-evenly gap-4 text-lg dark">
+                        <div className="w-full border rounded-2xl p-4 lg:p-6 bg-accent text-accent-foreground flex flex-col justify-between gap-4 text-lg dark">
                             <div className="flex justify-between items-baseline gap-4">
-                                <div className="font-medium opacity-70">Paid</div>
+                                <div className="font-medium opacity-70">Total Paid</div>
                                 <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "paid").length}</div>
                             </div>
-                            <div className="grid">
-                                <div className="font-medium opacity-70">Total Amount</div>
-                                <div className="font-semibold font-mono">
-                                    {totalAmount(
-                                        players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
-                                        "Vietnam",
-                                    )}
-                                </div>
+                            <div className="font-semibold text-right font-mono">
+                                {totalAmount(
+                                    players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
+                                    "Vietnam",
+                                )}
                             </div>
                         </div>
                     </section>
