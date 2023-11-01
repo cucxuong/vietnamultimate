@@ -38,6 +38,7 @@ export default function Players() {
                     return {
                         code: player.player_code,
                         name: player.full_name,
+                        email: player.email,
                         nickname: player.nickname,
                         yob: player.year_of_birth,
                         gender: player.gender,
