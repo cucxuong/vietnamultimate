@@ -2,9 +2,11 @@
 
 import PaymentPlayers from "@/components/Admin/PaymentPlayers";
 import { useEffect, useState } from "react";
-import { getVietnamHatPlayers, updatePaymentStatus } from "@/api/admin/vietnam-hat-2023/players";
+import { getVietnamHatPlayers, updatePaymentStatus, updatePlayerStatus } from "@/api/admin/vietnam-hat-2023/players";
 import { useRouter } from "next/navigation";
 import AllRegistration from "@/components/Admin/AllPlayers";
+import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
+import AdminPlayers from "@/components/Admin/AdminPlayers";
 
 export default function Players() {
     const [players, setPlayers] = useState([]);
@@ -23,12 +25,15 @@ export default function Players() {
 
                 transformedData = data.map((player: any) => {
 
+                    const keyStatus: keyof typeof PlayerStatus = player.status;
+
                     return {
                         registrationCode: player.player_code,
                         name: player.full_name,
                         nickname: player.nickname,
                         fee: player.total_fee,
-                        isPaid: player.status == "paid",
+                        country: player.current_country,
+                        status: PlayerStatus[keyStatus],
                     };
                 });
             } else {
@@ -67,9 +72,25 @@ export default function Players() {
     }, []);
 
     return localStorage.getItem("country") === "All" ? <AllRegistration players={players} /> :
-        <CountryPlayers players={players} />;
+        localStorage.getItem("country") === "Admin"
+            ? <AdminPlayersWrapper players={players} />
+            : <CountryPlayers players={players} />;
 }
 
+
+const AdminPlayersWrapper = ({ players } : { players: Array<any> }) => {
+    const changeStatus = async (code: string, status: PlayerStatus) => {
+        await updatePlayerStatus({ player_code: code, status });
+    };
+
+    return (
+        <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
+            <AdminPlayers items={players} onChange={(id: string, status: PlayerStatus) => {
+                changeStatus(id, status);
+            }} />
+        </section>
+    );
+};
 
 const CountryPlayers = ({ players }: { players: Array<any> }) => {
 
