@@ -27,7 +27,7 @@ const AppBottomBar = forwardRef(({ active, onChange }: Props, ref) => {
             <nav
                 className={`w-full bg-primary text-primary-foreground backdrop-blur rounded-2xl shadow-xl transition-all ${
                     activePath === "/tournament"
-                        ? "grid grid-cols-2 place-content-center gap-4 bg-opacity-0 h-full duration-400 p-8"
+                        ? "grid grid-cols-2 place-content-center gap-4 bg-opacity-0 h-full duration-400 p-6"
                         : "flex items-center justify-around bg-opacity-20 h-16 max-w-sm duration-200"
                 }`}
             >
@@ -65,7 +65,7 @@ const AppBottomBar = forwardRef(({ active, onChange }: Props, ref) => {
                     <span className={`relative z-1 ${activePath === "/tournament/guide" ? "text-primary-foreground" : activePath === "/tournament" ? "" : "text-primary"}`}>
                         <TrafficSign size={24} weight="duotone" />
                     </span>
-                    {activePath === "/tournament" && <span>Guide</span>}
+                    {activePath === "/tournament" && <span className="truncate">Find your team</span>}
                 </Button>
                 <Button
                     onClick={() => handleChange("/tournament/schedule")}

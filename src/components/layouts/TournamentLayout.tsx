@@ -43,7 +43,7 @@ export default function TournamentLayout({ children }: { children: React.ReactNo
                     </span>
                 </Button>
 
-                <span className={`px-6 uppercase font-bold transition-all duration-300 ${path === "/tournament" ? "-translate-x-10 text-left text-4xl pt-6" : "text-center text-xl"}`}>
+                <span className={`px-6 uppercase font-bold transition-all duration-300 ${path === "/tournament" ? "-translate-x-12 text-left text-4xl pt-6" : "text-center text-xl"}`}>
                     Vietnam HAT 2023
                 </span>
             </div>

@@ -89,6 +89,20 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
         }, {});
     };
 
+    const filterPlayers = (search:string) => {
+        return players
+            .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(search.toLowerCase().replace(/\s/, "")))
+            .sort((a, b) => {
+                const aOrder = a.status === "expired" ? 0 : a.status === "paid" ? 1 : 2;
+                const bOrder = b.status === "expired" ? 0 : b.status === "paid" ? 1 : 2;
+                const c1 = bOrder - aOrder;
+                if (c1 !== 0) {
+                    return c1;
+                }
+                return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
+            });
+    };
+
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             <ScrollArea className={`scroll-smooth transition-all ease-in-out duration-500`} onScroll={(v) => setScroll(v)}>
@@ -289,7 +303,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                     {/* Reg datatable */}
                     <div className="grid gap-4">
-                        <div className="sm:border sm:border-primary rounded-3xl overflow-hidden font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
+                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
                             <div
                                 className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs rounded-t-[inherit] bg-background`}
                             >
@@ -317,292 +331,280 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                             </div>
 
                             {/* Loop reg list */}
-                            {players
-                                .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(query.toLowerCase().replace(/\s/, "")))
-                                .sort((a, b) => {
-                                    const aOrder = a.status === "expired" ? 0 : a.status === "paid" ? 1 : 2;
-                                    const bOrder = b.status === "expired" ? 0 : b.status === "paid" ? 1 : 2;
-                                    const c1 = bOrder - aOrder;
-                                    if (c1 !== 0) {
-                                        return c1;
-                                    }
-                                    return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
-                                })
-                                .map((player, index) => (
-                                    <div
-                                        key={player.code}
-                                        className={`col-span-full backdrop-blur grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary cursor-pointer ${
-                                            selectedReg === player.code ? "bg-primary bg-opacity-10 font-semibold" : "bg-background"
-                                        } ${index === players.length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
-                                            player.status === "expired" ? "text-gray-400" : ""
-                                        }`}
-                                        onClick={() => setSelectedReg((v) => (v === player.code ? "" : player.code))}
-                                        title={`Registered at ${format(player.createdAt || 0, "dd/MM/yyyy")}`}
-                                    >
-                                        <span className="py-2 flex items-center max-sm:self-center sm:justify-center max-sm:px-4 max-sm:text-2xl">{player.code}</span>
-                                        <div className="max-sm:col-span-3 max-sm:self-center max-sm:pl-4 sm:px-3 lg:px-4 py-2 grid">
-                                            <span>
-                                                {player.name || "Name"}
-                                                {player.nickname ? ` (${player.nickname || "Nickname"})` : ""} {player.yob}
-                                            </span>
-                                            <span className="text-xs">{player.email || "Email"}</span>
+                            {filterPlayers(query).map((player, index) => (
+                                <div
+                                    key={player.code}
+                                    className={`col-span-full backdrop-blur grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary cursor-pointer ${
+                                        selectedReg === player.code ? "bg-primary bg-opacity-10 font-semibold" : "bg-background"
+                                    } ${index === filterPlayers(query).length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
+                                        player.status === "expired" ? "text-gray-400" : ""
+                                    }`}
+                                    onClick={() => setSelectedReg((v) => (v === player.code ? "" : player.code))}
+                                    title={`Registered at ${format(player.createdAt || 0, "dd/MM/yyyy")}`}
+                                >
+                                    <span className="py-2 flex items-center max-sm:self-center sm:justify-center max-sm:px-4 max-sm:text-2xl">{player.code}</span>
+                                    <div className="max-sm:col-span-3 max-sm:self-center max-sm:pl-4 sm:px-3 lg:px-4 py-2 grid">
+                                        <span>
+                                            {player.name || "Name"}
+                                            {player.nickname ? ` (${player.nickname || "Nickname"})` : ""} {player.yob}
+                                        </span>
+                                        <span className="text-xs">{player.email || "Email"}</span>
+                                    </div>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Team</span>
+                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">{player.options?.skills.team}</span>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Country</span>
+                                    <span className="sm:py-2 sm:px-2 flex items-center sm:justify-center gap-2">
+                                        <span className="truncate">{player.country}</span>
+                                    </span>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is female</span>
+                                    <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        {player.gender === "female" ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                    </span>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is student</span>
+                                    <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        {player.options?.info.isStudent ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                    </span>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Lunch</span>
+                                    <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        {player.options?.addition.lunch ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                    </span>
+
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Bus</span>
+                                    <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        {player.options?.addition.bus ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                    </span>
+
+                                    <div className="max-sm:col-span-full max-sm:border-t max-sm:-mr-4 max-sm:pr-4 grid grid-cols-2 divide-x sm:divide-primary">
+                                        <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">Black jersey</span>
+                                        <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White jersey</span>
+
+                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
+                                            {Object.keys(
+                                                groupBy(
+                                                    player.options?.addition.jerseys.filter((j) => j.color === "black"),
+                                                    "size",
+                                                ),
+                                            ).map((item) => (
+                                                <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
+                                                    <span className="uppercase">{item}</span>
+                                                    <span>x</span>
+                                                    <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === item).length}</span>
+                                                </div>
+                                            ))}
                                         </div>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Team</span>
-                                        <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">{player.options?.skills.team}</span>
+                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
+                                            {Object.keys(
+                                                groupBy(
+                                                    player.options?.addition.jerseys.filter((j) => j.color === "white"),
+                                                    "size",
+                                                ),
+                                            ).map((item) => (
+                                                <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
+                                                    <span className="uppercase">{item}</span>
+                                                    <span>x</span>
+                                                    <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === item).length}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Country</span>
-                                        <span className="sm:py-2 sm:px-2 flex items-center sm:justify-center gap-2">
-                                            <span className="truncate">{player.country}</span>
-                                        </span>
+                                    <div className="max-sm:col-span-full max-sm:border-y max-sm:-mr-4 max-sm:-mt-2 max-sm:pr-4 grid grid-cols-2 divide-x sm:divide-primary">
+                                        <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">Black shorts</span>
+                                        <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White shorts</span>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is female</span>
-                                        <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.gender === "female" ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
-                                        </span>
-
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is student</span>
-                                        <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.options?.info.isStudent ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
-                                        </span>
-
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Lunch</span>
-                                        <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.options?.addition.lunch ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
-                                        </span>
-
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Bus</span>
-                                        <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.options?.addition.bus ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
-                                        </span>
-
-                                        <div className="max-sm:col-span-full max-sm:border-t max-sm:-mr-4 max-sm:pr-4 grid grid-cols-2 divide-x sm:divide-primary">
-                                            <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">Black jersey</span>
-                                            <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White jersey</span>
-
-                                            <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
-                                                {Object.keys(
-                                                    groupBy(
-                                                        player.options?.addition.jerseys.filter((j) => j.color === "black"),
-                                                        "size",
-                                                    ),
-                                                ).map((item) => (
-                                                    <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
-                                                        <span className="uppercase">{item}</span>
-                                                        <span>x</span>
-                                                        <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === item).length}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
-                                                {Object.keys(
-                                                    groupBy(
-                                                        player.options?.addition.jerseys.filter((j) => j.color === "white"),
-                                                        "size",
-                                                    ),
-                                                ).map((item) => (
-                                                    <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
-                                                        <span className="uppercase">{item}</span>
-                                                        <span>x</span>
-                                                        <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === item).length}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
+                                            {Object.keys(
+                                                groupBy(
+                                                    player.options?.addition.shorts.filter((j) => j.color === "black"),
+                                                    "size",
+                                                ),
+                                            ).map((item) => (
+                                                <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
+                                                    <span className="uppercase">{item}</span>
+                                                    <span>x</span>
+                                                    <span className="sm:text-right">{player.options?.addition.shorts.filter((j) => j.color === "black" && j.size === item).length}</span>
+                                                </div>
+                                            ))}
                                         </div>
 
-                                        <div className="max-sm:col-span-full max-sm:border-y max-sm:-mr-4 max-sm:-mt-2 max-sm:pr-4 grid grid-cols-2 divide-x sm:divide-primary">
-                                            <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">Black shorts</span>
-                                            <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White shorts</span>
-
-                                            <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
-                                                {Object.keys(
-                                                    groupBy(
-                                                        player.options?.addition.shorts.filter((j) => j.color === "black"),
-                                                        "size",
-                                                    ),
-                                                ).map((item) => (
-                                                    <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
-                                                        <span className="uppercase">{item}</span>
-                                                        <span>x</span>
-                                                        <span className="sm:text-right">{player.options?.addition.shorts.filter((j) => j.color === "black" && j.size === item).length}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
-                                                {Object.keys(
-                                                    groupBy(
-                                                        player.options?.addition.shorts.filter((j) => j.color === "white"),
-                                                        "size",
-                                                    ),
-                                                ).map((item) => (
-                                                    <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
-                                                        <span className="uppercase">{item}</span>
-                                                        <span>x</span>
-                                                        <span className="sm:text-right">{player.options?.addition.shorts.filter((j) => j.color === "white" && j.size === item).length}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
+                                            {Object.keys(
+                                                groupBy(
+                                                    player.options?.addition.shorts.filter((j) => j.color === "white"),
+                                                    "size",
+                                                ),
+                                            ).map((item) => (
+                                                <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
+                                                    <span className="uppercase">{item}</span>
+                                                    <span>x</span>
+                                                    <span className="sm:text-right">{player.options?.addition.shorts.filter((j) => j.color === "white" && j.size === item).length}</span>
+                                                </div>
+                                            ))}
                                         </div>
+                                    </div>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Disc</span>
-                                        <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {player.options?.addition.disc || 0}</span>
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Disc</span>
+                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {player.options?.addition.disc || 0}</span>
 
-                                        <span className="max-sm:col-start-1 sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Total fee</span>
-                                        <div className="max-sm:col-span-3 sm:px-3 lg:px-4 sm:py-2 sm:grid content-center sm:text-right font-mono">
-                                            <span>{totalAmount(player.totalFee || 0, "Vietnam")}</span>
-                                            {player.country && player.country !== "Vietnam" && <span> ≈ {totalAmount(player.totalFee || 0, player.country)}</span>}
-                                        </div>
+                                    <span className="max-sm:col-start-1 sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Total fee</span>
+                                    <div className="max-sm:col-span-3 sm:px-3 lg:px-4 sm:py-2 sm:grid content-center sm:text-right font-mono">
+                                        <span>{totalAmount(player.totalFee || 0, "Vietnam")}</span>
+                                        {player.country && player.country !== "Vietnam" && <span> ≈ {totalAmount(player.totalFee || 0, player.country)}</span>}
+                                    </div>
 
-                                        <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Status</span>
-                                        <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                            {player.status === "paid" && (
-                                                <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
-                                            )}
-                                            {player.status === "expired" && <span className="uppercase px-1.5 py-0.5 bg-accent text-gray-400 grid place-content-center text-sm rounded">EXPIRED</span>}
-                                        </span>
+                                    <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Status</span>
+                                    <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        {player.status === "paid" && (
+                                            <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
+                                        )}
+                                        {player.status === "expired" && <span className="uppercase px-1.5 py-0.5 bg-accent text-gray-400 grid place-content-center text-sm rounded">EXPIRED</span>}
+                                    </span>
 
-                                        {selectedReg === player.code && (
-                                            <div className="col-span-full border-t !border-t-primary !border-opacity-30 !border-x-0 p-4">
-                                                <div className="grid sm:grid-cols-5 gap-6">
-                                                    <div className="sm:col-span-4 grid sm:grid-cols-2 gap-y-4 gap-x-8">
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">How long have you played Ultimate Frisbee?</span>
-                                                            <span>
-                                                                {player.options?.skills.years}.{" "}
-                                                                {["Less than 1 year", "1 - 3 years", "3 - 5 years", "5 - 10 years", "More than 10 years"][(player.options?.skills.years || 1) - 1]}
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Playing experience?</span>
-                                                            <span>
-                                                                {player.options?.skills.playExp}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Haven't really played much at all",
-                                                                        "Played in some regular pick-up games",
-                                                                        "Played pick-up quite regularly or played in leagues",
-                                                                        "Played on Club teams or played in tournament regularly",
-                                                                        "Have been playing for quite sometime and have played at high levels of ultimate",
-                                                                    ][(player.options?.skills.playExp || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Throwing skill?</span>
-                                                            <span>
-                                                                {player.options?.skills.throwing}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Can throw backhand and forehand consistently",
-                                                                        "Can throw backhand and forehand consistently if no defender is marking",
-                                                                        "Can throw backhand and forehand consistently when a defender is marking",
-                                                                        "Make decent decisions, can break marks, and handle well",
-                                                                        "Make significant decisions, very consitent with all kinds of throws, including hucking",
-                                                                    ][(player.options?.skills.throwing || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Catching skill?</span>
-                                                            <span>
-                                                                {player.options?.skills.catching}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Have trouble catching a disc even without defender on me",
-                                                                        "Can catch a disc when being guarded",
-                                                                        "Can read the disc well and have no trouble making catches under pressure",
-                                                                        "Can read hucks and I've got good hands under defensive pressure",
-                                                                        "Can catch anything under intense pressure in any situation",
-                                                                    ][(player.options?.skills.catching || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Cutting skill?</span>
-                                                            <span>
-                                                                {player.options?.skills.cutting}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Develop an understanding of the game, can perform basic straight-line cuts",
-                                                                        "Understand the importantce of timing, changing speed and using fakes to get open",
-                                                                        "Can make effective undercuts, deep cuts and diagonal cuts to create separation from defenders",
-                                                                        "Can execute complex cutting, possess exceptional speed, agility and field awareness",
-                                                                        "Can execute a wide range of cuts with precision and exploit defensive weaknesses",
-                                                                    ][(player.options?.skills.cutting || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Defense skill?</span>
-                                                            <span>
-                                                                {player.options?.skills.defense}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Do not understand the basics of defense, only know how to mark",
-                                                                        "Understand the force",
-                                                                        "Understand zone defense and poaching",
-                                                                        "Can defend well and understand all defensive strategies",
-                                                                        "Can perform all advanced defensive strategies to shutdown offender",
-                                                                    ][(player.options?.skills.defense || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Fitness and agility?</span>
-                                                            <span>
-                                                                {player.options?.skills.fitness}.{" "}
-                                                                {
-                                                                    [
-                                                                        "Have weak stamina and speed, can only play a few points",
-                                                                        "Have speed, can run in pong points but quickly lost stamina",
-                                                                        "Have endurance and quickness",
-                                                                        "Have speed, ability to change direction rapidly and stability",
-                                                                        "Have exceptional fitness and agility, can stay for the whole game",
-                                                                    ][(player.options?.skills.fitness || 1) - 1]
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Are you interested in the captain position or wish to be a captain? </span>
-                                                            <span>
-                                                                {player.options?.skills.beACaptain}.{" "}
-                                                                {["Yes", "No", "I can try", "If I'm the only choice"][(player.options?.skills.beACaptain || 1) - 1]}
-                                                            </span>
-                                                        </div>
+                                    {selectedReg === player.code && (
+                                        <div className="col-span-full border-t !border-t-primary !border-opacity-30 !border-x-0 p-4">
+                                            <div className="grid sm:grid-cols-5 gap-6">
+                                                <div className="sm:col-span-4 grid sm:grid-cols-2 gap-y-4 gap-x-8">
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">How long have you played Ultimate Frisbee?</span>
+                                                        <span>
+                                                            {player.options?.skills.years}.{" "}
+                                                            {["Less than 1 year", "1 - 3 years", "3 - 5 years", "5 - 10 years", "More than 10 years"][(player.options?.skills.years || 1) - 1]}
+                                                        </span>
                                                     </div>
 
-                                                    <div className="grid items-center content-start gap-4">
-                                                        <div className="grid">
-                                                            <span className="truncate font-normal">Are you vegan? </span>
-                                                            <span>{player.options?.addition.isVegan ? "Yes" : "No"}</span>
-                                                        </div>
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Playing experience?</span>
+                                                        <span>
+                                                            {player.options?.skills.playExp}.{" "}
+                                                            {
+                                                                [
+                                                                    "Haven't really played much at all",
+                                                                    "Played in some regular pick-up games",
+                                                                    "Played pick-up quite regularly or played in leagues",
+                                                                    "Played on Club teams or played in tournament regularly",
+                                                                    "Have been playing for quite sometime and have played at high levels of ultimate",
+                                                                ][(player.options?.skills.playExp || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
 
-                                                        {player.options?.addition.allergies && (
-                                                            <div className="grid">
-                                                                <span className="truncate font-normal">Allergies? </span>
-                                                                <span className="truncate">{player.options?.addition.allergies}</span>
-                                                            </div>
-                                                        )}
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Throwing skill?</span>
+                                                        <span>
+                                                            {player.options?.skills.throwing}.{" "}
+                                                            {
+                                                                [
+                                                                    "Can throw backhand and forehand consistently",
+                                                                    "Can throw backhand and forehand consistently if no defender is marking",
+                                                                    "Can throw backhand and forehand consistently when a defender is marking",
+                                                                    "Make decent decisions, can break marks, and handle well",
+                                                                    "Make significant decisions, very consitent with all kinds of throws, including hucking",
+                                                                ][(player.options?.skills.throwing || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
 
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Catching skill?</span>
+                                                        <span>
+                                                            {player.options?.skills.catching}.{" "}
+                                                            {
+                                                                [
+                                                                    "Have trouble catching a disc even without defender on me",
+                                                                    "Can catch a disc when being guarded",
+                                                                    "Can read the disc well and have no trouble making catches under pressure",
+                                                                    "Can read hucks and I've got good hands under defensive pressure",
+                                                                    "Can catch anything under intense pressure in any situation",
+                                                                ][(player.options?.skills.catching || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Cutting skill?</span>
+                                                        <span>
+                                                            {player.options?.skills.cutting}.{" "}
+                                                            {
+                                                                [
+                                                                    "Develop an understanding of the game, can perform basic straight-line cuts",
+                                                                    "Understand the importantce of timing, changing speed and using fakes to get open",
+                                                                    "Can make effective undercuts, deep cuts and diagonal cuts to create separation from defenders",
+                                                                    "Can execute complex cutting, possess exceptional speed, agility and field awareness",
+                                                                    "Can execute a wide range of cuts with precision and exploit defensive weaknesses",
+                                                                ][(player.options?.skills.cutting || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Defense skill?</span>
+                                                        <span>
+                                                            {player.options?.skills.defense}.{" "}
+                                                            {
+                                                                [
+                                                                    "Do not understand the basics of defense, only know how to mark",
+                                                                    "Understand the force",
+                                                                    "Understand zone defense and poaching",
+                                                                    "Can defend well and understand all defensive strategies",
+                                                                    "Can perform all advanced defensive strategies to shutdown offender",
+                                                                ][(player.options?.skills.defense || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Fitness and agility?</span>
+                                                        <span>
+                                                            {player.options?.skills.fitness}.{" "}
+                                                            {
+                                                                [
+                                                                    "Have weak stamina and speed, can only play a few points",
+                                                                    "Have speed, can run in pong points but quickly lost stamina",
+                                                                    "Have endurance and quickness",
+                                                                    "Have speed, ability to change direction rapidly and stability",
+                                                                    "Have exceptional fitness and agility, can stay for the whole game",
+                                                                ][(player.options?.skills.fitness || 1) - 1]
+                                                            }
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Are you interested in the captain position or wish to be a captain? </span>
+                                                        <span>
+                                                            {player.options?.skills.beACaptain}. {["Yes", "No", "I can try", "If I'm the only choice"][(player.options?.skills.beACaptain || 1) - 1]}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid items-center content-start gap-4">
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Are you vegan? </span>
+                                                        <span>{player.options?.addition.isVegan ? "Yes" : "No"}</span>
+                                                    </div>
+
+                                                    {player.options?.addition.allergies && (
                                                         <div className="grid">
-                                                            <span className="truncate font-normal">Registered date </span>
-                                                            <span className="truncate">{format(player.createdAt || 0, "dd/MM/yyyy")}</span>
+                                                            <span className="truncate font-normal">Allergies? </span>
+                                                            <span className="truncate">{player.options?.addition.allergies}</span>
                                                         </div>
+                                                    )}
+
+                                                    <div className="grid">
+                                                        <span className="truncate font-normal">Registered date </span>
+                                                        <span className="truncate">{format(player.createdAt || 0, "dd/MM/yyyy")}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
-                                    </div>
-                                ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </Main>
