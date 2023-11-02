@@ -23,8 +23,8 @@ const AppBottomBar = forwardRef(({ active, onChange }: Props, ref) => {
             className={`fixed flex items-center justify-center transition-all ${activePath === "/tournament" ? "w-[calc(100dvw_-_2rem)] h-[calc(50dvh_-_2rem)] bottom-[calc(25dvh_-_1rem)] left-4 duration-400" : "w-[100dvw] h-24 bottom-0 left-0 p-4 duration-200"}`}
         >
             <nav
-                className={`w-full flex items-center justify-around bg-primary text-primary-foreground transition-all ${
-                    activePath === "/tournament" ? "h-full grid-bg duration-400" : "rounded-2xl shadow-xl bg-opacity-20 backdrop-blur-sm h-16 max-w-sm duration-200"
+                className={`w-full flex items-center justify-around bg-primary text-primary-foreground bg-opacity-20 backdrop-blur rounded-2xl shadow-xl transition-all ${
+                    activePath === "/tournament" ? "h-full grid-bg duration-400" : "h-16 max-w-sm duration-200"
                 }`}
             >
                 <Button onClick={() => handleChange("/tournament/guide")} variant={"ghost"} size={"icon-lg"} className={`flex-col rounded-full relative transition-all duration-300`}>
