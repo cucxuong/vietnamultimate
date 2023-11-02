@@ -20,21 +20,59 @@ const AppBottomBar = forwardRef(({ active, onChange }: Props, ref) => {
     return (
         <section
             ref={ref as MutableRefObject<HTMLDivElement | null>}
-            className={`fixed flex items-center justify-center transition-all ${activePath === "/tournament" ? "w-[calc(100dvw_-_2rem)] h-[calc(50dvh_-_2rem)] bottom-[calc(25dvh_-_1rem)] left-4 duration-400" : "w-[100dvw] h-24 bottom-0 left-0 p-4 duration-200"}`}
+            className={`fixed flex items-center justify-center transition-all ${
+                activePath === "/tournament" ? "w-[calc(100dvw_-_2rem)] h-[calc(50dvh_-_2rem)] bottom-[calc(25dvh_-_1rem)] left-4 duration-400" : "w-[100dvw] h-24 bottom-0 left-0 p-4 duration-200"
+            }`}
         >
             <nav
-                className={`w-full flex items-center justify-around bg-primary text-primary-foreground bg-opacity-20 backdrop-blur rounded-2xl shadow-xl transition-all ${
-                    activePath === "/tournament" ? "h-full grid-bg duration-400" : "h-16 max-w-sm duration-200"
+                className={`w-full bg-primary text-primary-foreground backdrop-blur rounded-2xl shadow-xl transition-all ${
+                    activePath === "/tournament"
+                        ? "grid grid-cols-2 place-content-center gap-4 bg-opacity-0 h-full duration-400 p-8"
+                        : "flex items-center justify-around bg-opacity-20 h-16 max-w-sm duration-200"
                 }`}
             >
-                <Button onClick={() => handleChange("/tournament/guide")} variant={"ghost"} size={"icon-lg"} className={`flex-col rounded-full relative transition-all duration-300`}>
+                <Button
+                    onClick={() => handleChange("/tournament/guide")}
+                    variant={activePath === "/tournament" ? "default" : "ghost"}
+                    size={activePath === "/tournament" ? "auto" : "icon-lg"}
+                    className={`flex-col relative transition-all duration-300 ${activePath === "/tournament" ? "rounded-xl aspect-square p-4" : "rounded-full"}`}
+                >
                     <div className={`absolute inset-0 z-0 rounded-full bg-primary transition-all duration-300 ${activePath === "/tournament/guide" ? "" : "scale-0 opacity-0"}`}></div>
                     <span className={`relative z-1 ${activePath === "/tournament/guide" ? "text-primary-foreground" : activePath === "/tournament" ? "" : "text-primary"}`}>
                         <TrafficSign size={24} weight="duotone" />
                     </span>
                     {activePath === "/tournament" && <span>Guide</span>}
                 </Button>
-                <Button onClick={() => handleChange("/tournament/schedule")} variant={"ghost"} size={"icon-lg"} className={`flex-col rounded-full relative transition-all duration-300`}>
+                <Button
+                    onClick={() => handleChange("/tournament/schedule")}
+                    variant={activePath === "/tournament" ? "default" : "ghost"}
+                    size={activePath === "/tournament" ? "auto" : "icon-lg"}
+                    className={`flex-col relative transition-all duration-300 ${activePath === "/tournament" ? "rounded-xl aspect-square p-4" : "rounded-full"}`}
+                >
+                    <div className={`absolute inset-0 z-0 rounded-full bg-primary transition-all duration-300 ${activePath === "/tournament/schedule" ? "" : "scale-0 opacity-0"}`}></div>
+                    <span className={`relative z-1 ${activePath === "/tournament/schedule" ? "text-primary-foreground" : activePath === "/tournament" ? "" : "text-primary"}`}>
+                        <Sheet size={24} strokeWidth={1.25} fill="currentColor" fillOpacity={0.2} />
+                    </span>
+                    {activePath === "/tournament" && <span>Schedule</span>}
+                </Button>
+                <Button
+                    onClick={() => handleChange("/tournament/guide")}
+                    variant={activePath === "/tournament" ? "default" : "ghost"}
+                    size={activePath === "/tournament" ? "auto" : "icon-lg"}
+                    className={`flex-col relative transition-all duration-300 ${activePath === "/tournament" ? "rounded-xl aspect-square p-4" : "rounded-full"}`}
+                >
+                    <div className={`absolute inset-0 z-0 rounded-full bg-primary transition-all duration-300 ${activePath === "/tournament/guide" ? "" : "scale-0 opacity-0"}`}></div>
+                    <span className={`relative z-1 ${activePath === "/tournament/guide" ? "text-primary-foreground" : activePath === "/tournament" ? "" : "text-primary"}`}>
+                        <TrafficSign size={24} weight="duotone" />
+                    </span>
+                    {activePath === "/tournament" && <span>Guide</span>}
+                </Button>
+                <Button
+                    onClick={() => handleChange("/tournament/schedule")}
+                    variant={activePath === "/tournament" ? "default" : "ghost"}
+                    size={activePath === "/tournament" ? "auto" : "icon-lg"}
+                    className={`flex-col relative transition-all duration-300 ${activePath === "/tournament" ? "rounded-xl aspect-square p-4" : "rounded-full"}`}
+                >
                     <div className={`absolute inset-0 z-0 rounded-full bg-primary transition-all duration-300 ${activePath === "/tournament/schedule" ? "" : "scale-0 opacity-0"}`}></div>
                     <span className={`relative z-1 ${activePath === "/tournament/schedule" ? "text-primary-foreground" : activePath === "/tournament" ? "" : "text-primary"}`}>
                         <Sheet size={24} strokeWidth={1.25} fill="currentColor" fillOpacity={0.2} />

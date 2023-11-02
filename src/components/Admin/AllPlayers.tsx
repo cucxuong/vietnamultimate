@@ -289,7 +289,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                     {/* Reg datatable */}
                     <div className="grid gap-4">
-                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
+                        <div className="sm:border sm:border-primary rounded-3xl overflow-hidden font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
                             <div
                                 className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs rounded-t-[inherit] bg-background`}
                             >
