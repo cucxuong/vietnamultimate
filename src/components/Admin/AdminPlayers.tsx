@@ -3,20 +3,23 @@ import Main from "@/components/Home/Main";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Input } from "@/components/ui/input";
 import { Transition } from "@headlessui/react";
-import { CheckFat } from "@phosphor-icons/react";
 import { Fragment, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
-import { Simulate } from "react-dom/test-utils";
 
-export default function PaymentPlayers({
-                                           items,
-                                           onChange,
-                                           country,
-                                       }: {
-    items: { registrationCode: string; name: string; nickname: string; fee: number; status: PlayerStatus }[];
-    onChange: (id: string, value: boolean) => void;
-    country: string;
+export default function AdminPlayers({
+                                         items,
+                                         onChange,
+                                     }: {
+    items: {
+        registrationCode: string;
+        name: string;
+        nickname: string;
+        fee: number;
+        status: PlayerStatus,
+        country: string
+    }[];
+    onChange: (id: string, status: PlayerStatus) => void;
 }) {
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
 
@@ -24,11 +27,12 @@ export default function PaymentPlayers({
 
     const [dialog, setDialog] = useState(false);
     const [openDialog, setOpenDialog] = useState<{
+        country: string;
         registrationCode: string;
         name: string;
         nickname: string;
         fee: number;
-        status: PlayerStatus;
+        status: PlayerStatus
     } | null>(null);
 
     const [players, setPlayers] = useState<{
@@ -36,14 +40,15 @@ export default function PaymentPlayers({
         name: string;
         nickname: string;
         fee: number;
+        country: string,
         status: PlayerStatus
     }[]>([...items]);
 
-    function tooglePaid(code: string) {
+    function toggleStatus(code: string, status: PlayerStatus) {
         setPlayers((ps) => [
             ...ps.map((p) => {
                 if (p.registrationCode === code) {
-                    return { ...p, status: PlayerStatus.paid };
+                    return { ...p, status: status };
                 }
                 return { ...p };
             }),
@@ -51,7 +56,7 @@ export default function PaymentPlayers({
         setOpenDialog(null);
     }
 
-    const total = (fee: number) => {
+    const total = (country: string, fee: number) => {
         if (country === "Singapore") {
             return `${Intl.NumberFormat("en-US")
                 .format(Math.ceil(fee / 17500))
@@ -79,12 +84,36 @@ export default function PaymentPlayers({
         setPlayers(items.filter((p) => (p.registrationCode + p.name + p.nickname).toLowerCase().replace(/\s/g, "").includes(query.toLowerCase().replace(/\s/g, ""))));
     }, [query, items]);
 
+    const StatusButton = ({ status, onChange }: {
+        status: PlayerStatus,
+        onChange: () => void
+    }) => {
+        return (
+            <Button className={`text-sm px-3 text-white ${status === PlayerStatus.pending
+                ? "bg-gray-600"
+                : status === PlayerStatus.paid
+                    ? "bg-green-800"
+                    : status === PlayerStatus.expired
+                        ? "bg-amber-600"
+                        : "bg-red-500"}`}
+
+                    onClick={() => {
+                        console.log("123");
+                        onChange();
+                    }}
+            >
+                {PlayerStatus[status][0].toUpperCase() + PlayerStatus[status].slice(1).toLowerCase()}
+            </Button>
+        );
+    };
+
+
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
             <ScrollArea className={`scroll-smooth transition-all ease-in-out duration-500`}
                         onScroll={(v) => setScroll(v)}>
                 <Main className="w-full lg:max-w-lg lg:mx-auto">
-                    <h2 className="text-5xl font-semibold -mx-6 -mt-6 py-6 px-4 lg:px-6">Registered {country} Players</h2>
+                    <h2 className="text-5xl font-semibold -mx-6 -mt-6 py-6 px-4 lg:px-6">Registered Players</h2>
                     <div className="grid gap-4">
                         <div
                             className={`sticky top-0 grid gap-2 -mx-6 transition-all border-b px-4 lg:px-6 ${
@@ -130,30 +159,26 @@ export default function PaymentPlayers({
                                             {player.nickname && player.nickname !== "" &&
                                                 <small>({player.nickname})</small>}
                                         </div>
-                                        <span className="font-mono text-right">{total(player.fee)}</span>
+                                        <span
+                                            className="font-mono text-right">{total(player.country, player.fee)}</span>
                                     </div>
                                     <span className="px-3 lg:px-4 py-2 flex items-center justify-center">
-                                        {(player.status === PlayerStatus.paid || player.status === PlayerStatus.pending) ? (
-                                            <button
-                                                className={`h-6 w-6 rounded ${player.status === PlayerStatus.paid ? "bg-green-100" : "border-2 border-primary"} grid place-content-center`}
-                                                onClick={() => {
-                                                    if (player.status === PlayerStatus.paid) {
-                                                        setDialog(true);
-                                                    } else {
-                                                        setOpenDialog(player);
-                                                    }
-                                                }}
-                                            >
-                                                {player.status === PlayerStatus.paid &&
-                                                    <CheckFat size={18} weight="fill" className="text-green-600" />}
-                                            </button>
-                                        ) : (
-                                           <button
-                                                className={`h-6 w-32 text-white text-sm rounded ${player.status === PlayerStatus.expired ? "bg-amber-600" : "bg-red-500"} grid place-content-center`} onClick={() =>{}}
-                                            >
-                                               {PlayerStatus[player.status][0].toUpperCase() + PlayerStatus[player.status].slice(1).toLowerCase()}
-                                            </button>
-                                        )}
+                                        <button
+                                            className={`h-6 px-2 text-white text-sm rounded ${
+                                                player.status === PlayerStatus.pending
+                                                    ? "bg-gray-600"
+                                                    : player.status === PlayerStatus.paid
+                                                        ? "bg-green-800"
+                                                        : player.status === PlayerStatus.expired
+                                                            ? "bg-amber-600"
+                                                            : "bg-red-500"
+                                            } grid place-content-center`}
+                                            onClick={() => {
+                                                setOpenDialog(player);
+                                            }}
+                                        >
+                                            {PlayerStatus[player.status][0].toUpperCase() + PlayerStatus[player.status].slice(1).toLowerCase()}
+                                        </button>
                                     </span>
                                 </div>
                             ))}
@@ -172,58 +197,44 @@ export default function PaymentPlayers({
             >
                 <div
                     className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
-                    <h3 className="text-3xl">Confirm payment?</h3>
+                    <h3 className="text-3xl">Confirm status changing?</h3>
                     <div className="rounded-xl border p-4 grid bg-foreground text-background place-content-center">
                         <span>
                             {openDialog?.registrationCode} - <span className="font-semibold">{openDialog?.name}</span>
                         </span>
 
-                        <span className="font-mono font-semibold">{total(openDialog?.fee || 0)}</span>
+                        <span className="font-mono font-semibold">{total(openDialog?.country!, openDialog?.fee!)}</span>
                     </div>
-                    <p>We will send a payment confirmination email to this player.</p>
-                    <p>Once you confirm, the action can not be undo.</p>
-                    <p>Please make sure that all information are correct.</p>
+
+                    <div className="grid grid-cols-3 gap-4">
+                        {openDialog?.status !== PlayerStatus.pending &&
+                            <StatusButton status={PlayerStatus.pending} onChange={() => {
+                                onChange(openDialog?.registrationCode!, PlayerStatus.pending);
+                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.pending);
+                            }} />}
+                        {openDialog?.status !== PlayerStatus.paid &&
+                            <StatusButton status={PlayerStatus.paid} onChange={() => {
+                                onChange(openDialog?.registrationCode!, PlayerStatus.paid);
+                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.paid);
+                            }} />}
+                        {openDialog?.status !== PlayerStatus.expired &&
+                            <StatusButton status={PlayerStatus.expired} onChange={() => {
+                                onChange(openDialog?.registrationCode!, PlayerStatus.expired);
+                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.expired);
+                            }} />}
+                        {openDialog?.status !== PlayerStatus.cancelled &&
+                            <StatusButton status={PlayerStatus.cancelled} onChange={() => {
+                                onChange(openDialog?.registrationCode!, PlayerStatus.cancelled);
+                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.cancelled);
+                            }} />}
+                    </div>
+
                     <div className="flex gap-4">
-                        <Button
-                            variant={"outline"}
-                            onClick={() => {
-                                setOpenDialog(null);
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                onChange(openDialog?.registrationCode || "", true);
-                                tooglePaid(openDialog?.registrationCode || "");
-                            }}
-                            className="w-full"
-                        >
-                            Confirm Paid
-                        </Button>
-                    </div>
-                </div>
-            </Transition>
-            <Transition
-                show={dialog}
-                as={Fragment}
-                enter="transition-all duration-200 ease-in"
-                leave="transition-all duration-100 ease-out"
-                enterFrom="translate-y-full opacity-0"
-                leaveTo="translate-y-full opacity-0"
-            >
-                <div
-                    className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
-                    <h3 className="text-3xl">Cannot uncheck</h3>
-                    <p>
-                        If there is something wrong, <div>please contact organizers.</div>
-                    </p>
-                    <div className="flex justify-center gap-4">
-                        <Button
-                            variant={"outline"}
-                            onClick={() => {
-                                setDialog(false);
-                            }}
+                        <Button className="w-full"
+                                variant={"outline"}
+                                onClick={() => {
+                                    setOpenDialog(null);
+                                }}
                         >
                             Cancel
                         </Button>
