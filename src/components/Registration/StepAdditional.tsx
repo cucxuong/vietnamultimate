@@ -885,23 +885,29 @@ export default function StepAdditional({
               </Transition>
             </div>
           </div>
-          {tournament.total_disc < 120 && (
-            <div
-              className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
-              <div className="text-2xl font-medium">{t("Tournament disc")}</div>
-              <div className="grid lg:gap-6 gap-4 w-full max-w-lg mx-auto">
-                <div className="grid place-content-center bg-secondary rounded-2xl overflow-hidden">
-                  <div className="snap-center w-full min-w-[250px]">
-                    <img src="./VNHAT2023-Disc.png" alt="" className="w-full h-full object-contain" />
-                  </div>
-                </div>
 
+          <div
+            className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
+            <div
+              className="text-2xl font-medium">{t("Tournament disc")} {t(`Remain: ${110 - tournament.total_disc}`)}</div>
+            <div className="grid lg:gap-6 gap-4 w-full max-w-lg mx-auto">
+              <div className="grid place-content-center bg-secondary rounded-2xl overflow-hidden">
+                <div className="snap-center w-full min-w-[250px]">
+                  <img src="./VNHAT2023-Disc.png" alt="" className="w-full h-full object-contain" />
+                </div>
+              </div>
+
+              {tournament.total_disc >= 110 ? (
+                <div>Because we have to prepare for printing, the number of tournament discs is limited. Disc
+                  registration may be closed earlier than expected.</div>
+              ) : (
                 <div className="flex flex-wrap justify-center items-center">
                   <span className="w-full text-xs text-center">QTY</span>
                   <div
                     className={`grid grid-cols-[3rem_3rem_3rem] h-12 border border-primary border-opacity-60 divide-x divide-primary divide-opacity-60 rounded-full overflow-hidden`}>
                     <button className="grid place-content-center"
-                            onClick={() => handleChange("disc", data.disc > 0 ? data.disc - 1 : 0)}>
+                            onClick={() => handleChange("disc", data.disc > 0 ? data.disc - 1 : 0)}
+                    >
                                         <span>
                                             <Minus size={18} />
                                         </span>
@@ -909,16 +915,20 @@ export default function StepAdditional({
                     <div className={`grid place-content-center ${data.disc > 0 ? "bg-primary bg-opacity-30" : ""}`}>
                       <span>{data.disc}</span>
                     </div>
-                    <button className="grid place-content-center" onClick={() => handleChange("disc", data.disc + 1)}>
+                    <button className="grid place-content-center"
+                            onClick={(e) => (110 - tournament.total_disc) <= data.disc
+                              ? e.preventDefault()
+                              : handleChange("disc", data.disc + 1)
+                            }>
                                         <span>
                                             <Plus size={18} />
                                         </span>
                     </button>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
