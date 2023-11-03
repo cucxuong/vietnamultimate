@@ -885,7 +885,7 @@ export default function StepAdditional({
               </Transition>
             </div>
           </div>
-          {tournament.total_disc < 10 && (
+          {tournament.total_disc < 120 && (
             <div
               className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
               <div className="text-2xl font-medium">{t("Tournament disc")}</div>
