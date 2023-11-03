@@ -24,6 +24,7 @@ export default function Registration() {
     const [validate, setValidate] = useState(false);
     const [valid, setValid] = useState(true);
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
+    const [tournament, setTournament] = useState(null);
     const [dataStepGeneral, setDataStepGeneral] = useState<StepGeneralData>({
         name: "",
         nickname: "",
@@ -76,6 +77,7 @@ export default function Registration() {
                     country={dataStepGeneral.stayingCountry}
                     onChange={(e) => setDataStepAdditional(e)}
                     onValidate={(e) => setValid(e)}
+                    tournament={tournament ?? { total_disc: 0 }}
                 />
             ),
         },
@@ -159,10 +161,23 @@ export default function Registration() {
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 100);
+       fetchTourData();
     }, []);
+
+    const fetchTourData = async () => {
+         try {
+            const response = await fetchTournamentInfo({id: VIETNAM_HAT_TOURNAMENT_ID});
+
+            // @ts-ignore
+            const tourInfo = response.data.data;
+
+            setTournament(tourInfo);
+            setLoading(false);
+        } catch(e) {
+            setLoading(false);
+            throw e;
+        }
+    }
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>

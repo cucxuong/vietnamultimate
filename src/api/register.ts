@@ -4,7 +4,7 @@ import axiosInstance from "./axios";
 const tournamentID = VIETNAM_HAT_TOURNAMENT_ID;
 
 const fetchTournamentInfo = async ({ id }: { id: string }) => {
-    await axiosInstance.get(`/tournaments/${tournamentID}`);
+    return await axiosInstance.get(`/tournaments/${tournamentID}`);
 };
 
 interface RegisterProps {
