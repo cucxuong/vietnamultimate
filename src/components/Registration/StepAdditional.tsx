@@ -933,11 +933,11 @@ export default function StepAdditional({
                                         </span>
                                         </button>
                                     </div>
-                                    <div className="flex flex-wrap justify-center items-center">
+                                </div>
+                                 <div className="flex flex-wrap justify-center items-center mt-3">
                                         Because we have to prepare for printing, the number of tournament discs is
                                         limited. Disc registration may be closed earlier than expected.
-                                    </div>
-                                </div>
+                                 </div>
                             </div>
                         </div>
                     )}
