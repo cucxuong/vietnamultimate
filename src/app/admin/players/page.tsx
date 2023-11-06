@@ -37,6 +37,7 @@ export default function Players() {
             } else {
                 transformedData = data.map((player: any) => {
                     const selectOptions = JSON.parse(player.selected_options);
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
 
                     return {
                         code: player.player_code,
@@ -47,7 +48,7 @@ export default function Players() {
                         gender: player.gender,
                         country: player?.current_country,
                         totalFee: player.total_fee,
-                        status: player.status,
+                        status: PlayerStatus[keyStatus],
                         options: selectOptions,
                         createdAt: new Date(player.created_at),
                     };
