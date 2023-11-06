@@ -4,5 +4,5 @@ export enum PlayerStatus {
     expired = 'expired',
     cancelled = 'cancelled',
     confirmed = 'confirmed',
-    halfpaid = 'halfpaid'
+    halfpaid = 'half-paid'
 }

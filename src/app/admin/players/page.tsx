@@ -23,7 +23,7 @@ export default function Players() {
             let transformedData = [];
             if (localStorage.getItem("country") !== "All") {
                 transformedData = data.map((player: any) => {
-                    const keyStatus: keyof typeof PlayerStatus = player.status;
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
 
                     return {
                         registrationCode: player.player_code,
@@ -97,9 +97,9 @@ const AdminPlayersWrapper = ({ players }: { players: Array<any> }) => {
 
 const CountryPlayers = ({ players }: { players: Array<any> }) => {
     // POST Players
-    const tooglePaid = async (code: string, value: string) => {
+    const tooglePaid = async (code: string, value: PlayerStatus.paid | PlayerStatus.halfpaid) => {
         //Sửa chỗ này để update statú paid/halfpaid
-        await updatePaymentStatus({ player_code: code });
+        await updatePaymentStatus({ player_code: code, status: value });
     };
 
     return (

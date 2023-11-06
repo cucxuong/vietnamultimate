@@ -3,11 +3,10 @@ import Main from "@/components/Home/Main";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Input } from "@/components/ui/input";
 import { Transition } from "@headlessui/react";
-import { CheckFat, Check } from "@phosphor-icons/react";
+import { Check, CheckFat } from "@phosphor-icons/react";
 import { Fragment, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
-import { Simulate } from "react-dom/test-utils";
 
 export default function PaymentPlayers({
     items,
@@ -15,7 +14,7 @@ export default function PaymentPlayers({
     country,
 }: {
     items: { registrationCode: string; name: string; nickname: string; fee: number; status: PlayerStatus }[];
-    onChange: (id: string, value: "full" | "half") => void;
+    onChange: (id: string, value: PlayerStatus.halfpaid | PlayerStatus.paid) => void;
     country: string;
 }) {
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
@@ -195,7 +194,7 @@ export default function PaymentPlayers({
                             </Button>
                             <Button
                                 onClick={() => {
-                                    onChange(openDialog?.registrationCode || "", "half");
+                                    onChange(openDialog?.registrationCode || "", PlayerStatus.halfpaid);
                                     tooglePaid(openDialog?.registrationCode || "", true);
                                 }}
                                 className="w-full"
@@ -204,7 +203,7 @@ export default function PaymentPlayers({
                             </Button>
                             <Button
                                 onClick={() => {
-                                    onChange(openDialog?.registrationCode || "", "full");
+                                    onChange(openDialog?.registrationCode || "", PlayerStatus.paid);
                                     tooglePaid(openDialog?.registrationCode || "");
                                 }}
                                 className="w-full"
