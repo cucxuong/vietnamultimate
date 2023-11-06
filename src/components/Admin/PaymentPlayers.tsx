@@ -136,7 +136,7 @@ export default function PaymentPlayers({
                                                         : "border-2 border-primary"
                                                 } grid place-content-center`}
                                                 onClick={() => {
-                                                    if (player.status === PlayerStatus.paid) {
+                                                    if (player.status === PlayerStatus.paid || player.status === PlayerStatus.halfpaid) {
                                                         setDialog(true);
                                                     } else {
                                                         setOpenDialog(player);
@@ -222,9 +222,9 @@ export default function PaymentPlayers({
             >
                 <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
                     <h3 className="text-3xl">Cannot uncheck</h3>
-                    <p>
+                    <div>
                         If there is something wrong, <div>please contact organizers.</div>
-                    </p>
+                    </div>
                     <div className="flex justify-center gap-4">
                         <Button
                             variant={"outline"}
