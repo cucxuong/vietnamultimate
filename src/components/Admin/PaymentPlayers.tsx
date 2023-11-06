@@ -15,7 +15,7 @@ export default function PaymentPlayers({
     country,
 }: {
     items: { registrationCode: string; name: string; nickname: string; fee: number; status: PlayerStatus }[];
-    onChange: (id: string, value: "full"|"half") => void;
+    onChange: (id: string, value: "full" | "half") => void;
     country: string;
 }) {
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
@@ -170,45 +170,48 @@ export default function PaymentPlayers({
                 enterFrom="translate-y-full opacity-0"
                 leaveTo="translate-y-full opacity-0"
             >
-                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
-                    <h3 className="text-3xl">Confirm payment?</h3>
-                    <div className="rounded-xl border p-4 grid bg-foreground text-background place-content-center">
-                        <span>
-                            {openDialog?.registrationCode} - <span className="font-semibold">{openDialog?.name}</span>
-                        </span>
+                <div className="fixed inset-0 pb-8 flex items-end justify-center">
+                    <div className="absolute inset-0 z-40" onClick={() => setOpenDialog(null)}></div>
+                    <div className="rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center z-50">
+                        <h3 className="text-3xl">Confirm payment?</h3>
+                        <div className="rounded-xl border p-4 grid bg-foreground text-background place-content-center">
+                            <span>
+                                {openDialog?.registrationCode} - <span className="font-semibold">{openDialog?.name}</span>
+                            </span>
 
-                        <span className="font-mono font-semibold">{total(openDialog?.fee || 0)}</span>
-                    </div>
-                    <p>We will send a payment confirmination email to this player.</p>
-                    <p>Once you confirm, the action can not be undo.</p>
-                    <p>Please make sure that all information are correct.</p>
-                    <div className="flex gap-4">
-                        <Button
-                            variant={"outline"}
-                            onClick={() => {
-                                setOpenDialog(null);
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                onChange(openDialog?.registrationCode || "", "half");
-                                tooglePaid(openDialog?.registrationCode || "", true);
-                            }}
-                            className="w-full"
-                        >
-                            Half Paid
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                onChange(openDialog?.registrationCode || "", "full");
-                                tooglePaid(openDialog?.registrationCode || "");
-                            }}
-                            className="w-full"
-                        >
-                            Full Paid
-                        </Button>
+                            <span className="font-mono font-semibold">{total(openDialog?.fee || 0)}</span>
+                        </div>
+                        <p>We will send a payment confirmination email to this player.</p>
+                        <p>Once you confirm, the action can not be undo.</p>
+                        <p>Please make sure that all information are correct.</p>
+                        <div className="flex gap-4">
+                            <Button
+                                variant={"outline"}
+                                onClick={() => {
+                                    setOpenDialog(null);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    onChange(openDialog?.registrationCode || "", "half");
+                                    tooglePaid(openDialog?.registrationCode || "", true);
+                                }}
+                                className="w-full"
+                            >
+                                Half Paid
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    onChange(openDialog?.registrationCode || "", "full");
+                                    tooglePaid(openDialog?.registrationCode || "");
+                                }}
+                                className="w-full"
+                            >
+                                Full Paid
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </Transition>
@@ -220,20 +223,23 @@ export default function PaymentPlayers({
                 enterFrom="translate-y-full opacity-0"
                 leaveTo="translate-y-full opacity-0"
             >
-                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center">
-                    <h3 className="text-3xl">Cannot uncheck</h3>
-                    <div>
-                        If there is something wrong, <div>please contact organizers.</div>
-                    </div>
-                    <div className="flex justify-center gap-4">
-                        <Button
-                            variant={"outline"}
-                            onClick={() => {
-                                setDialog(false);
-                            }}
-                        >
-                            Cancel
-                        </Button>
+                <div className="fixed inset-0 pb-8 flex items-end justify-center">
+                    <div className="absolute inset-0 z-40" onClick={() => setDialog(false)}></div>
+                    <div className="rounded-xl shadow-2xl bg-background text-foreground p-6 w-full max-w-[min(24rem,calc(100dvw_-_3rem))] grid dark gap-4 text-center z-50">
+                        <h3 className="text-3xl">Cannot uncheck</h3>
+                        <div>
+                            If there is something wrong, <div>please contact organizers.</div>
+                        </div>
+                        <div className="flex justify-center gap-4">
+                            <Button
+                                variant={"outline"}
+                                onClick={() => {
+                                    setDialog(false);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </Transition>
