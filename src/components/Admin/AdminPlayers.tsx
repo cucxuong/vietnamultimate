@@ -8,16 +8,16 @@ import { Button } from "../ui/button";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
 
 export default function AdminPlayers({
-                                         items,
-                                         onChange,
-                                     }: {
+    items,
+    onChange,
+}: {
     items: {
         registrationCode: string;
         name: string;
         nickname: string;
         fee: number;
-        status: PlayerStatus,
-        country: string
+        status: PlayerStatus;
+        country: string;
     }[];
     onChange: (id: string, status: PlayerStatus) => void;
 }) {
@@ -32,17 +32,19 @@ export default function AdminPlayers({
         name: string;
         nickname: string;
         fee: number;
-        status: PlayerStatus
+        status: PlayerStatus;
     } | null>(null);
 
-    const [players, setPlayers] = useState<{
-        registrationCode: string;
-        name: string;
-        nickname: string;
-        fee: number;
-        country: string,
-        status: PlayerStatus
-    }[]>([...items]);
+    const [players, setPlayers] = useState<
+        {
+            registrationCode: string;
+            name: string;
+            nickname: string;
+            fee: number;
+            country: string;
+            status: PlayerStatus;
+        }[]
+    >([...items]);
 
     function toggleStatus(code: string, status: PlayerStatus) {
         setPlayers((ps) => [
@@ -84,29 +86,29 @@ export default function AdminPlayers({
         setPlayers(items.filter((p) => (p.registrationCode + p.name + p.nickname).toLowerCase().replace(/\s/g, "").includes(query.toLowerCase().replace(/\s/g, ""))));
     }, [query, items]);
 
-    const StatusButton = ({ status, onChange }: {
-        status: PlayerStatus,
-        onChange: () => void
-    }) => {
-        return (
-            <Button className={`text-sm px-3 text-white ${status === PlayerStatus.pending
-                ? "bg-gray-600"
-                : status === PlayerStatus.paid
-                    ? "bg-green-800"
-                    : status === PlayerStatus.expired
-                        ? "bg-amber-600"
-                        : "bg-red-500"}`}
 
-                    onClick={() => {
-                        console.log("123");
-                        onChange();
-                    }}
+    const StatusButton = ({ status, onChange }: { status: PlayerStatus; onChange: () => void }) => {
+        return (
+            <Button
+                className={`text-sm px-3 ${
+                    status === PlayerStatus.pending
+                        ? "bg-gray-600 text-white"
+                        : status === PlayerStatus.paid
+                            ? "bg-green-600 text-white"
+                            : status === PlayerStatus.confirmed
+                                ? "bg-indigo-600 text-white"
+                                : status === PlayerStatus.halfpaid
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-red-500 text-white"
+                }`}
+                onClick={() => {
+                    onChange();
+                }}
             >
-                {PlayerStatus[status][0].toUpperCase() + PlayerStatus[status].slice(1).toLowerCase()}
+                {status[0].toUpperCase() + status.slice(1).toLowerCase()}
             </Button>
         );
     };
-
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
@@ -164,20 +166,26 @@ export default function AdminPlayers({
                                     </div>
                                     <span className="px-3 lg:px-4 py-2 flex items-center justify-center">
                                         <button
-                                            className={`h-6 px-2 text-white text-sm rounded ${
+                                            className={`h-6 px-2 text-sm rounded ${
                                                 player.status === PlayerStatus.pending
-                                                    ? "bg-gray-600"
+                                                    ? "border text-gray-600"
                                                     : player.status === PlayerStatus.paid
-                                                        ? "bg-green-800"
-                                                        : player.status === PlayerStatus.expired
-                                                            ? "bg-amber-600"
-                                                            : "bg-red-500"
+                                                        ? "bg-green-600 text-white"
+                                                        : player.status === PlayerStatus.confirmed
+                                                            ? "bg-indigo-600 text-white"
+                                                            : player.status === PlayerStatus.halfpaid
+                                                                ? "bg-green-100 text-green-700"
+                                                                : player.status === PlayerStatus.expired
+                                                                    ? "bg-amber-600 text-white"
+                                                                    : player.status === PlayerStatus.cancelled
+                                                                        ? "bg-red-100 text-red-700"
+                                                                        : ""
                                             } grid place-content-center`}
                                             onClick={() => {
                                                 setOpenDialog(player);
                                             }}
                                         >
-                                            {PlayerStatus[player.status][0].toUpperCase() + PlayerStatus[player.status].slice(1).toLowerCase()}
+                                            {player.status[0].toUpperCase() + player.status.slice(1).toLowerCase()}
                                         </button>
                                     </span>
                                 </div>
@@ -206,35 +214,61 @@ export default function AdminPlayers({
                         <span className="font-mono font-semibold">{total(openDialog?.country!, openDialog?.fee!)}</span>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
-                        {openDialog?.status !== PlayerStatus.pending &&
-                            <StatusButton status={PlayerStatus.pending} onChange={() => {
-                                onChange(openDialog?.registrationCode!, PlayerStatus.pending);
-                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.pending);
-                            }} />}
-                        {openDialog?.status !== PlayerStatus.paid &&
-                            <StatusButton status={PlayerStatus.paid} onChange={() => {
-                                onChange(openDialog?.registrationCode!, PlayerStatus.paid);
-                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.paid);
-                            }} />}
-                        {openDialog?.status !== PlayerStatus.expired &&
-                            <StatusButton status={PlayerStatus.expired} onChange={() => {
-                                onChange(openDialog?.registrationCode!, PlayerStatus.expired);
-                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.expired);
-                            }} />}
-                        {openDialog?.status !== PlayerStatus.cancelled &&
-                            <StatusButton status={PlayerStatus.cancelled} onChange={() => {
-                                onChange(openDialog?.registrationCode!, PlayerStatus.cancelled);
-                                toggleStatus(openDialog?.registrationCode!, PlayerStatus.cancelled);
-                            }} />}
+                    <div className="grid grid-cols-2 gap-4">
+                        {openDialog?.status !== PlayerStatus.pending && (
+                            <StatusButton
+                                status={PlayerStatus.pending}
+                                onChange={() => {
+                                    onChange(openDialog?.registrationCode!, PlayerStatus.pending);
+                                    toggleStatus(openDialog?.registrationCode!, PlayerStatus.pending);
+                                }}
+                            />
+                        )}
+                        {openDialog?.status !== PlayerStatus.halfpaid && (
+                            <StatusButton
+                                status={PlayerStatus.halfpaid}
+                                onChange={() => {
+                                    onChange(openDialog?.registrationCode!, PlayerStatus.halfpaid);
+                                    toggleStatus(openDialog?.registrationCode!, PlayerStatus.halfpaid);
+                                }}
+                            />
+                        )}
+                        {openDialog?.status !== PlayerStatus.paid && (
+                            <StatusButton
+                                status={PlayerStatus.paid}
+                                onChange={() => {
+                                    onChange(openDialog?.registrationCode!, PlayerStatus.paid);
+                                    toggleStatus(openDialog?.registrationCode!, PlayerStatus.paid);
+                                }}
+                            />
+                        )}
+                        {openDialog?.status !== PlayerStatus.confirmed && (
+                            <StatusButton
+                                status={PlayerStatus.confirmed}
+                                onChange={() => {
+                                    onChange(openDialog?.registrationCode!, PlayerStatus.confirmed);
+                                    toggleStatus(openDialog?.registrationCode!, PlayerStatus.confirmed);
+                                }}
+                            />
+                        )}
+                        {openDialog?.status !== PlayerStatus.cancelled && (
+                            <StatusButton
+                                status={PlayerStatus.cancelled}
+                                onChange={() => {
+                                    onChange(openDialog?.registrationCode!, PlayerStatus.cancelled);
+                                    toggleStatus(openDialog?.registrationCode!, PlayerStatus.cancelled);
+                                }}
+                            />
+                        )}
                     </div>
 
                     <div className="flex gap-4">
-                        <Button className="w-full"
-                                variant={"outline"}
-                                onClick={() => {
-                                    setOpenDialog(null);
-                                }}
+                        <Button
+                            className="w-full"
+                            variant={"outline"}
+                            onClick={() => {
+                                setOpenDialog(null);
+                            }}
                         >
                             Cancel
                         </Button>

@@ -11,9 +11,10 @@ export const authorizeCountry = async ({ code } : { code: string }) => {
     });
 }
 
-export const updatePaymentStatus = async ({ player_code } : { player_code: string })=> {
+export const updatePaymentStatus = async ({ player_code, status } : { player_code: string, status: PlayerStatus.paid | PlayerStatus.halfpaid })=> {
     return await axiosInstance.post('/admin/vietnam-hat-2023/update-payment', {
-        player_code
+        player_code,
+        status
     });
 }
 
