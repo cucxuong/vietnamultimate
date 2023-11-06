@@ -491,6 +491,9 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         {player.status === "paid" && (
                                             <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
                                         )}
+                                        {player.status === "confirmed" && (
+                                            <span className="uppercase px-1.5 py-0.5 border border-primary text-primary grid place-content-center text-sm font-bold rounded">CONFIRMED</span>
+                                        )}
                                         {player.status === "halfpaid" && (
                                             <span className="uppercase px-1.5 py-0.5 bg-primary bg-opacity-30 text-primary grid place-content-center text-sm font-bold rounded">HALFPAID</span>
                                         )}
