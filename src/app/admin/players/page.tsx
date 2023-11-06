@@ -22,9 +22,7 @@ export default function Players() {
 
             let transformedData = [];
             if (localStorage.getItem("country") !== "All") {
-
                 transformedData = data.map((player: any) => {
-
                     const keyStatus: keyof typeof PlayerStatus = player.status;
 
                     return {
@@ -71,39 +69,42 @@ export default function Players() {
         fetchPlayers();
     }, []);
 
-    return localStorage.getItem("country") === "All" ? <AllRegistration players={players} /> :
-        localStorage.getItem("country") === "Admin"
-            ? <AdminPlayersWrapper players={players} />
-            : <CountryPlayers players={players} />;
+    return localStorage.getItem("country") === "All" ? (
+        <AllRegistration players={players} />
+    ) : localStorage.getItem("country") === "Admin" ? (
+        <AdminPlayersWrapper players={players} />
+    ) : (
+        <CountryPlayers players={players} />
+    );
 }
 
-
-const AdminPlayersWrapper = ({ players } : { players: Array<any> }) => {
+const AdminPlayersWrapper = ({ players }: { players: Array<any> }) => {
     const changeStatus = async (code: string, status: PlayerStatus) => {
         await updatePlayerStatus({ player_code: code, status });
     };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            <AdminPlayers items={players} onChange={(id: string, status: PlayerStatus) => {
-                changeStatus(id, status);
-            }} />
+            <AdminPlayers
+                items={players}
+                onChange={(id: string, status: PlayerStatus) => {
+                    changeStatus(id, status);
+                }}
+            />
         </section>
     );
 };
 
 const CountryPlayers = ({ players }: { players: Array<any> }) => {
-
     // POST Players
-    const tooglePaid = async (code: string, value: boolean) => {
-
+    const tooglePaid = async (code: string, value: string) => {
+        //Sửa chỗ này để update statú paid/halfpaid
         await updatePaymentStatus({ player_code: code });
     };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            <PaymentPlayers items={players} onChange={(code, v) => tooglePaid(code, v)}
-                            country={localStorage.getItem("country") ?? ""} />
+            <PaymentPlayers items={players} onChange={(code, v) => tooglePaid(code, v)} country={localStorage.getItem("country") ?? ""} />
         </section>
     );
 };

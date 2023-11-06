@@ -152,7 +152,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                             <div className="w-full border rounded-2xl sm:rounded-l-none max-sm:rounded-t-none p-4 lg:p-6 bg-accent text-accent-foreground grid sm:grid-cols-[minmax(0,9fr)_auto_minmax(0,6fr)] gap-2 sm:gap-4">
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">Black Jerseys</div>
+                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                            Black Jerseys{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -168,7 +175,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">White Jerseys</div>
+                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                            White Jerseys{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -186,7 +200,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 <div className="max-sm:border-t sm:border-l max-sm:-mx-4 sm:-my-6"></div>
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">Black Shorts</div>
+                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                            Black Shorts{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -202,7 +223,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">White Shorts</div>
+                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                            White Shorts{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
