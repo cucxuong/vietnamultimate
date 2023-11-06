@@ -298,7 +298,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Waiting</div>
                                             <div className="font-semibold text-right font-mono">
-                                                {players.filter((p) => p.status !== "expired" && p.status !== "canceled" && p.status !== "paid").length}
+                                                {players.filter((p) => p.status !== "expired" && p.status !== "canceled" && p.status !== "paid" && p.status !== "halfpaid").length}
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
@@ -306,12 +306,12 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "paid").length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
-                                            <div className="font-medium opacity-70">Expired</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "expired").length}</div>
+                                            <div className="font-medium opacity-70">Canceled</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "cancelled").length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
-                                            <div className="font-medium opacity-70">Canceled</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "canceled").length}</div>
+                                            <div className="font-medium opacity-70">Half-paid</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "halfpaid").length}</div>
                                         </div>
                                     </div>
                                 </div>
