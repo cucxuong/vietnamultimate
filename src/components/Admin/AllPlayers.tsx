@@ -89,7 +89,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
         }, {});
     };
 
-    const filterPlayers = (search:string) => {
+    const filterPlayers = (search: string) => {
         return players
             .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(search.toLowerCase().replace(/\s/, "")))
             .sort((a, b) => {
@@ -152,7 +152,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                             <div className="w-full border rounded-2xl sm:rounded-l-none max-sm:rounded-t-none p-4 lg:p-6 bg-accent text-accent-foreground grid sm:grid-cols-[minmax(0,9fr)_auto_minmax(0,6fr)] gap-2 sm:gap-4">
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">Black Jerseys</div>
+                                        <div className="font-medium opacity-70 leading-tight">
+                                            Black Jerseys{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -168,7 +175,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">White Jerseys</div>
+                                        <div className="font-medium opacity-70 leading-tight">
+                                            White Jerseys{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -186,7 +200,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 <div className="max-sm:border-t sm:border-l max-sm:-mx-4 sm:-my-6"></div>
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">Black Shorts</div>
+                                        <div className="font-medium opacity-70 leading-tight">
+                                            Black Shorts{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -202,7 +223,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight">White Shorts</div>
+                                        <div className="font-medium opacity-70 leading-tight">
+                                            White Shorts{" "}
+                                            <span className="font-mono">
+                                                {players
+                                                    .filter((p) => p.status !== "expired")
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
+                                            </span>
+                                        </div>
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "lg", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
@@ -270,7 +298,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Waiting</div>
                                             <div className="font-semibold text-right font-mono">
-                                                {players.filter((p) => p.status !== "expired" && p.status !== "canceled" && p.status !== "paid").length}
+                                                {players.filter((p) => p.status !== "expired" && p.status !== "canceled" && p.status !== "paid" && p.status !== "halfpaid").length}
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
@@ -278,12 +306,12 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "paid").length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
-                                            <div className="font-medium opacity-70">Expired</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "expired").length}</div>
+                                            <div className="font-medium opacity-70">Canceled</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "cancelled").length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
-                                            <div className="font-medium opacity-70">Canceled</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "canceled").length}</div>
+                                            <div className="font-medium opacity-70">Half-paid</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "halfpaid").length}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -292,7 +320,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="font-medium opacity-70">Total Paid</div>
                                     <div className="font-semibold text-right font-mono">
                                         {totalAmount(
-                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
+                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : p.status === "halfpaid" ? (p.totalFee || 0) / 2 : 0), 0),
                                             "Vietnam",
                                         )}
                                     </div>
@@ -463,7 +491,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         {player.status === "paid" && (
                                             <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
                                         )}
+                                        {player.status === "confirmed" && (
+                                            <span className="uppercase px-1.5 py-0.5 border border-primary text-primary grid place-content-center text-sm font-bold rounded">CONFIRMED</span>
+                                        )}
+                                        {player.status === "halfpaid" && (
+                                            <span className="uppercase px-1.5 py-0.5 bg-primary bg-opacity-30 text-primary grid place-content-center text-sm font-bold rounded">HALFPAID</span>
+                                        )}
                                         {player.status === "expired" && <span className="uppercase px-1.5 py-0.5 bg-accent text-gray-400 grid place-content-center text-sm rounded">EXPIRED</span>}
+                                        {player.status === "cancelled" && <span className="uppercase px-1.5 py-0.5 bg-accent text-gray-400 grid place-content-center text-sm rounded">CANCELED</span>}
                                     </span>
 
                                     {selectedReg === player.code && (

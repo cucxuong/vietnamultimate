@@ -22,10 +22,8 @@ export default function Players() {
 
             let transformedData = [];
             if (localStorage.getItem("country") !== "All") {
-
                 transformedData = data.map((player: any) => {
-
-                    const keyStatus: keyof typeof PlayerStatus = player.status;
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
 
                     return {
                         registrationCode: player.player_code,
@@ -39,6 +37,7 @@ export default function Players() {
             } else {
                 transformedData = data.map((player: any) => {
                     const selectOptions = JSON.parse(player.selected_options);
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
 
                     return {
                         code: player.player_code,
@@ -49,7 +48,7 @@ export default function Players() {
                         gender: player.gender,
                         country: player?.current_country,
                         totalFee: player.total_fee,
-                        status: player.status,
+                        status: PlayerStatus[keyStatus],
                         options: selectOptions,
                         createdAt: new Date(player.created_at),
                     };
@@ -71,39 +70,42 @@ export default function Players() {
         fetchPlayers();
     }, []);
 
-    return localStorage.getItem("country") === "All" ? <AllRegistration players={players} /> :
-        localStorage.getItem("country") === "Admin"
-            ? <AdminPlayersWrapper players={players} />
-            : <CountryPlayers players={players} />;
+    return localStorage.getItem("country") === "All" ? (
+        <AllRegistration players={players} />
+    ) : localStorage.getItem("country") === "Admin" ? (
+        <AdminPlayersWrapper players={players} />
+    ) : (
+        <CountryPlayers players={players} />
+    );
 }
 
-
-const AdminPlayersWrapper = ({ players } : { players: Array<any> }) => {
+const AdminPlayersWrapper = ({ players }: { players: Array<any> }) => {
     const changeStatus = async (code: string, status: PlayerStatus) => {
         await updatePlayerStatus({ player_code: code, status });
     };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            <AdminPlayers items={players} onChange={(id: string, status: PlayerStatus) => {
-                changeStatus(id, status);
-            }} />
+            <AdminPlayers
+                items={players}
+                onChange={(id: string, status: PlayerStatus) => {
+                    changeStatus(id, status);
+                }}
+            />
         </section>
     );
 };
 
 const CountryPlayers = ({ players }: { players: Array<any> }) => {
-
     // POST Players
-    const tooglePaid = async (code: string, value: boolean) => {
-
-        await updatePaymentStatus({ player_code: code });
+    const tooglePaid = async (code: string, value: PlayerStatus.paid | PlayerStatus.halfpaid) => {
+        //Sửa chỗ này để update statú paid/halfpaid
+        await updatePaymentStatus({ player_code: code, status: value });
     };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
-            <PaymentPlayers items={players} onChange={(code, v) => tooglePaid(code, v)}
-                            country={localStorage.getItem("country") ?? ""} />
+            <PaymentPlayers items={players} onChange={(code, v) => tooglePaid(code, v)} country={localStorage.getItem("country") ?? ""} />
         </section>
     );
 };
