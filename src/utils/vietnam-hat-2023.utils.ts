@@ -3,4 +3,6 @@ export enum PlayerStatus {
     paid = 'paid',
     expired = 'expired',
     cancelled = 'cancelled',
+    confirmed = 'confirmed',
+    halfpaid = 'halfpaid'
 }
