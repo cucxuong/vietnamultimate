@@ -89,7 +89,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
         }, {});
     };
 
-    const filterPlayers = (search:string) => {
+    const filterPlayers = (search: string) => {
         return players
             .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(search.toLowerCase().replace(/\s/, "")))
             .sort((a, b) => {
@@ -320,7 +320,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="font-medium opacity-70">Total Paid</div>
                                     <div className="font-semibold text-right font-mono">
                                         {totalAmount(
-                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : 0), 0),
+                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : p.status === "halfpaid" ? (p.totalFee || 0) / 2 : 0), 0),
                                             "Vietnam",
                                         )}
                                     </div>
