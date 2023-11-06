@@ -152,7 +152,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                             <div className="w-full border rounded-2xl sm:rounded-l-none max-sm:rounded-t-none p-4 lg:p-6 bg-accent text-accent-foreground grid sm:grid-cols-[minmax(0,9fr)_auto_minmax(0,6fr)] gap-2 sm:gap-4">
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                        <div className="font-medium opacity-70 leading-tight">
                                             Black Jerseys{" "}
                                             <span className="font-mono">
                                                 {players
@@ -175,7 +175,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                        <div className="font-medium opacity-70 leading-tight">
                                             White Jerseys{" "}
                                             <span className="font-mono">
                                                 {players
@@ -200,7 +200,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 <div className="max-sm:border-t sm:border-l max-sm:-mx-4 sm:-my-6"></div>
                                 <div className="grid grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                        <div className="font-medium opacity-70 leading-tight">
                                             Black Shorts{" "}
                                             <span className="font-mono">
                                                 {players
@@ -223,7 +223,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
                                     <div className="border-t -mx-4 lg:-mx-6"></div>
                                     <div className="grid">
-                                        <div className="font-medium opacity-70 leading-tight flex justify-between">
+                                        <div className="font-medium opacity-70 leading-tight">
                                             White Shorts{" "}
                                             <span className="font-mono">
                                                 {players
