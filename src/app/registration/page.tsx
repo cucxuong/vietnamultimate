@@ -56,7 +56,7 @@ export default function Registration() {
             { id: "j-2", color: clothColor.WHITE, size: clothSize.M },
         ],
         shorts: [],
-        disc: 1,
+        disc: 0,
     });
     const steps: IndicatorItem[] = [
         {
