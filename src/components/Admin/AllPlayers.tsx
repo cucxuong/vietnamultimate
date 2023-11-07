@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { format } from "date-fns";
+import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
 
 // Temp
 type PlayerReg = {
@@ -93,8 +94,13 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
         return players
             .filter((p) => JSON.stringify(Object.values(p)).toLowerCase().replace(/\s/, "").includes(search.toLowerCase().replace(/\s/, "")))
             .sort((a, b) => {
-                const aOrder = a.status === "expired" ? 0 : a.status === "paid" ? 1 : 2;
-                const bOrder = b.status === "expired" ? 0 : b.status === "paid" ? 1 : 2;
+                const aOrder =
+                    a.status === PlayerStatus.expired || a.status === PlayerStatus.cancelled
+                        ? 0
+                        : a.status === PlayerStatus.paid || a.status === PlayerStatus.halfpaid || PlayerStatus.confirmed
+                        ? 1
+                        : 2;
+                const bOrder = b.status === PlayerStatus.expired || b.status === PlayerStatus.cancelled ? 0 : b.status === PlayerStatus.paid ? 1 : 2;
                 const c1 = bOrder - aOrder;
                 if (c1 !== 0) {
                     return c1;
