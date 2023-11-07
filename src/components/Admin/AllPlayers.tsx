@@ -21,7 +21,7 @@ type PlayerReg = {
     gender?: string;
     country?: string;
     options?: {
-        info: { isStudent: boolean };
+        info: { is_student: boolean };
         skills: {
             years: number;
             throwing: number;
@@ -276,7 +276,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="flex justify-between items-baseline text-sm gap-4">
                                         <div className="font-medium opacity-70">Student</div>
                                         <div className="font-semibold text-right font-mono">
-                                            {players.filter((p) => p.options?.info.isStudent && p.status !== "expired" && p.status !== "canceled").length}
+                                            {players.filter((p) => p.options?.info.is_student && p.status !== "expired" && p.status !== "canceled").length}
                                         </div>
                                     </div>
 
@@ -400,7 +400,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is student</span>
                                     <span className="max-sm:self-center sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
-                                        {player.options?.info.isStudent ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
+                                        {player.options?.info.is_student ? <CheckFat size={18} weight="fill" /> : <X size={18} strokeWidth={6} className="sm:hidden opacity-10" />}
                                     </span>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Lunch</span>
