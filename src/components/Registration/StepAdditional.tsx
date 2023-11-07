@@ -895,7 +895,7 @@ export default function StepAdditional({
                         </div>
                     </div>
 
-                    {tournament.total_disc < 110 && (
+                    {tournament.total_disc < 0 && (
                         <div
                             className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                             <div
