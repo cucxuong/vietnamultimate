@@ -311,7 +311,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Half-paid</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "halfpaid").length}</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "half-paid").length}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +320,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="font-medium opacity-70">Total Paid</div>
                                     <div className="font-semibold text-right font-mono">
                                         {totalAmount(
-                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : p.status === "halfpaid" ? (p.totalFee || 0) / 2 : 0), 0),
+                                            players.reduce((total, p) => total + (p.status === "paid" ? p.totalFee || 0 : p.status === "half-paid" ? (p.totalFee || 0) / 2 : 0), 0),
                                             "Vietnam",
                                         )}
                                     </div>
