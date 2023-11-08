@@ -97,15 +97,20 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                 const aOrder =
                     a.status === PlayerStatus.expired || a.status === PlayerStatus.cancelled
                         ? 0
-                        : a.status === PlayerStatus.paid || a.status === PlayerStatus.halfpaid || PlayerStatus.confirmed
+                        : a.status === PlayerStatus.paid || a.status === PlayerStatus.halfpaid || a.status === PlayerStatus.confirmed
                         ? 1
                         : 2;
-                const bOrder = b.status === PlayerStatus.expired || b.status === PlayerStatus.cancelled ? 0 : b.status === PlayerStatus.paid ? 1 : 2;
+                const bOrder =
+                    b.status === PlayerStatus.expired || b.status === PlayerStatus.cancelled
+                        ? 0
+                        : b.status === PlayerStatus.paid || b.status === PlayerStatus.halfpaid || b.status === PlayerStatus.confirmed
+                        ? 1
+                        : 2;
                 const c1 = bOrder - aOrder;
-                if (c1 !== 0) {
-                    return c1;
-                }
-                return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
+                // if (c1 !== 0) {
+                //     return c1;
+                // }
+                return c1 || (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
             });
     };
 
