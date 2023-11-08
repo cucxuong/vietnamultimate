@@ -133,7 +133,7 @@ export default function PaymentPlayers({
                                                         : player.status === PlayerStatus.halfpaid
                                                         ? "border-2 border-green-300"
                                                         : "border-2 border-primary"
-                                                } grid place-content-center`}
+                                                } grid place-content-center whitespace-nowrap`}
                                                 onClick={() => {
                                                     if (player.status === PlayerStatus.paid || player.status === PlayerStatus.halfpaid) {
                                                         setDialog(true);
