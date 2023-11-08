@@ -97,15 +97,23 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                 const aOrder =
                     a.status === PlayerStatus.expired || a.status === PlayerStatus.cancelled
                         ? 0
-                        : a.status === PlayerStatus.paid || a.status === PlayerStatus.halfpaid || a.status === PlayerStatus.confirmed
+                        : a.status === PlayerStatus.paid
                         ? 1
-                        : 2;
+                        : a.status === PlayerStatus.halfpaid
+                        ? 2
+                        : a.status === PlayerStatus.confirmed
+                        ? 3
+                        : 4;
                 const bOrder =
                     b.status === PlayerStatus.expired || b.status === PlayerStatus.cancelled
                         ? 0
-                        : b.status === PlayerStatus.paid || b.status === PlayerStatus.halfpaid || b.status === PlayerStatus.confirmed
+                        : b.status === PlayerStatus.paid
                         ? 1
-                        : 2;
+                        : b.status === PlayerStatus.halfpaid
+                        ? 2
+                        : b.status === PlayerStatus.confirmed
+                        ? 3
+                        : 4;
                 const c1 = bOrder - aOrder;
                 // if (c1 !== 0) {
                 //     return c1;
