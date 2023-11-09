@@ -53,7 +53,7 @@ type Props = {
     data: StepAdditionalData;
     validate?: boolean;
     scroll?: ScrollTarget;
-    isStudent?: boolean;
+    isStudent: boolean | null;
     country?: string;
     onChange: (d: StepAdditionalData) => void;
     onValidate?: (v: boolean) => void;
@@ -101,14 +101,15 @@ export default function StepAdditional({
     const handleChange = (prop: string, value: any) => {
         onChange({ ...data, [prop]: value });
     };
+
     useEffect(() => {
         setTotal((v) => {
             const fixed = 700000;
             const lunch = data.lunch ? 170000 : 0;
             const bus = data.bus ? 200000 : 0;
-            const jersey = data.jerseys.length * 170000;
+            const jersey = data.jerseys.length * (isStudent === true ? 170000 : 200000);
             const short = data.shorts.length * 200000;
-            const disc = data.disc * 200000;
+            const disc = data.disc * 250000;
             return fixed + lunch + bus + jersey + short + disc;
         });
     }, [data]);
@@ -895,7 +896,7 @@ export default function StepAdditional({
                         </div>
                     </div>
 
-                    {tournament.total_disc < 0 && (
+                    {tournament.total_disc < 110 && (
                         <div
                             className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
                             <div
