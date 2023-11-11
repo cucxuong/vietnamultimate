@@ -73,7 +73,7 @@ export default function Registration() {
                     data={dataStepAdditional}
                     validate={validate}
                     scroll={scroll}
-                    isStudent={dataStepGeneral.isStudent}
+                    isStudent={ dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null }
                     country={dataStepGeneral.stayingCountry}
                     onChange={(e) => setDataStepAdditional(e)}
                     onValidate={(e) => setValid(e)}
@@ -133,16 +133,33 @@ export default function Registration() {
     // Call api register Tournament
     const submitData = async () => {
         try {
+            const isStudent = dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null;
+
+            const newDataAdditions = Object.keys(dataStepAdditional).reduce((result, key) => {
+                if ((key === 'jerseys') && isStudent !== true) {
+                    // @ts-ignore
+                    result[`new_${key}`] = dataStepAdditional[key];
+                } else if (key === 'disc') {
+                    // @ts-ignore
+                    result[`new_${key}`] = dataStepAdditional[key];
+                } else {
+                    // @ts-ignore
+                    result[key] = dataStepAdditional[key];
+                }
+
+                return result;
+            }, {});
+
             // API-EVENT: Start call API, need loading behavior
             const response = await registerTournament({
                 ...dataStepGeneral,
                 tournament: VIETNAM_HAT_TOURNAMENT_ID,
                 options: JSON.stringify({
                     info: {
-                        is_student: dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null,
+                        is_student: isStudent,
                     },
                     skills: dataStepSkillset,
-                    addition: dataStepAdditional,
+                    addition: newDataAdditions,
                 }),
             });
 
