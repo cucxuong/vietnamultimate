@@ -178,7 +178,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <span className="font-mono">
                                                 {players
                                                     .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition?.jerseys.filter((j) => j.color === "black").length || 0) + (p.options?.addition?.new_jerseys.filter((j) => j.color === "black").length || 0), 0)}
+                                                    .reduce((total, p) => total + (p.options?.addition?.jerseys?.filter((j) => j.color === "black").length || 0) + (p.options?.addition?.new_jerseys?.filter((j) => j.color === "black").length || 0), 0)}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -188,7 +188,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-semibold font-mono">
                                                         {players
                                                             .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === size).length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -201,7 +201,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <span className="font-mono">
                                                 {players
                                                     .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white").length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "white").length || 0), 0)}
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "white").length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "white").length || 0), 0)}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -211,7 +211,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-semibold font-mono">
                                                         {players
                                                             .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === size).length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -446,14 +446,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition.jerseys.filter((j) => j.color === "black"),
+                                                    player.options?.addition.jerseys?.filter((j) => j.color === "black"),
                                                     "size",
                                                 ),
                                             ).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
-                                                    <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === item).length}</span>
+                                                    <span className="sm:text-right">{player.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === item).length}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -461,14 +461,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition.jerseys.filter((j) => j.color === "white"),
+                                                    player.options?.addition.jerseys?.filter((j) => j.color === "white"),
                                                     "size",
                                                 ),
                                             ).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
-                                                    <span className="sm:text-right">{player.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === item).length}</span>
+                                                    <span className="sm:text-right">{player.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === item).length}</span>
                                                 </div>
                                             ))}
                                         </div>
