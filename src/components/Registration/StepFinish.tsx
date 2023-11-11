@@ -12,15 +12,18 @@ type Props = {
     dataAdditional: StepAdditionalData;
 };
 export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }: Props) {
+    const isStudent = dataGeneral.stayingCountry == "Vietnam" ? dataGeneral.isStudent : null;
+
     const { t, i18n } = useAppTranslation();
     const [fee, setFee] = useState(
         700000 +
             (dataAdditional.lunch ? 170000 : 0) +
             (dataAdditional.bus ? 200000 : 0) +
-            dataAdditional.jerseys.length * 170000 +
+            dataAdditional.jerseys.length * (isStudent === true ? 170000 : 200000) +
             dataAdditional.shorts.length * 200000 +
-            dataAdditional.disc * 200000,
+            dataAdditional.disc * 250000,
     );
+
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3 className="text-5xl font-semibold sticky top-0 pt-12 bg-background grid-bg text-balance">{t("Review your information")}</h3>
@@ -79,7 +82,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                         </span>
                         <span className="font-mono">
                             {Intl.NumberFormat("en-US")
-                                .format(dataAdditional.jerseys.length * 170000)
+                                .format(dataAdditional.jerseys.length * (isStudent === true ? 170000 : 200000))
                                 .replaceAll(",", "'")}{" "}
                             VND
                         </span>
@@ -102,7 +105,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                             </span>
                             <span className="font-mono">
                                 {Intl.NumberFormat("en-US")
-                                    .format(dataAdditional.disc * 200000)
+                                    .format(dataAdditional.disc * 250000)
                                     .replaceAll(",", "'")}{" "}
                                 VND
                             </span>
