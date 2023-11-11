@@ -38,8 +38,10 @@ type PlayerReg = {
             isVegan: boolean;
             allergies: string;
             bus: boolean;
+            new_jerseys: { id: string; color: string; size: string }[];
             jerseys: { id: string; color: string; size: string }[];
             shorts: { id: string; color: string; size: string }[];
+            new_disc: number;
             disc: number;
         };
     };
@@ -163,7 +165,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Disc</div>
                                     <div className="font-semibold text-right font-mono">
-                                        {players.filter((p) => p.status !== PlayerStatus.expired).reduce((total, p) => total + (p.options?.addition.disc || 0), 0)}
+                                        {players.filter((p) => p.status !== PlayerStatus.expired).reduce((total, p) => total + (p.options?.addition?.disc || 0) + (p.options?.addition?.new_disc || 0), 0)}
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +178,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <span className="font-mono">
                                                 {players
                                                     .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black").length || 0), 0)}
+                                                    .reduce((total, p) => total + (p.options?.addition?.jerseys.filter((j) => j.color === "black").length || 0) + (p.options?.addition?.new_jerseys.filter((j) => j.color === "black").length || 0), 0)}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -186,7 +188,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-semibold font-mono">
                                                         {players
                                                             .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "black" && j.size === size).length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -199,7 +201,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             <span className="font-mono">
                                                 {players
                                                     .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white").length || 0), 0)}
+                                                    .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white").length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "white").length || 0), 0)}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -209,7 +211,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-semibold font-mono">
                                                         {players
                                                             .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                            .reduce((total, p) => total + (p.options?.addition.jerseys.filter((j) => j.color === "white" && j.size === size).length || 0) + (p.options?.addition.new_jerseys.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
                                             ))}
@@ -508,7 +510,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Disc</span>
-                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {player.options?.addition.disc || 0}</span>
+                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {(player.options?.addition?.disc || 0) + (player.options?.addition?.new_disc || 0)}</span>
 
                                     <span className="max-sm:col-start-1 sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Total fee</span>
                                     <div className="max-sm:col-span-3 sm:px-3 lg:px-4 sm:py-2 sm:grid content-center sm:text-right font-mono">
