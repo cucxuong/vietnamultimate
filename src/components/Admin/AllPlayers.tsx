@@ -446,7 +446,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition?.jerseys?.filter((j) => j.color === "black"),
+                                                    player.options?.addition?.jerseys?.filter((j) => j.color === "black") ?? [],
                                                     "size",
                                                 ),
                                             ).map((item) => (
@@ -458,7 +458,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             ))}
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "black"),
+                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "black") ?? [],
                                                     "size",
                                                 ),
                                             ).map((item) => (
@@ -473,7 +473,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "white"),
+                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "white") ?? [],
                                                     "size",
                                                 ),
                                             ).map((item) => (
@@ -485,7 +485,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             ))}
                                             {Object.keys(
                                                 groupBy(
-                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "white"),
+                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "white") ?? [],
                                                     "size",
                                                 ),
                                             ).map((item) => (
