@@ -183,9 +183,13 @@ export default function StepGeneral({ data, validate, onChange, onValidate = (e:
                         toLowerCaseNonAccentVietnamese(data.stayingCountry.replace(/\W/g, "").toLowerCase()) === "vietnam" ? "rounded rounded-t-3xl" : "rounded-3xl"
                     }`}
                 >
-                    <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
-                        {t("Which country are you staying?")} {!data.stayingCountry && <span className="text-rose-500">*</span>}
-                    </span>
+                        <span className={`text-2xl font-medium ${validate && !data.stayingCountry ? "text-rose-500 snap-start" : ""}`}>
+                            {t("Which country are you staying?")} {!data.stayingCountry && <span className="text-rose-500">*</span>}
+                        </span>
+                    <div className="grid">
+                        <p>{t("We have supported some payment method on some countries below.")}</p>
+                        <p>{t("If your country is not in the list (You are able to pay by cash later at the tournament), please select the 'Other' option then fill out it.")}</p>
+                    </div>
                     <div
                         className={`grid auto-rows-fr rounded-2xl overflow-hidden border border-opacity-60 divide-y divide-foreground divide-opacity-60 ${
                             validate && data.stayingCountry === "" ? "border-rose-500" : "border-foreground"
