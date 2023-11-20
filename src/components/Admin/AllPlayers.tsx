@@ -240,7 +240,17 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce(
                                                                 (total, p) =>
                                                                     total +
@@ -259,7 +269,17 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             White Jerseys{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce(
+                                                        (total, p) =>
+                                                            total +
+                                                            (p.options?.addition.jerseys?.filter((j) => j.color === "white").length || 0) +
+                                                            (p.options?.addition.new_jerseys?.filter((j) => j.color === "white").length || 0),
+                                                        0,
+                                                    )}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                     .reduce(
                                                         (total, p) =>
                                                             total +
@@ -275,7 +295,17 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce(
                                                                 (total, p) =>
                                                                     total +
@@ -296,7 +326,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             Black Shorts{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
                                             </span>
                                         </div>
@@ -306,7 +340,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
@@ -319,7 +357,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             White Shorts{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
                                             </span>
                                         </div>
@@ -329,7 +371,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
@@ -389,17 +435,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid grid-cols-2 content-center gap-x-8">
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Waiting</div>
-                                            <div className="font-semibold text-right font-mono">
-                                                {
-                                                    players.filter(
-                                                        (p) =>
-                                                            p.status !== PlayerStatus.expired &&
-                                                            p.status !== PlayerStatus.cancelled &&
-                                                            p.status !== PlayerStatus.paid &&
-                                                            p.status !== PlayerStatus.halfpaid,
-                                                    ).length
-                                                }
-                                            </div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.pending).length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Paid</div>
@@ -407,11 +443,15 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Canceled</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "cancelled").length}</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.cancelled).length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Half-paid</div>
                                             <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.halfpaid).length}</div>
+                                        </div>
+                                        <div className="col-start-2 flex justify-between items-center text-sm gap-4">
+                                            <div className="font-medium opacity-70">Confirmed</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.confirmed).length}</div>
                                         </div>
                                     </div>
                                 </div>
