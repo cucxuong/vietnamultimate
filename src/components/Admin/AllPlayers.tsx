@@ -238,7 +238,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono">
+                                                    <div className="font-semibold font-mono text-sm">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce(
@@ -293,7 +293,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono">
+                                                    <div className="font-semibold font-mono text-sm">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce(
@@ -338,7 +338,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono">
+                                                    <div className="font-semibold font-mono text-sm">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
@@ -369,7 +369,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono">
+                                                    <div className="font-semibold font-mono text-sm">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
@@ -640,7 +640,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         {player.status === PlayerStatus.paid && (
                                             <span className="uppercase px-1.5 py-0.5 bg-primary text-primary-foreground grid place-content-center text-sm font-bold rounded">PAID</span>
                                         )}
-                                        {player.status === "confirmed" && (
+                                        {player.status === PlayerStatus.confirmed && (
                                             <span className="uppercase px-1.5 py-0.5 border border-primary text-primary grid place-content-center text-sm font-bold rounded">CONFIRMED</span>
                                         )}
                                         {player.status === PlayerStatus.halfpaid && (
