@@ -149,23 +149,60 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Lunch (R)</div>
                                     <div className="font-semibold text-right font-mono">
-                                        {players.filter((p) => p.options?.addition.lunch && !p.options?.addition.isVegan && p.status !== PlayerStatus.expired).length}
+                                        {
+                                            players.filter(
+                                                (p) =>
+                                                    p.options?.addition.lunch &&
+                                                    !p.options?.addition.isVegan &&
+                                                    (p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed),
+                                            ).length
+                                        }
+                                        /
+                                        {
+                                            players.filter((p) => p.options?.addition.lunch && !p.options?.addition.isVegan && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                .length
+                                        }
                                     </div>
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Lunch (V)</div>
                                     <div className="font-semibold text-right font-mono">
-                                        {players.filter((p) => p.options?.addition.lunch && p.options?.addition.isVegan && p.status !== PlayerStatus.expired).length}
+                                        {
+                                            players.filter(
+                                                (p) =>
+                                                    p.options?.addition.lunch &&
+                                                    p.options?.addition.isVegan &&
+                                                    (p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed),
+                                            ).length
+                                        }
+                                        /
+                                        {
+                                            players.filter((p) => p.options?.addition.lunch && p.options?.addition.isVegan && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                .length
+                                        }
                                     </div>
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Bus</div>
-                                    <div className="font-semibold text-right font-mono">{players.filter((p) => p.options?.addition.bus && p.status !== PlayerStatus.expired).length}</div>
+                                    <div className="font-semibold text-right font-mono">
+                                        {
+                                            players.filter(
+                                                (p) => p.options?.addition.bus && (p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed),
+                                            ).length
+                                        }
+                                        /{players.filter((p) => p.options?.addition.bus && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled).length}
+                                    </div>
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Disc</div>
                                     <div className="font-semibold text-right font-mono">
-                                        {players.filter((p) => p.status !== PlayerStatus.expired).reduce((total, p) => total + (p.options?.addition?.disc || 0) + (p.options?.addition?.new_disc || 0), 0)}
+                                        {players
+                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                            .reduce((total, p) => total + (p.options?.addition?.disc || 0) + (p.options?.addition?.new_disc || 0), 0)}
+                                        /
+                                        {players
+                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                            .reduce((total, p) => total + (p.options?.addition?.disc || 0) + (p.options?.addition?.new_disc || 0), 0)}
                                     </div>
                                 </div>
                             </div>
@@ -177,8 +214,24 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             Black Jerseys{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition?.jerseys?.filter((j) => j.color === "black").length || 0) + (p.options?.addition?.new_jerseys?.filter((j) => j.color === "black").length || 0), 0)}
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce(
+                                                        (total, p) =>
+                                                            total +
+                                                            (p.options?.addition?.jerseys?.filter((j) => j.color === "black").length || 0) +
+                                                            (p.options?.addition?.new_jerseys?.filter((j) => j.color === "black").length || 0),
+                                                        0,
+                                                    )}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                    .reduce(
+                                                        (total, p) =>
+                                                            total +
+                                                            (p.options?.addition?.jerseys?.filter((j) => j.color === "black").length || 0) +
+                                                            (p.options?.addition?.new_jerseys?.filter((j) => j.color === "black").length || 0),
+                                                        0,
+                                                    )}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -187,8 +240,24 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "black" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
                                                     </div>
                                                 </div>
                                             ))}
@@ -200,8 +269,24 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             White Jerseys{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
-                                                    .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "white").length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "white").length || 0), 0)}
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce(
+                                                        (total, p) =>
+                                                            total +
+                                                            (p.options?.addition.jerseys?.filter((j) => j.color === "white").length || 0) +
+                                                            (p.options?.addition.new_jerseys?.filter((j) => j.color === "white").length || 0),
+                                                        0,
+                                                    )}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                    .reduce(
+                                                        (total, p) =>
+                                                            total +
+                                                            (p.options?.addition.jerseys?.filter((j) => j.color === "white").length || 0) +
+                                                            (p.options?.addition.new_jerseys?.filter((j) => j.color === "white").length || 0),
+                                                        0,
+                                                    )}
                                             </span>
                                         </div>
                                         <div className="flex gap-4 justify-between">
@@ -210,8 +295,24 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
-                                                            .reduce((total, p) => total + (p.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0) + (p.options?.addition.new_jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
+                                                            .reduce(
+                                                                (total, p) =>
+                                                                    total +
+                                                                    (p.options?.addition.jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0) +
+                                                                    (p.options?.addition.new_jerseys?.filter((j) => j.color === "white" && j.size === size).length || 0),
+                                                                0,
+                                                            )}
                                                     </div>
                                                 </div>
                                             ))}
@@ -225,7 +326,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             Black Shorts{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
                                             </span>
                                         </div>
@@ -235,7 +340,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
@@ -248,7 +357,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             White Shorts{" "}
                                             <span className="font-mono">
                                                 {players
-                                                    .filter((p) => p.status !== PlayerStatus.expired)
+                                                    .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                    .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
+                                                /
+                                                {players
+                                                    .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
                                             </span>
                                         </div>
@@ -258,7 +371,11 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                     <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
                                                     <div className="font-semibold font-mono">
                                                         {players
-                                                            .filter((p) => p.status !== PlayerStatus.expired)
+                                                            .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
+                                                            .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
+                                                        /
+                                                        {players
+                                                            .filter((p) => p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
                                                     </div>
                                                 </div>
@@ -318,17 +435,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid grid-cols-2 content-center gap-x-8">
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Waiting</div>
-                                            <div className="font-semibold text-right font-mono">
-                                                {
-                                                    players.filter(
-                                                        (p) =>
-                                                            p.status !== PlayerStatus.expired &&
-                                                            p.status !== PlayerStatus.cancelled &&
-                                                            p.status !== PlayerStatus.paid &&
-                                                            p.status !== PlayerStatus.halfpaid,
-                                                    ).length
-                                                }
-                                            </div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.pending).length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Paid</div>
@@ -336,11 +443,15 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Canceled</div>
-                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === "cancelled").length}</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.cancelled).length}</div>
                                         </div>
                                         <div className="flex justify-between items-center text-sm gap-4">
                                             <div className="font-medium opacity-70">Half-paid</div>
                                             <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.halfpaid).length}</div>
+                                        </div>
+                                        <div className="col-start-2 flex justify-between items-center text-sm gap-4">
+                                            <div className="font-medium opacity-70">Confirmed</div>
+                                            <div className="font-semibold text-right font-mono">{players.filter((p) => p.status === PlayerStatus.confirmed).length}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -444,24 +555,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White jersey</span>
 
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
-                                            {Object.keys(
-                                                groupBy(
-                                                    player.options?.addition?.jerseys?.filter((j) => j.color === "black") ?? [],
-                                                    "size",
-                                                ),
-                                            ).map((item) => (
+                                            {Object.keys(groupBy(player.options?.addition?.jerseys?.filter((j) => j.color === "black") ?? [], "size")).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
                                                     <span className="sm:text-right">{player.options?.addition.jerseys?.filter((j) => j.color === "black" && j.size === item).length}</span>
                                                 </div>
                                             ))}
-                                            {Object.keys(
-                                                groupBy(
-                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "black") ?? [],
-                                                    "size",
-                                                ),
-                                            ).map((item) => (
+                                            {Object.keys(groupBy(player.options?.addition?.new_jerseys?.filter((j) => j.color === "black") ?? [], "size")).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
@@ -471,24 +572,14 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         </div>
 
                                         <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
-                                            {Object.keys(
-                                                groupBy(
-                                                    player.options?.addition?.jerseys?.filter((j) => j.color === "white") ?? [],
-                                                    "size",
-                                                ),
-                                            ).map((item) => (
+                                            {Object.keys(groupBy(player.options?.addition?.jerseys?.filter((j) => j.color === "white") ?? [], "size")).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
                                                     <span className="sm:text-right">{player.options?.addition?.jerseys?.filter((j) => j.color === "white" && j.size === item).length}</span>
                                                 </div>
                                             ))}
-                                            {Object.keys(
-                                                groupBy(
-                                                    player.options?.addition?.new_jerseys?.filter((j) => j.color === "white") ?? [],
-                                                    "size",
-                                                ),
-                                            ).map((item) => (
+                                            {Object.keys(groupBy(player.options?.addition?.new_jerseys?.filter((j) => j.color === "white") ?? [], "size")).map((item) => (
                                                 <div key={item} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
                                                     <span className="uppercase">{item}</span>
                                                     <span>x</span>
@@ -534,7 +625,9 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     </div>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Disc</span>
-                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">x {(player.options?.addition?.disc || 0) + (player.options?.addition?.new_disc || 0)}</span>
+                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">
+                                        x {(player.options?.addition?.disc || 0) + (player.options?.addition?.new_disc || 0)}
+                                    </span>
 
                                     <span className="max-sm:col-start-1 sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Total fee</span>
                                     <div className="max-sm:col-span-3 sm:px-3 lg:px-4 sm:py-2 sm:grid content-center sm:text-right font-mono">
