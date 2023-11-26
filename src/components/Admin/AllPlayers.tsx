@@ -48,6 +48,7 @@ type PlayerReg = {
     totalFee?: number;
     status?: string;
     createdAt?: Date;
+    note?: string;
 };
 
 export default function AllRegistration({ players }: { players: PlayerReg[] }) {
@@ -148,7 +149,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                             <div className="w-full sm:max-w-[12rem] border sm:border-r-0 max-sm:border-b-0 rounded-2xl sm:rounded-r-none max-sm:rounded-b-none p-4 lg:p-6 bg-accent text-accent-foreground grid max-sm:grid-cols-2 gap-x-6 gap-y-1 content-center">
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Lunch (R)</div>
-                                    <div className="font-semibold text-right font-mono">
+                                    <div className="font-semibold text-right text-sm font-mono">
                                         {
                                             players.filter(
                                                 (p) =>
@@ -166,7 +167,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Lunch (V)</div>
-                                    <div className="font-semibold text-right font-mono">
+                                    <div className="font-semibold text-right text-sm font-mono">
                                         {
                                             players.filter(
                                                 (p) =>
@@ -184,7 +185,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Bus</div>
-                                    <div className="font-semibold text-right font-mono">
+                                    <div className="font-semibold text-right text-sm font-mono">
                                         {
                                             players.filter(
                                                 (p) => p.options?.addition.bus && (p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed),
@@ -195,7 +196,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                 </div>
                                 <div className="flex justify-between items-baseline max-sm:gap-2 gap-4">
                                     <div className="font-medium opacity-70 truncate">Disc</div>
-                                    <div className="font-semibold text-right font-mono">
+                                    <div className="font-semibold text-right text-sm font-mono">
                                         {players
                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                             .reduce((total, p) => total + (p.options?.addition?.disc || 0) + (p.options?.addition?.new_disc || 0), 0)}
@@ -212,7 +213,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid">
                                         <div className="font-medium opacity-70 leading-tight">
                                             Black Jerseys{" "}
-                                            <span className="font-mono">
+                                            <span className="font-mono text-sm">
                                                 {players
                                                     .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                     .reduce(
@@ -237,8 +238,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
-                                                    <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono text-sm">
+                                                    <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
+                                                    <div className="font-semibold font-mono text-xs">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce(
@@ -267,7 +268,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid">
                                         <div className="font-medium opacity-70 leading-tight">
                                             White Jerseys{" "}
-                                            <span className="font-mono">
+                                            <span className="font-mono text-sm">
                                                 {players
                                                     .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                     .reduce(
@@ -292,8 +293,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
-                                                    <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono text-sm">
+                                                    <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
+                                                    <div className="font-semibold font-mono text-xs">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce(
@@ -324,7 +325,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid">
                                         <div className="font-medium opacity-70 leading-tight">
                                             Black Shorts{" "}
-                                            <span className="font-mono">
+                                            <span className="font-mono text-sm">
                                                 {players
                                                     .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
@@ -337,8 +338,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
-                                                    <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono text-sm">
+                                                    <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
+                                                    <div className="font-semibold font-mono text-xs">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black" && j.size === size).length || 0), 0)}
@@ -355,7 +356,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     <div className="grid">
                                         <div className="font-medium opacity-70 leading-tight">
                                             White Shorts{" "}
-                                            <span className="font-mono">
+                                            <span className="font-mono text-sm">
                                                 {players
                                                     .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
@@ -368,8 +369,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div className="flex gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
-                                                    <div className="font-medium text-sm opacity-70 uppercase">{size}</div>
-                                                    <div className="font-semibold font-mono text-sm">
+                                                    <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
+                                                    <div className="font-semibold font-mono text-xs">
                                                         {players
                                                             .filter((p) => p.status === PlayerStatus.paid || p.status === PlayerStatus.halfpaid || p.status === PlayerStatus.confirmed)
                                                             .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white" && j.size === size).length || 0), 0)}
@@ -417,7 +418,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         // @ts-ignore
                                         [...new Set(players.map((p) => p.country))].map((c) => (
                                             <div key={c} className={`flex justify-between items-baseline text-sm gap-4`}>
-                                                <div className="font-medium opacity-70">{c}</div>
+                                                <div className="font-medium opacity-70 truncate max-w-[4rem]">{c}</div>
                                                 <div className="font-semibold text-right font-mono">
                                                     {players.filter((p) => p.country === c && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled).length}
                                                 </div>
@@ -787,6 +788,10 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                         <span className="truncate font-normal">Registered date </span>
                                                         <span className="truncate">{format(player.createdAt || 0, "dd/MM/yyyy")}</span>
                                                     </div>
+                                                </div>
+                                                
+                                                <div className="col-span-full grid">
+                                                    <Input placeholder="Note..." value={player.note} onChange={(e) => (player.note = e)} />
                                                 </div>
                                             </div>
                                         </div>
