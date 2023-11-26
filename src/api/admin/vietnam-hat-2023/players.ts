@@ -18,10 +18,16 @@ export const updatePaymentStatus = async ({ player_code, status } : { player_cod
     });
 }
 
-
 export const updatePlayerStatus = async ({ player_code, status } : { player_code: string, status: PlayerStatus }) => {
     return await axiosInstance.post('/admin/vietnam-hat-2023/update-status', {
         player_code,
         status
     });
 }
+
+export const updatePlayerNote = async ({ player_code, note }: { player_code: string; note: string }) => {
+    return await axiosInstance.post("/admin/vietnam-hat-2023/update-note", {
+        player_code,
+        note,
+    });
+};
