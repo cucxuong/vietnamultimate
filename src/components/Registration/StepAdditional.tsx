@@ -1,11 +1,11 @@
-import { CheckFat, Image } from "@phosphor-icons/react";
-import { Banana, Beer, Citrus, Croissant, Cross, CupSoda, GlassWater, Minus, Plus, Sandwich, Shirt, Stethoscope, X, Zap } from "lucide-react";
-import { Fragment, useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { Transition } from "@headlessui/react";
 import { useAppTranslation } from "@/i18n/client";
+import { Transition } from "@headlessui/react";
+import { CheckFat } from "@phosphor-icons/react";
+import { format } from "date-fns";
+import { Banana, Beer, Citrus, Croissant, Cross, CupSoda, GlassWater, Minus, Plus, Sandwich, Stethoscope, X, Zap } from "lucide-react";
+import { Fragment, useEffect, useState } from "react";
 import { ScrollTarget } from "../UIs/ScrollArea";
-import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export enum clothColor {
     BLACK = "black",
@@ -84,10 +84,10 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
             const bus = data.bus ? 200000 : 0;
             const jersey = data.jerseys.length * (isStudent === true ? 170000 : 200000);
             const short = data.shorts.length * 200000;
-            const disc = data.disc * 250000;
+            const disc = data.disc * (isStudent === true ? 200000 : 250000);
             return fixed + lunch + bus + jersey + short + disc;
         });
-    }, [data]);
+    }, [data, isStudent]);
     return (
         <div className="flex flex-col gap-6 snap-start -mt-6">
             <h3
@@ -331,529 +331,533 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                             {t("Route is from Central District 1 Hochiminh City to the field in the morning and back in the afternoon both days.")}
                         </div>
                     </div>
+                    
+                    {format(new Date(), 'yyyy-MM-dd HH:mm:ss') <= '2023-11-26 17:00:00' && (
+                        <>
+                            <div className="grid gap-0.5">
+                                <div className="rounded rounded-t-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
+                                    <div className="text-2xl font-medium">{t("Jersey & Short")}</div>
+                                    <div className="grid text-sm lg:text-base gap-2">
+                                        <p>{t("This year, the match is between Black & White.")}</p>
+                                        <p>{t("Each player NEED TO PREPARE A BLACK JERSEY AND A WHITE JERSEY for changing (or flipping).")}</p>
+                                        {new Date().getTime() <= new Date(2023, 10, 27, 0, 0, 0).getTime() && <p>{t("You can prepare yourself or order tournament jersey designs.")}</p>}
+                                    </div>
+                                </div>
 
-                    <div className="grid gap-0.5">
-                        <div className="rounded rounded-t-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                            <div className="text-2xl font-medium">{t("Jersey & Short")}</div>
-                            <div className="grid text-sm lg:text-base gap-2">
-                                <p>{t("This year, the match is between Black & White.")}</p>
-                                <p>{t("Each player NEED TO PREPARE A BLACK JERSEY AND A WHITE JERSEY for changing (or flipping).")}</p>
-                                {new Date().getTime() <= new Date(2023, 10, 27, 0, 0, 0).getTime() && <p>{t("You can prepare yourself or order tournament jersey designs.")}</p>}
+                                {new Date().getTime() <= new Date(2023, 10, 27, 0, 0, 0).getTime() && (
+                                    <>
+                                        <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
+                                            <div className="font-medium uppercase">{t("Black jersey")}</div>
+                                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseBlackJersey(true);
+                                                        handleChange("jerseys", [...blackJerseys, ...data.jerseys]);
+                                                    }}
+                                                >
+                                                    {useBlackJersey && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span>{t("Order")}</span>
+                                                </button>
+                                                <div className="border-l border-foreground border-opacity-60"></div>
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        !useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseBlackJersey(false);
+                                                        handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.BLACK)]);
+                                                    }}
+                                                >
+                                                    {!useBlackJersey && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span className="truncate">{t("Already have")}</span>
+                                                </button>
+                                            </div>
+                                            <Transition
+                                                show={useBlackJersey}
+                                                as={Fragment}
+                                                enter="transition-all duration-200 ease-in"
+                                                leave="transition-all duration-100 ease-out"
+                                                enterFrom="-translate-y-4 opacity-0"
+                                                leaveTo="-translate-y-4 opacity-0"
+                                            >
+                                                <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
+                                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./VNHAT2023-(Front-View).png" alt="" className="w-full h-full object-cover" />
+                                                        </div>
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
+                                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
+                                                                <span></span>
+                                                                <span className="text-xs">A inch</span>
+                                                                <span className="text-xs">B inch</span>
+                                                                <span className="text-xs">C inch</span>
+                                                            </div>
+                                                            <span></span>
+                                                            <span className="text-xs text-center">QTY</span>
+                                                        </div>
+                                                        <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
+                                                            {sizeChart.map((j) => (
+                                                                <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
+                                                                    <div
+                                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
+                                                                            data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span className="uppercase text-left">{j.size}</span>
+                                                                        <span>{j.x}</span>
+                                                                        <span>{j.y}</span>
+                                                                        <span>{j.z}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || "")),
+                                                                            ];
+                                                                            handleChange("jerseys", [...val]);
+                                                                            setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Minus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                    <div
+                                                                        className={`grid place-content-center ${
+                                                                            data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span>{data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val: Cloth[] = [
+                                                                                {
+                                                                                    id: `j-${Math.round(Math.random() * 100)}`,
+                                                                                    color: clothColor.BLACK,
+                                                                                    size: j.size,
+                                                                                },
+                                                                                ...data.jerseys,
+                                                                            ];
+                                                                            handleChange("jerseys", [...val]);
+                                                                            setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Plus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Transition>
+                                        </div>
+
+                                        <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
+                                            <div className="font-medium uppercase">{t("White jersey")}</div>
+                                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseWhiteJersey(true);
+                                                        handleChange("jerseys", [...whiteJerseys, ...data.jerseys]);
+                                                    }}
+                                                >
+                                                    {useWhiteJersey && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span>{t("Order")}</span>
+                                                </button>
+                                                <div className="border-l border-foreground border-opacity-60"></div>
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        !useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseWhiteJersey(false);
+                                                        handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.WHITE)]);
+                                                    }}
+                                                >
+                                                    {!useWhiteJersey && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span className="truncate">{t("Already have")}</span>
+                                                </button>
+                                            </div>
+                                            <Transition
+                                                show={useWhiteJersey}
+                                                as={Fragment}
+                                                enter="transition-all duration-200 ease-in"
+                                                leave="transition-all duration-100 ease-out"
+                                                enterFrom="-translate-y-4 opacity-0"
+                                                leaveTo="-translate-y-4 opacity-0"
+                                            >
+                                                <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
+                                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./VNHAT2023-W-(Front-View).png" alt="" className="w-full h-full object-contain" />
+                                                        </div>
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
+                                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
+                                                                <span></span>
+                                                                <span className="text-xs">A inch</span>
+                                                                <span className="text-xs">B inch</span>
+                                                                <span className="text-xs">C inch</span>
+                                                            </div>
+                                                            <span></span>
+                                                            <span className="text-xs text-center">QTY</span>
+                                                        </div>
+                                                        <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
+                                                            {sizeChart.map((j) => (
+                                                                <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
+                                                                    <div
+                                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
+                                                                            data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span className="uppercase text-left">{j.size}</span>
+                                                                        <span>{j.x}</span>
+                                                                        <span>{j.y}</span>
+                                                                        <span>{j.z}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || "")),
+                                                                            ];
+                                                                            handleChange("jerseys", [...val]);
+                                                                            setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Minus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                    <div
+                                                                        className={`grid place-content-center ${
+                                                                            data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span>{data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                {
+                                                                                    id: `j-${Math.round(Math.random() * 100)}`,
+                                                                                    color: clothColor.WHITE,
+                                                                                    size: j.size,
+                                                                                },
+                                                                                ...data.jerseys,
+                                                                            ];
+                                                                            handleChange("jerseys", [...val]);
+                                                                            setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Plus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Transition>
+                                        </div>
+
+                                        <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
+                                            <div className="font-medium uppercase">{t("Black short")}</div>
+                                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseBlackShort(true);
+                                                        handleChange("shorts", [...blackShorts, ...data.shorts]);
+                                                    }}
+                                                >
+                                                    {useBlackShort && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span>{t("Order")}</span>
+                                                </button>
+                                                <div className="border-l border-foreground border-opacity-60"></div>
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        !useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseBlackShort(false);
+                                                        handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.BLACK)]);
+                                                    }}
+                                                >
+                                                    {!useBlackShort && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span className="truncate">{t("Already have")}</span>
+                                                </button>
+                                            </div>
+                                            <Transition
+                                                show={useBlackShort}
+                                                as={Fragment}
+                                                enter="transition-all duration-200 ease-in"
+                                                leave="transition-all duration-100 ease-out"
+                                                enterFrom="-translate-y-4 opacity-0"
+                                                leaveTo="-translate-y-4 opacity-0"
+                                            >
+                                                <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
+                                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./blackshorts.png" alt="" className="w-full h-full object-contain" />
+                                                        </div>
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
+                                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
+                                                                <span></span>
+                                                                <span className="text-xs">A inch</span>
+                                                                <span className="text-xs">B inch</span>
+                                                                <span className="text-xs">C inch</span>
+                                                            </div>
+                                                            <span></span>
+                                                            <span className="text-xs text-center">QTY</span>
+                                                        </div>
+                                                        <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
+                                                            {sSizeChart.map((j) => (
+                                                                <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
+                                                                    <div
+                                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
+                                                                            data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span className="uppercase text-left">{j.size}</span>
+                                                                        <span>{j.x}</span>
+                                                                        <span>{j.y}</span>
+                                                                        <span>{j.z}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || "")),
+                                                                            ];
+                                                                            handleChange("shorts", [...val]);
+                                                                            setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Minus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                    <div
+                                                                        className={`grid place-content-center ${
+                                                                            data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span>{data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                {
+                                                                                    id: `j-${Math.round(Math.random() * 100)}`,
+                                                                                    color: clothColor.BLACK,
+                                                                                    size: j.size,
+                                                                                },
+                                                                                ...data.shorts,
+                                                                            ];
+                                                                            handleChange("shorts", [...val]);
+                                                                            setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Plus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Transition>
+                                        </div>
+
+                                        <div className="rounded rounded-b-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
+                                            <div className="font-medium uppercase">{t("White short")}</div>
+                                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseWhiteShort(true);
+                                                        handleChange("shorts", [...whiteShorts, ...data.shorts]);
+                                                    }}
+                                                >
+                                                    {useWhiteShort && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span>{t("Order")}</span>
+                                                </button>
+                                                <div className="border-l border-foreground border-opacity-60"></div>
+                                                <button
+                                                    className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
+                                                        !useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
+                                                    }`}
+                                                    onClick={() => {
+                                                        setUseWhiteShort(false);
+                                                        handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.WHITE)]);
+                                                    }}
+                                                >
+                                                    {!useWhiteShort && (
+                                                        <span>
+                                                            <CheckFat size={18} weight="fill" />
+                                                        </span>
+                                                    )}
+                                                    <span className="truncate">{t("Already have")}</span>
+                                                </button>
+                                            </div>
+                                            <Transition
+                                                show={useWhiteShort}
+                                                as={Fragment}
+                                                enter="transition-all duration-200 ease-in"
+                                                leave="transition-all duration-100 ease-out"
+                                                enterFrom="-translate-y-4 opacity-0"
+                                                leaveTo="-translate-y-4 opacity-0"
+                                            >
+                                                <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
+                                                    <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./whiteshorts.png" alt="" className="w-full h-full object-contain" />
+                                                        </div>
+                                                        <div className="snap-center w-full min-w-[250px]">
+                                                            <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid">
+                                                        <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
+                                                            <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
+                                                                <span></span>
+                                                                <span className="text-xs">A inch</span>
+                                                                <span className="text-xs">B inch</span>
+                                                                <span className="text-xs">C inch</span>
+                                                            </div>
+                                                            <span></span>
+                                                            <span className="text-xs text-center">QTY</span>
+                                                        </div>
+                                                        <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
+                                                            {sSizeChart.map((j) => (
+                                                                <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
+                                                                    <div
+                                                                        className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
+                                                                            data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span className="uppercase text-left">{j.size}</span>
+                                                                        <span>{j.x}</span>
+                                                                        <span>{j.y}</span>
+                                                                        <span>{j.z}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || "")),
+                                                                            ];
+                                                                            handleChange("shorts", [...val]);
+                                                                            setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Minus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                    <div
+                                                                        className={`grid place-content-center ${
+                                                                            data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <span>{data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
+                                                                    </div>
+                                                                    <button
+                                                                        className="grid place-content-center"
+                                                                        onClick={() => {
+                                                                            const val = [
+                                                                                {
+                                                                                    id: `j-${Math.round(Math.random() * 100)}`,
+                                                                                    color: clothColor.WHITE,
+                                                                                    size: j.size,
+                                                                                },
+                                                                                ...data.shorts,
+                                                                            ];
+                                                                            handleChange("shorts", [...val]);
+                                                                            setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
+                                                                        }}
+                                                                    >
+                                                                        <span>
+                                                                            <Plus size={18} />
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
                             </div>
-                        </div>
-
-                        {new Date().getTime() <= new Date(2023, 10, 27, 0, 0, 0).getTime() && (
-                            <>
-                                <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                                    <div className="font-medium uppercase">{t("Black jersey")}</div>
-                                    <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseBlackJersey(true);
-                                                handleChange("jerseys", [...blackJerseys, ...data.jerseys]);
-                                            }}
-                                        >
-                                            {useBlackJersey && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span>{t("Order")}</span>
-                                        </button>
-                                        <div className="border-l border-foreground border-opacity-60"></div>
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                !useBlackJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseBlackJersey(false);
-                                                handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.BLACK)]);
-                                            }}
-                                        >
-                                            {!useBlackJersey && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span className="truncate">{t("Already have")}</span>
-                                        </button>
-                                    </div>
-                                    <Transition
-                                        show={useBlackJersey}
-                                        as={Fragment}
-                                        enter="transition-all duration-200 ease-in"
-                                        leave="transition-all duration-100 ease-out"
-                                        enterFrom="-translate-y-4 opacity-0"
-                                        leaveTo="-translate-y-4 opacity-0"
-                                    >
-                                        <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                            <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./VNHAT2023-(Front-View).png" alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid">
-                                                <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                                    <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
-                                                        <span></span>
-                                                        <span className="text-xs">A inch</span>
-                                                        <span className="text-xs">B inch</span>
-                                                        <span className="text-xs">C inch</span>
-                                                    </div>
-                                                    <span></span>
-                                                    <span className="text-xs text-center">QTY</span>
-                                                </div>
-                                                <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                                    {sizeChart.map((j) => (
-                                                        <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
-                                                            <div
-                                                                className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
-                                                                    data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span className="uppercase text-left">{j.size}</span>
-                                                                <span>{j.x}</span>
-                                                                <span>{j.y}</span>
-                                                                <span>{j.z}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || "")),
-                                                                    ];
-                                                                    handleChange("jerseys", [...val]);
-                                                                    setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Minus size={18} />
-                                                                </span>
-                                                            </button>
-                                                            <div
-                                                                className={`grid place-content-center ${
-                                                                    data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span>{data.jerseys.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val: Cloth[] = [
-                                                                        {
-                                                                            id: `j-${Math.round(Math.random() * 100)}`,
-                                                                            color: clothColor.BLACK,
-                                                                            size: j.size,
-                                                                        },
-                                                                        ...data.jerseys,
-                                                                    ];
-                                                                    handleChange("jerseys", [...val]);
-                                                                    setBlackJerseys([...val.filter((v) => v.color === clothColor.BLACK)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Plus size={18} />
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Transition>
-                                </div>
-
-                                <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                                    <div className="font-medium uppercase">{t("White jersey")}</div>
-                                    <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseWhiteJersey(true);
-                                                handleChange("jerseys", [...whiteJerseys, ...data.jerseys]);
-                                            }}
-                                        >
-                                            {useWhiteJersey && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span>{t("Order")}</span>
-                                        </button>
-                                        <div className="border-l border-foreground border-opacity-60"></div>
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                !useWhiteJersey ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseWhiteJersey(false);
-                                                handleChange("jerseys", [...data.jerseys.filter((e) => e.color !== clothColor.WHITE)]);
-                                            }}
-                                        >
-                                            {!useWhiteJersey && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span className="truncate">{t("Already have")}</span>
-                                        </button>
-                                    </div>
-                                    <Transition
-                                        show={useWhiteJersey}
-                                        as={Fragment}
-                                        enter="transition-all duration-200 ease-in"
-                                        leave="transition-all duration-100 ease-out"
-                                        enterFrom="-translate-y-4 opacity-0"
-                                        leaveTo="-translate-y-4 opacity-0"
-                                    >
-                                        <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                            <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./VNHAT2023-W-(Front-View).png" alt="" className="w-full h-full object-contain" />
-                                                </div>
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./J-sizes.png" alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid">
-                                                <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                                    <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
-                                                        <span></span>
-                                                        <span className="text-xs">A inch</span>
-                                                        <span className="text-xs">B inch</span>
-                                                        <span className="text-xs">C inch</span>
-                                                    </div>
-                                                    <span></span>
-                                                    <span className="text-xs text-center">QTY</span>
-                                                </div>
-                                                <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                                    {sizeChart.map((j) => (
-                                                        <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
-                                                            <div
-                                                                className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
-                                                                    data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span className="uppercase text-left">{j.size}</span>
-                                                                <span>{j.x}</span>
-                                                                <span>{j.y}</span>
-                                                                <span>{j.z}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        ...data.jerseys.filter((e) => e.id !== (data.jerseys.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || "")),
-                                                                    ];
-                                                                    handleChange("jerseys", [...val]);
-                                                                    setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Minus size={18} />
-                                                                </span>
-                                                            </button>
-                                                            <div
-                                                                className={`grid place-content-center ${
-                                                                    data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span>{data.jerseys.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        {
-                                                                            id: `j-${Math.round(Math.random() * 100)}`,
-                                                                            color: clothColor.WHITE,
-                                                                            size: j.size,
-                                                                        },
-                                                                        ...data.jerseys,
-                                                                    ];
-                                                                    handleChange("jerseys", [...val]);
-                                                                    setWhiteJerseys([...val.filter((v) => v.color === clothColor.WHITE)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Plus size={18} />
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Transition>
-                                </div>
-
-                                <div className="rounded bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                                    <div className="font-medium uppercase">{t("Black short")}</div>
-                                    <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseBlackShort(true);
-                                                handleChange("shorts", [...blackShorts, ...data.shorts]);
-                                            }}
-                                        >
-                                            {useBlackShort && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span>{t("Order")}</span>
-                                        </button>
-                                        <div className="border-l border-foreground border-opacity-60"></div>
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                !useBlackShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseBlackShort(false);
-                                                handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.BLACK)]);
-                                            }}
-                                        >
-                                            {!useBlackShort && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span className="truncate">{t("Already have")}</span>
-                                        </button>
-                                    </div>
-                                    <Transition
-                                        show={useBlackShort}
-                                        as={Fragment}
-                                        enter="transition-all duration-200 ease-in"
-                                        leave="transition-all duration-100 ease-out"
-                                        enterFrom="-translate-y-4 opacity-0"
-                                        leaveTo="-translate-y-4 opacity-0"
-                                    >
-                                        <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                            <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./blackshorts.png" alt="" className="w-full h-full object-contain" />
-                                                </div>
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid">
-                                                <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                                    <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
-                                                        <span></span>
-                                                        <span className="text-xs">A inch</span>
-                                                        <span className="text-xs">B inch</span>
-                                                        <span className="text-xs">C inch</span>
-                                                    </div>
-                                                    <span></span>
-                                                    <span className="text-xs text-center">QTY</span>
-                                                </div>
-                                                <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                                    {sSizeChart.map((j) => (
-                                                        <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
-                                                            <div
-                                                                className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
-                                                                    data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span className="uppercase text-left">{j.size}</span>
-                                                                <span>{j.x}</span>
-                                                                <span>{j.y}</span>
-                                                                <span>{j.z}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.BLACK && s.size === j.size)?.id || "")),
-                                                                    ];
-                                                                    handleChange("shorts", [...val]);
-                                                                    setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Minus size={18} />
-                                                                </span>
-                                                            </button>
-                                                            <div
-                                                                className={`grid place-content-center ${
-                                                                    data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span>{data.shorts.filter((e) => e.color === clothColor.BLACK && e.size === j.size).length}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        {
-                                                                            id: `j-${Math.round(Math.random() * 100)}`,
-                                                                            color: clothColor.BLACK,
-                                                                            size: j.size,
-                                                                        },
-                                                                        ...data.shorts,
-                                                                    ];
-                                                                    handleChange("shorts", [...val]);
-                                                                    setBlackShorts([...val.filter((s) => s.color === clothColor.BLACK)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Plus size={18} />
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Transition>
-                                </div>
-
-                                <div className="rounded rounded-b-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
-                                    <div className="font-medium uppercase">{t("White short")}</div>
-                                    <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-full overflow-hidden border border-foreground border-opacity-60 h-12 w-full max-w-lg mx-auto">
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseWhiteShort(true);
-                                                handleChange("shorts", [...whiteShorts, ...data.shorts]);
-                                            }}
-                                        >
-                                            {useWhiteShort && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span>{t("Order")}</span>
-                                        </button>
-                                        <div className="border-l border-foreground border-opacity-60"></div>
-                                        <button
-                                            className={`w-full flex items-center justify-center gap-2 px-4 transition-all ease-in-out ${
-                                                !useWhiteShort ? "bg-primary bg-opacity-30 duration-200" : "duration-100"
-                                            }`}
-                                            onClick={() => {
-                                                setUseWhiteShort(false);
-                                                handleChange("shorts", [...data.shorts.filter((e) => e.color !== clothColor.WHITE)]);
-                                            }}
-                                        >
-                                            {!useWhiteShort && (
-                                                <span>
-                                                    <CheckFat size={18} weight="fill" />
-                                                </span>
-                                            )}
-                                            <span className="truncate">{t("Already have")}</span>
-                                        </button>
-                                    </div>
-                                    <Transition
-                                        show={useWhiteShort}
-                                        as={Fragment}
-                                        enter="transition-all duration-200 ease-in"
-                                        leave="transition-all duration-100 ease-out"
-                                        enterFrom="-translate-y-4 opacity-0"
-                                        leaveTo="-translate-y-4 opacity-0"
-                                    >
-                                        <div className="grid lg:grid-cols-2 gap-2 lg:gap-4">
-                                            <div className="flex gap-2 items-center bg-secondary rounded-2xl overflow-x-scroll overflow-y-hidden snap-x snap-mandatory">
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./whiteshorts.png" alt="" className="w-full h-full object-contain" />
-                                                </div>
-                                                <div className="snap-center w-full min-w-[250px]">
-                                                    <img src="./S-sizes.png" alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid">
-                                                <div className="grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] items-end">
-                                                    <div className="grid grid-cols-4 gap-2 text-center leading-none px-4">
-                                                        <span></span>
-                                                        <span className="text-xs">A inch</span>
-                                                        <span className="text-xs">B inch</span>
-                                                        <span className="text-xs">C inch</span>
-                                                    </div>
-                                                    <span></span>
-                                                    <span className="text-xs text-center">QTY</span>
-                                                </div>
-                                                <div className="grid rounded-2xl border border-primary border-opacity-60 divide-y divide-primary divide-opacity-60 overflow-hidden">
-                                                    {sSizeChart.map((j) => (
-                                                        <div key={j.size} className={`grid grid-cols-[minmax(0,1fr)_3rem_3rem_3rem] h-12 divide-x divide-primary divide-opacity-60`}>
-                                                            <div
-                                                                className={`grid grid-cols-4 gap-2 px-4 items-center text-center ${
-                                                                    data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span className="uppercase text-left">{j.size}</span>
-                                                                <span>{j.x}</span>
-                                                                <span>{j.y}</span>
-                                                                <span>{j.z}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        ...data.shorts.filter((e) => e.id !== (data.shorts.find((s) => s.color === clothColor.WHITE && s.size === j.size)?.id || "")),
-                                                                    ];
-                                                                    handleChange("shorts", [...val]);
-                                                                    setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Minus size={18} />
-                                                                </span>
-                                                            </button>
-                                                            <div
-                                                                className={`grid place-content-center ${
-                                                                    data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length > 0 ? "bg-primary bg-opacity-30" : ""
-                                                                }`}
-                                                            >
-                                                                <span>{data.shorts.filter((e) => e.color === clothColor.WHITE && e.size === j.size).length}</span>
-                                                            </div>
-                                                            <button
-                                                                className="grid place-content-center"
-                                                                onClick={() => {
-                                                                    const val = [
-                                                                        {
-                                                                            id: `j-${Math.round(Math.random() * 100)}`,
-                                                                            color: clothColor.WHITE,
-                                                                            size: j.size,
-                                                                        },
-                                                                        ...data.shorts,
-                                                                    ];
-                                                                    handleChange("shorts", [...val]);
-                                                                    setWhiteShorts([...val.filter((v) => v.color === clothColor.WHITE)]);
-                                                                }}
-                                                            >
-                                                                <span>
-                                                                    <Plus size={18} />
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Transition>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                        </>
+                    )}
 
                     {tournament.total_disc < 110 && (
                         <div className="rounded-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid grid-rows-[auto_minmax(0,1fr)] gap-4 p-4 lg:p-6">
