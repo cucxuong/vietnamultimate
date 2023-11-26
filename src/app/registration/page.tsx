@@ -3,19 +3,19 @@
 import { fetchTournamentInfo, registerTournament } from "@/api/register";
 import Main from "@/components/Home/Main";
 import Indicator, { IndicatorItem } from "@/components/Registration/Indicator";
-import StepAdditional, { StepAdditionalData, clothColor, clothSize } from "@/components/Registration/StepAdditional";
+import StepAdditional, { StepAdditionalData } from "@/components/Registration/StepAdditional";
 import StepFinish from "@/components/Registration/StepFinish";
 import StepGeneral, { StepGeneralData } from "@/components/Registration/StepGeneral";
 import StepSkillset, { StepSkillsetData } from "@/components/Registration/StepSkillset";
 import Loading from "@/components/UIs/Loading";
 import ScrollArea, { ScrollTarget } from "@/components/UIs/ScrollArea";
 import { Button } from "@/components/ui/button";
+import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
 import { useAppTranslation } from "@/i18n/client";
 import { Transition } from "@headlessui/react";
-import { ArrowDown, ArrowLeft, ArrowRight, BadgeCheck, Loader2 } from "lucide-react";
+import { SealCheck } from "@phosphor-icons/react";
+import { ArrowDown, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
-import { VIETNAM_HAT_TOURNAMENT_ID } from "@/config/vietnam-hat.env";
-import { Cloud, SealCheck } from "@phosphor-icons/react";
 
 export default function Registration() {
     const { t, i18n } = useAppTranslation();
@@ -51,10 +51,7 @@ export default function Registration() {
         isVegan: false,
         allergies: "",
         bus: true,
-        jerseys: [
-            { id: "j-1", color: clothColor.BLACK, size: clothSize.M },
-            { id: "j-2", color: clothColor.WHITE, size: clothSize.M },
-        ],
+        jerseys: [],
         shorts: [],
         disc: 0,
     });
