@@ -509,7 +509,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                     className={`col-span-full backdrop-blur grid max-sm:grid-cols-[repeat(2,auto_minmax(0,1fr))] max-sm:border max-sm:rounded-3xl max-sm:border-primary max-sm:pr-4 max-sm:pt-2 max-sm:pb-4 max-sm:gap-y-2 max-sm:items-baseline sm:grid-cols-[inherit] min-h-[3rem] sm:divide-x sm:divide-primary cursor-pointer ${
                                         selectedReg === player.code ? "bg-primary bg-opacity-10 font-semibold" : "bg-background"
                                     } ${index === filterPlayers(query).length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
-                                        player.status === PlayerStatus.expired ? "text-gray-400" : ""
+                                        player.status === PlayerStatus.expired || player.status === PlayerStatus.cancelled ? "text-gray-400" : ""
                                     }`}
                                     onClick={() => setSelectedReg((v) => (v === player.code ? "" : player.code))}
                                     title={`Registered at ${format(player.createdAt || 0, "dd/MM/yyyy")}`}
@@ -594,7 +594,15 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">Black shorts</span>
                                         <span className="sm:hidden px-4 pt-2 sm:py-2 flex items-baseline uppercase text-xs">White shorts</span>
 
-                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none">
+                                        <div
+                                            className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none ${
+                                                player.createdAt &&
+                                                player.createdAt.getTime() <= new Date(2023, 10, 21).getTime() &&
+                                                (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
+                                                    ? "text-indigo-500"
+                                                    : ""
+                                            }`}
+                                        >
                                             {Object.keys(
                                                 groupBy(
                                                     player.options?.addition.shorts.filter((j) => j.color === "black"),
@@ -609,7 +617,15 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             ))}
                                         </div>
 
-                                        <div className="grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center">
+                                        <div
+                                            className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center ${
+                                                player.createdAt &&
+                                                player.createdAt.getTime() <= new Date(2023, 10, 21).getTime() &&
+                                                (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
+                                                    ? "text-indigo-500"
+                                                    : ""
+                                            }`}
+                                        >
                                             {Object.keys(
                                                 groupBy(
                                                     player.options?.addition.shorts.filter((j) => j.color === "white"),
