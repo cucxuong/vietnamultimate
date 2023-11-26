@@ -236,7 +236,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     )}
                                             </span>
                                         </div>
-                                        <div className="flex gap-4 justify-between">
+                                        <div className="flex flex-wrap gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
@@ -291,7 +291,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     )}
                                             </span>
                                         </div>
-                                        <div className="flex gap-4 justify-between">
+                                        <div className="flex flex-wrap gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl", "5xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
@@ -336,7 +336,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "black").length || 0), 0)}
                                             </span>
                                         </div>
-                                        <div className="flex gap-4 justify-between">
+                                        <div className="flex flex-wrap gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
@@ -367,7 +367,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     .reduce((total, p) => total + (p.options?.addition.shorts.filter((j) => j.color === "white").length || 0), 0)}
                                             </span>
                                         </div>
-                                        <div className="flex gap-4 justify-between">
+                                        <div className="flex flex-wrap gap-4 justify-between">
                                             {["xs", "s", "m", "l", "xl", "2xl"].map((size) => (
                                                 <div key={size} className="grid justify-center text-center">
                                                     <div className="font-medium text-xs opacity-70 uppercase">{size}</div>
