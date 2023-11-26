@@ -597,7 +597,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div
                                             className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none ${
                                                 player.createdAt &&
-                                                player.createdAt.getTime() <= new Date(2023, 10, 21).getTime() &&
+                                                player.createdAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
                                                 (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
                                                     ? "text-indigo-500"
                                                     : ""
@@ -620,7 +620,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                         <div
                                             className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center ${
                                                 player.createdAt &&
-                                                player.createdAt.getTime() <= new Date(2023, 10, 21).getTime() &&
+                                                player.createdAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
                                                 (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
                                                     ? "text-indigo-500"
                                                     : ""
