@@ -789,8 +789,13 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                         <span className="truncate">{format(player.createdAt || 0, "dd/MM/yyyy")}</span>
                                                     </div>
                                                 </div>
-                                                
-                                                <div className="col-span-full grid">
+
+                                                <div
+                                                    className="col-span-full grid"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                    }}
+                                                >
                                                     <Input placeholder="Note..." value={player.note} onChange={(e) => (player.note = e)} />
                                                 </div>
                                             </div>

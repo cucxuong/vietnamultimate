@@ -332,7 +332,7 @@ export default function StepAdditional({ data, validate, scroll, isStudent, coun
                         </div>
                     </div>
                     
-                    {format(new Date(), 'yyyy-MM-dd HH:mm:ss') <= '2023-11-26 17:00:00' && (
+                    {format(new Date(), 'yyyy-MM-dd HH:mm:ss') <= '2023-11-27 00:00:00' && (
                         <>
                             <div className="grid gap-0.5">
                                 <div className="rounded rounded-t-3xl bg-foreground bg-opacity-5 backdrop-blur-xl grid gap-4 p-4 lg:p-6">
