@@ -52,13 +52,14 @@ type PlayerReg = {
     note?: string;
 };
 
-export default function AllRegistration({ players, onChange }: { players: PlayerReg[]; onChange:(id:string,note:string)=>void }) {
+export default function AllRegistration({ players, onChange }: { players: PlayerReg[]; onChange: (id: string, note: string) => void }) {
     const router = useRouter();
 
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
     const [query, setQuery] = useState("");
     const [expand, setExpand] = useState(false);
     const [selectedReg, setSelectedReg] = useState<string | undefined>("");
+    const [regNote, setRegNote] = useState("");
 
     const totalAmount = (fee: number, country: string) => {
         if (country === "Singapore") {
@@ -512,7 +513,10 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                     } ${index === filterPlayers(query).length - 1 ? "rounded-b-[inherit]" : ""} ${index === 0 ? "max-sm:rounded-t-[inherit]" : ""} ${
                                         player.status === PlayerStatus.expired || player.status === PlayerStatus.cancelled ? "text-gray-400" : ""
                                     }`}
-                                    onClick={() => setSelectedReg((v) => (v === player.code ? "" : player.code))}
+                                    onClick={() => {
+                                        setSelectedReg((v) => (v === player.code ? "" : player.code));
+                                        setRegNote(player.note || "");
+                                    }}
                                     title={`Registered at ${format(player.createdAt || 0, "dd/MM/yyyy")}`}
                                 >
                                     <span className="py-2 flex items-center max-sm:self-center sm:justify-center max-sm:px-4 max-sm:text-2xl">{player.code}</span>
@@ -809,12 +813,15 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                 </div>
 
                                                 <div
-                                                    className="col-span-full grid"
+                                                    className="col-span-full flex gap-2"
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                     }}
                                                 >
-                                                    <Input placeholder="Note..." value={player.note} onChange={(e) => onChange(player?.code!, e)} />
+                                                    <div className="w-full">
+                                                        <Input placeholder="Note..." value={regNote} onChange={(e) => setRegNote(e)} />
+                                                    </div>
+                                                    {regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
                                                 </div>
                                             </div>
                                         </div>
