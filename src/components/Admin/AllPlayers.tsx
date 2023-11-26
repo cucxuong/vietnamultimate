@@ -526,7 +526,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                             {player.nickname ? ` (${player.nickname || "Nickname"})` : ""} {player.yob}
                                         </span>
                                         <span className="text-xs truncate">{player.email || "Email"}</span>
-                                        <span className="text-xs text-indigo-400 italic">{player.note}</span>
+                                        <span className="text-xs text-indigo-400 italic truncate">{player.note}</span>
                                     </div>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Team</span>
@@ -818,10 +818,10 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                         e.stopPropagation();
                                                     }}
                                                 >
-                                                    <div className="w-full">
+                                                    <div className="w-full grid">
                                                         <Input placeholder="Note..." value={regNote} onChange={(e) => setRegNote(e)} />
                                                     </div>
-                                                    {regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
+                                                    {player.note&&regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
                                                 </div>
                                             </div>
                                         </div>
