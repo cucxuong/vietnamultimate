@@ -20,7 +20,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
             (dataAdditional.bus ? 200000 : 0) +
             dataAdditional.jerseys.length * (isStudent === true ? 170000 : 200000) +
             dataAdditional.shorts.length * 200000 +
-            dataAdditional.disc * (isStudent ? 200000 : 250000),
+            dataAdditional.disc * (isStudent === true ? 200000 : 250000),
     );
 
     return (
