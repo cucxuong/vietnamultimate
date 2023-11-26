@@ -2,7 +2,7 @@
 
 import PaymentPlayers from "@/components/Admin/PaymentPlayers";
 import { useEffect, useState } from "react";
-import { getVietnamHatPlayers, updatePaymentStatus, updatePlayerStatus } from "@/api/admin/vietnam-hat-2023/players";
+import { getVietnamHatPlayers, updatePaymentStatus, updatePlayerNote, updatePlayerStatus } from "@/api/admin/vietnam-hat-2023/players";
 import { useRouter } from "next/navigation";
 import AllRegistration from "@/components/Admin/AllPlayers";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
@@ -52,6 +52,7 @@ export default function Players() {
                         options: selectOptions,
                         createdAt: new Date(player.created_at),
                         updatedAt: new Date(player.updated_at),
+                        note: player.note,
                     };
                 });
             }
@@ -72,13 +73,30 @@ export default function Players() {
     }, []);
 
     return localStorage.getItem("country") === "All" ? (
-        <AllRegistration players={players} />
+        <AllPlayersWrapper players={players} />
     ) : localStorage.getItem("country") === "Admin" ? (
         <AdminPlayersWrapper players={players} />
     ) : (
         <CountryPlayers players={players} />
     );
 }
+
+const AllPlayersWrapper = ({ players }: { players: Array<any> }) => {
+    const changeNote = async (code: string, note: string) => {
+        await updatePlayerNote({ player_code: code, note });
+    };
+
+    return (
+        <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
+            <AllRegistration
+                players={players}
+                onChange={(id: string, note: string) => {
+                    changeNote(id, note);
+                }}
+            />
+        </section>
+    );
+};
 
 const AdminPlayersWrapper = ({ players }: { players: Array<any> }) => {
     const changeStatus = async (code: string, status: PlayerStatus) => {

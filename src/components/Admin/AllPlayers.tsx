@@ -52,7 +52,7 @@ type PlayerReg = {
     note?: string;
 };
 
-export default function AllRegistration({ players }: { players: PlayerReg[] }) {
+export default function AllRegistration({ players, onChange }: { players: PlayerReg[]; onChange:(id:string,note:string)=>void }) {
     const router = useRouter();
 
     const [scroll, setScroll] = useState<ScrollTarget>({ top: 0, bottom: 0, height: 0, isDown: true, isEnd: false });
@@ -814,7 +814,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                                         e.stopPropagation();
                                                     }}
                                                 >
-                                                    <Input placeholder="Note..." value={player.note} onChange={(e) => (player.note = e)} />
+                                                    <Input placeholder="Note..." value={player.note} onChange={(e) => onChange(player?.code!, e)} />
                                                 </div>
                                             </div>
                                         </div>
