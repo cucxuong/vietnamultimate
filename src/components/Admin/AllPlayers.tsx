@@ -419,7 +419,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                         // @ts-ignore
                                         [...new Set(players.map((p) => p.country))].map((c) => (
                                             <div key={c} className={`flex justify-between items-baseline text-sm gap-4`}>
-                                                <div className="font-medium opacity-70 truncate max-w-[6rem]">{c}</div>
+                                                <div className="font-medium opacity-70 truncate max-w-[6rem] capitalize">{c}</div>
                                                 <div className="font-semibold text-right font-mono">
                                                     {players.filter((p) => p.country === c && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled).length}
                                                 </div>
@@ -530,7 +530,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Country</span>
                                     <span className="sm:py-2 sm:px-2 flex items-center sm:justify-center sm:text-center gap-2">
-                                        <span className="truncate">{player.country}</span>
+                                        <span className="truncate capitalize">{player.country}</span>
                                     </span>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-center uppercase text-xs">Is female</span>
