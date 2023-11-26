@@ -1,1 +1,0 @@
-export const VIETNAM_HAT_TOURNAMENT_ID = "6540dcdb19219b33f8160f3c";
