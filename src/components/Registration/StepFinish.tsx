@@ -1,9 +1,8 @@
 import { useAppTranslation } from "@/i18n/client";
-import { CheckFat } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { StepAdditionalData } from "./StepAdditional";
 import { StepGeneralData } from "./StepGeneral";
 import { StepSkillsetData } from "./StepSkillset";
-import { StepAdditionalData } from "./StepAdditional";
 
 export type StepFinishData = {};
 type Props = {
@@ -21,7 +20,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
             (dataAdditional.bus ? 200000 : 0) +
             dataAdditional.jerseys.length * (isStudent === true ? 170000 : 200000) +
             dataAdditional.shorts.length * 200000 +
-            dataAdditional.disc * 250000,
+            dataAdditional.disc * (isStudent === true ? 200000 : 250000),
     );
 
     return (
@@ -105,7 +104,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                             </span>
                             <span className="font-mono">
                                 {Intl.NumberFormat("en-US")
-                                    .format(dataAdditional.disc * 250000)
+                                    .format(dataAdditional.disc * (isStudent === true ? 200000 : 250000))
                                     .replaceAll(",", "'")}{" "}
                                 VND
                             </span>

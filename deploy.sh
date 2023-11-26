@@ -8,8 +8,6 @@ EXPOSE_PORT=3003
 
 BRANCH_NAME=$(git symbolic-ref --short -q HEAD)
 
-CONFIG_FILE_NAME=vietnam-hat.env.$BRANCH_NAME.ts
-
 if [[ $BRANCH_NAME == 'main' ]]; then
     CONTAINER_NAME=vietnam-ultimate-container
     IMAGE_NAME=vietnam-ultimate
@@ -23,8 +21,6 @@ echo $IMAGE_NAME
 echo $CONTAINER_NAME
 echo $EXPOSE_PORT
 echo $CONFIG_FILE_NAME;
-
-cp ./src/config/$CONFIG_FILE_NAME ./src/config/vietnam-hat.env.ts
 
 git pull origin $BRANCH_NAME
 
