@@ -419,7 +419,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                         // @ts-ignore
                                         [...new Set(players.map((p) => p.country))].map((c) => (
                                             <div key={c} className={`flex justify-between items-baseline text-sm gap-4`}>
-                                                <div className="font-medium opacity-70 truncate max-w-[5rem]">{c}</div>
+                                                <div className="font-medium opacity-70 truncate max-w-[6rem]">{c}</div>
                                                 <div className="font-semibold text-right font-mono">
                                                     {players.filter((p) => p.country === c && p.status !== PlayerStatus.expired && p.status !== PlayerStatus.cancelled).length}
                                                 </div>
@@ -476,7 +476,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
 
                     {/* Reg datatable */}
                     <div className="grid gap-4">
-                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,2fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,10rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
+                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,2fr)_repeat(2,minmax(0,8rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,10rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
                             <div
                                 className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs rounded-t-[inherit] bg-background`}
                             >
@@ -526,10 +526,10 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                     </div>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Team</span>
-                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center gap-2">{player.options?.skills.team}</span>
+                                    <span className="sm:px-3 lg:px-4 sm:py-2 flex items-center sm:justify-center sm:text-center gap-2">{player.options?.skills.team}</span>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Country</span>
-                                    <span className="sm:py-2 sm:px-2 flex items-center sm:justify-center gap-2">
+                                    <span className="sm:py-2 sm:px-2 flex items-center sm:justify-center sm:text-center gap-2">
                                         <span className="truncate">{player.country}</span>
                                     </span>
 
