@@ -23,7 +23,7 @@ export default function Players() {
             let transformedData = [];
             if (localStorage.getItem("country") !== "All") {
                 transformedData = data.map((player: any) => {
-                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll("-", "");
 
                     return {
                         registrationCode: player.player_code,
@@ -37,7 +37,7 @@ export default function Players() {
             } else {
                 transformedData = data.map((player: any) => {
                     const selectOptions = JSON.parse(player.selected_options);
-                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll('-', '');
+                    const keyStatus: keyof typeof PlayerStatus = player.status.replaceAll("-", "");
 
                     return {
                         code: player.player_code,
@@ -51,6 +51,7 @@ export default function Players() {
                         status: PlayerStatus[keyStatus],
                         options: selectOptions,
                         createdAt: new Date(player.created_at),
+                        updatedAt: new Date(player.updated_at),
                     };
                 });
             }

@@ -48,6 +48,7 @@ type PlayerReg = {
     totalFee?: number;
     status?: string;
     createdAt?: Date;
+    updatedAt?: Date;
     note?: string;
 };
 
@@ -475,7 +476,7 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                     {/* Reg datatable */}
                     <div className="grid gap-4">
-                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,12rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
+                        <div className="sm:border sm:border-primary rounded-3xl font-medium grid sm:grid-cols-[4rem_minmax(0,1fr)_repeat(2,minmax(0,6rem))_repeat(4,minmax(0,4rem))_repeat(2,minmax(0,10rem))_4rem_minmax(0,1fr)_6rem] sm:divide-y sm:divide-primary max-sm:gap-4">
                             <div
                                 className={`col-span-full max-sm:!hidden grid grid-cols-[inherit] min-h-[3rem] divide-x divide-primary font-semibold uppercase text-xs rounded-t-[inherit] bg-background`}
                             >
@@ -520,7 +521,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
                                             {player.name || "Name"}
                                             {player.nickname ? ` (${player.nickname || "Nickname"})` : ""} {player.yob}
                                         </span>
-                                        <span className="text-xs">{player.email || "Email"}</span>
+                                        <span className="text-xs truncate">{player.email || "Email"}</span>
+                                        <span className="text-xs text-indigo-400 italic">{player.note}</span>
                                     </div>
 
                                     <span className="sm:hidden px-4 sm:py-2 flex items-baseline uppercase text-xs">Team</span>
@@ -596,8 +598,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                                         <div
                                             className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center !border-none ${
-                                                player.createdAt &&
-                                                player.createdAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
+                                                player.updatedAt &&
+                                                player.updatedAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
                                                 (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
                                                     ? "text-indigo-500"
                                                     : ""
@@ -619,8 +621,8 @@ export default function AllRegistration({ players }: { players: PlayerReg[] }) {
 
                                         <div
                                             className={`grid max-sm:px-4 px-3 pb-2 lg:px-4 sm:py-2 max-sm:place-content-start place-content-center ${
-                                                player.createdAt &&
-                                                player.createdAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
+                                                player.updatedAt &&
+                                                player.updatedAt.getTime() <= new Date(2023, 10, 20, 21, 0, 0).getTime() &&
                                                 (player.status === PlayerStatus.halfpaid || player.status === PlayerStatus.paid || player.status === PlayerStatus.confirmed)
                                                     ? "text-indigo-500"
                                                     : ""
