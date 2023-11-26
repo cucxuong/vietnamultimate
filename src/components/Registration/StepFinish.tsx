@@ -104,7 +104,7 @@ export default function StepFinish({ dataGeneral, dataSkillset, dataAdditional }
                             </span>
                             <span className="font-mono">
                                 {Intl.NumberFormat("en-US")
-                                    .format(dataAdditional.disc * 250000)
+                                    .format(dataAdditional.disc * (isStudent === true ? 200000 : 250000))
                                     .replaceAll(",", "'")}{" "}
                                 VND
                             </span>
