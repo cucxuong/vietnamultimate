@@ -11,6 +11,8 @@ import { X } from "lucide-react";
 import { format } from "date-fns";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
 
+
+
 // Temp
 type PlayerReg = {
     code?: string;
@@ -821,7 +823,7 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     <div className="w-full grid">
                                                         <Input placeholder="Note..." value={regNote} onChange={(e) => setRegNote(e)} />
                                                     </div>
-                                                    {player.note&&regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
+                                                    {player.note && regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
                                                 </div>
                                             </div>
                                         </div>
