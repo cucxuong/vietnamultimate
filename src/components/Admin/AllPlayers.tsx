@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { format } from "date-fns";
 import { PlayerStatus } from "@/utils/vietnam-hat-2023.utils";
+import { Textarea } from "../ui/textarea";
 
 
 
@@ -821,9 +822,9 @@ export default function AllRegistration({ players, onChange }: { players: Player
                                                     }}
                                                 >
                                                     <div className="w-full grid">
-                                                        <Input placeholder="Note..." value={regNote} onChange={(e) => setRegNote(e)} />
+                                                        <Textarea placeholder="Note..." value={regNote} onChange={(e) => setRegNote(e.target.value)} />
                                                     </div>
-                                                    {player.note && regNote !== player.note && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
+                                                    {regNote !== (player.note || "") && <Button onClick={() => onChange(player.code!, regNote)}>Save</Button>}
                                                 </div>
                                             </div>
                                         </div>
