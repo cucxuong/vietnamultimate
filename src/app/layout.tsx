@@ -9,8 +9,8 @@ const barlow = Barlow({ weight: ["100", "200", "300", "400", "500", "600", "700"
 const jetbrainsMono = JetBrains_Mono({ weight: ["100", "200", "300", "400", "500", "600", "700", "800"], subsets: ["latin", "vietnamese"], variable: "--font-jetbrains-mono" });
 
 export const metadata: Metadata = {
-    title: "Registration - Vietnam Hat 2023",
-    description: "The biggest HAT of Vietnam is coming",
+    title: "Vietnam Ultimate Frisbee",
+    description: "A channel for Vietnam Ultimate Community",
     openGraph: {
         type: "website",
         url: "https://vietnam-ultimate.com",
