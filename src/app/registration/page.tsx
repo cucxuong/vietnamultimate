@@ -70,7 +70,7 @@ export default function Registration() {
                     data={dataStepAdditional}
                     validate={validate}
                     scroll={scroll}
-                    isStudent={ dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null }
+                    isStudent={dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null}
                     country={dataStepGeneral.stayingCountry}
                     onChange={(e) => setDataStepAdditional(e)}
                     onValidate={(e) => setValid(e)}
@@ -133,10 +133,10 @@ export default function Registration() {
             const isStudent = dataStepGeneral.stayingCountry == "Vietnam" ? dataStepGeneral.isStudent : null;
 
             const newDataAdditions = Object.keys(dataStepAdditional).reduce((result, key) => {
-                if ((key === 'jerseys') && isStudent !== true) {
+                if (key === "jerseys" && isStudent !== true) {
                     // @ts-ignore
                     result[`new_${key}`] = dataStepAdditional[key];
-                } else if (key === 'disc') {
+                } else if (key === "disc") {
                     // @ts-ignore
                     result[`new_${key}`] = dataStepAdditional[key];
                 } else {
@@ -175,23 +175,23 @@ export default function Registration() {
     };
 
     useEffect(() => {
-       fetchTourData();
+        fetchTourData();
     }, []);
 
     const fetchTourData = async () => {
-         try {
-            const response = await fetchTournamentInfo({id: VIETNAM_HAT_TOURNAMENT_ID});
+        try {
+            const response = await fetchTournamentInfo({ id: VIETNAM_HAT_TOURNAMENT_ID });
 
             // @ts-ignore
             const tourInfo = response.data.data;
 
             setTournament(tourInfo);
             setLoading(false);
-        } catch(e) {
+        } catch (e) {
             setLoading(false);
             throw e;
         }
-    }
+    };
 
     return (
         <section className={`grid grid-cols-1 grid-rows-1 gap-12 h-[100dvh] w-[100dvw] overflow-hidden`}>
