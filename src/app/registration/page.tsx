@@ -214,7 +214,7 @@ export default function Registration() {
                         leaveTo={"-translate-y-1/4 opacity-0"}
                     >
                         <div className="flex justify-center relative">
-                            <Image alt="" src="./heading-closed.svg" width={200} height={200} className="w-full max-h-[50dvh] max-w-2xl" />
+                            <img src="./heading.svg" className="w-full max-h-[50dvh] max-w-2xl" />
                         </div>
                     </Transition>
                     <Transition
@@ -255,7 +255,7 @@ export default function Registration() {
                                 </p>
                             </div>
                         </div> */}
-                        {/* <div className="grid w-full max-w-xs gap-4 mx-auto sticky bottom-2 content-end">
+                        <div className="grid w-full max-w-xs gap-4 mx-auto sticky bottom-2 content-end">
                             <Button onClick={() => handleSelectLang("en")} className={`flex rounded-full px-6 gap-2`}>
                                 <span className="w-full">English</span>
                                 <span>
@@ -268,18 +268,6 @@ export default function Registration() {
                                     <ArrowDown size={20} />
                                 </span>
                             </Button>
-                        </div> */}
-                        <div className="grid grid-cols-[auto_minmax(0,1fr)] gap-y-2 gap-x-4 mx-auto">
-                            <span className="col-span-full text-center text-lg font-medium">Contact Vietnam HAT 2023 organizer</span>
-                            <span>Fanpage</span>
-                            <a className="font-medium underline" href="https://www.facebook.com/VietNamHatVNH" target="_blank">
-                                https://www.facebook.com/VietNamHatVNH
-                            </a>
-
-                            <span>Email</span>
-                            <a className="font-medium underline" href="mailto:vietnamhat.ultimate@gmail.com" target="_blank">
-                                vietnamhat.ultimate@gmail.com
-                            </a>
                         </div>
                     </Transition>
                 </div>
